@@ -1,0 +1,46 @@
+<view class="container">
+  <view class="orders-switch">
+    <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>
+      <view class="txt">모두</view>
+    </view>
+    <view class="item {{ showType == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>
+      <view class="txt">지불 보류</view>
+    </view>
+    <view class="item {{ showType == 2 ? 'active' : ''}}" bindtap="switchTab" data-index='2'>
+      <view class="txt">배송 준비 중</view>
+    </view>
+    <view class="item {{ showType == 3 ? 'active' : ''}}" bindtap="switchTab" data-index='3'>
+      <view class="txt">배송 중</view>
+    </view>
+    <view class="item {{ showType == 4 ? 'active' : ''}}" bindtap="switchTab" data-index='4'>
+      <view class="txt">댓글</view>
+    </view>
+  </view>
+  <view class="no-order" wx:if="{{orderList.length <= 0}}">
+    <view class="c">
+      <text>아직 주문이 없습니다</text>
+    </view>
+  </view>
+
+  <view class="orders">
+    <navigator url="../orderDetail/orderDetail?id={{item.id}}" class="order" open-type="redirect" wx:for="{{orderList}}" wx:key="id">
+      <view class="h">
+        <view class="l">주문 번호：{{item.orderSn}}</view>
+        <view class="r">{{item.orderStatusText}}</view>
+      </view>
+      <view class="goods" wx:for="{{item.goodsList}}" wx:key="id" wx:for-item="gitem">
+        <view class="img">
+          <image src="{{gitem.picUrl}}"></image>
+        </view>
+        <view class="info">
+          <text class="name">{{gitem.goodsName}}</text>
+          <text class="number">共{{gitem.number}}아이템</text>
+        </view>
+        <view class="status"></view>
+      </view>
+      <view class="b">
+        <view class="l">지불：￥{{item.actualPrice}}</view>
+      </view>
+    </navigator>
+  </view>
+</view>

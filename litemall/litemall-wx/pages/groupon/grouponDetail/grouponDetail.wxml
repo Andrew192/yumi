@@ -1,0 +1,67 @@
+<view class="container">
+  <view class="progress">
+    <view class="item-a">
+      <van-steps steps="{{ steps }}" active="{{ active }}" active-icon="{{ activeIcon }}"
+  active-color="{{ activeColor }}" />
+    </view>
+    <view class="item-c" wx:if="{{groupon.status === 1}}">
+      <view class="l">
+        그룹이 너무 작습니다.
+        <van-tag type="danger">{{rules.discountMember - joiners.length}}</van-tag>
+        人
+      </view>
+      <view class="r">
+        <button class="btn active" open-type="share">초대</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="menu-list-pro">
+    <view class="h">
+      <view class="label">단체 구매 참여 ( {{joiners.length}}人)</view>
+      <view class="status">모두 보기</view>
+    </view>
+    <view class="menu-list-item" wx:for-items="{{joiners}}" wx:key="id" data-id="{{item.id}}">
+      <image class="icon" src="{{item.avatar}}"></image>
+      <text class="txt">{{item.nickname}}</text>
+    </view>
+  </view>
+
+  <view class="order-goods">
+    <view class="h">
+      <view class="label">상품 정보</view>
+    </view>
+    <view class="goods">
+      <view class="item" wx:for="{{orderGoods}}" wx:key="id">
+        <view class="img">
+          <image src="{{item.picUrl}}"></image>
+        </view>
+        <view class="info">
+          <view class="t">
+            <text class="name">{{item.goodsName}}</text>
+            <text class="number">x{{item.number}}</text>
+          </view>
+          <view class="attr">{{item.goodsSpecificationValues}}</view>
+          <view class="price">￥{{item.retailPrice}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="order-bottom">
+      <view class="total">
+        <view class="t">
+          <text class="label">상품 합계：</text>
+          <text class="txt">￥{{orderInfo.goodsPrice}}</text>
+        </view>
+        <view class="t">
+          <text class="label">상품 배송：</text>
+          <text class="txt">￥{{orderInfo.freightPrice}}</text>
+        </view>
+      </view>
+      <view class="pay-fee">
+        <text class="label">결제 완료 상품：</text>
+        <text class="txt">￥{{orderInfo.actualPrice}}</text>
+      </view>
+    </view>
+  </view>
+</view>

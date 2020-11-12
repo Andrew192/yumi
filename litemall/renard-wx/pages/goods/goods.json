@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "제품 세부 정보",
+  "usingComponents": {
+    "sharePop": "/components/sharePop/sharePop",
+    "goodList": "/components/goodList/goodList",
+    "van-notify": "/components/notify/index"
+  }
+}

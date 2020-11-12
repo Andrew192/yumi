@@ -1,0 +1,7 @@
+<view class="container">
+  <view class="form-box">
+
+    <button type="primary" open-type="getUserInfo" class="login-btn" bindgetuserinfo="wxLogin">WeChat 직접 로그인</button>
+
+  </view>
+</view>

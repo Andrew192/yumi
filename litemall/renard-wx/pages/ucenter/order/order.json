@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "내 주문",
+  "usingComponents": {
+    "zan-capsule": "/components/capsule/index"
+  }
+}

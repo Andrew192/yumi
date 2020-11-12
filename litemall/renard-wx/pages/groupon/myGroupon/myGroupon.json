@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "내 그룹 구매",
+  "usingComponents": {
+    "zan-capsule": "/components/capsule/index"
+  }
+}

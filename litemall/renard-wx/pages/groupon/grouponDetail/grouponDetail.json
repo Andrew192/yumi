@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "그룹 구매 세부 정보",
+  "usingComponents": {
+    "sharePop": "/components/sharePop/sharePop"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "브랜드 정보",
+  "usingComponents": {
+    "goodList": "/components/goodList/goodList"
+  }
+}

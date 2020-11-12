@@ -1,0 +1,56 @@
+<view class="container">
+
+  <view class="h">
+    <view class="item {{ status == 0 ? 'active' : ''}}" bindtap="switchTab" data-index="0">
+      <view class="txt">미사용</view>
+    </view>
+    <view class="item {{ status == 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1">
+      <view class="txt">중고</view>
+    </view>
+    <view class="item {{ status == 2 ? 'active' : ''}}" bindtap="switchTab" data-index="2">
+      <view class="txt">만료</view>
+    </view>
+  </view>
+
+  <view class="b">
+
+    <view class="coupon-form" wx:if="{{status == 0}}">
+      <view class="input-box">
+        <input class="coupon-sn" placeholder="请输入优惠码" value="{{code}}" bindinput="bindExchange"/>
+        <van-icon name="close" class="clear-icon" wx:if="{{ code.length > 0 }}" catchtap="clearExchange"/>        
+      </view>
+      <view class="add-btn" bindtap='goExchange'>교환</view>
+    </view>
+
+    <view class="help" wx:if="{{status == 0}}">
+      <van-icon name="question-o" />
+      사용 지침
+    </view>
+
+    <scroll-view class="coupon-list" scroll-y="true" scroll-top="{{scrollTop}}">
+
+      <view class="item {{ status == 0 ? 'active' : ''}}" wx:for="{{couponList}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+        <view class="tag">{{item.tag}}</view>
+        <view class="content">
+          <view class="left">
+            <view class="discount">{{item.discount}}위안</view>
+            <view class="min"> 총 {{item.min}}위안</view>
+          </view>
+          <view class="right">
+            <view class="name">{{item.name}}</view>
+            <view class="time"> 유효기간：{{item.startTime}} - {{item.endTime}}</view>
+          </view>
+        </view>
+        <view class="condition">
+          <text class="txt">{{item.desc}}</text>
+          <image src="{{item.pic}}" class="icon"></image>
+        </view>
+      </view>
+
+      <view class="page" wx:if="{{showPage}}">
+        <view class="prev {{ page <= 1 ? 'disabled' : ''}}" bindtap="prevPage">이전 페이지</view>
+        <view class="next {{ (count / size) < page ? 'disabled' : ''}}" bindtap="nextPage">다음 페이지</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

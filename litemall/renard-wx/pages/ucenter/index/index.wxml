@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="my-info">
+    <view class="profile-info" bindtap="goLogin">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" />
+      <view class="my-info-name">{{userInfo.nickName}}
+        <text></text>
+      </view>
+    </view>
+    <view class="my-info-order">
+      <view class="list-icon" bindtap="goOrder" data-index="0">
+        <view class="{{tabClass[0]}}"></view>
+        <image src="../../../images/my-icon-1.png" />
+        <text>내 주문</text>
+      </view>
+      <view class="list-icon" bindtap="goGroupon" data-index="1">
+        <view class="{{tabClass[1]}}"></view>
+        <image src="../../../images/my-icon-2.png" />
+        <text>내 그룹 구매</text>
+      </view>
+      <view class="list-icon" bindtap="goCollect" data-index="2">
+        <view class="{{tabClass[2]}}"></view>
+        <image src="../../../images/my-icon-3.png" />
+        <text>내 컬렉션</text>
+      </view>
+      <view class="list-icon" bindtap="goAddress" data-index="3">
+        <view class="{{tabClass[3]}}"></view>
+        <image src="../../../images/my-icon-4.png" />
+        <text>배송 주소</text>
+      </view>
+    </view>
+  </view>
+  <view class="my-item-list">
+    <view class="my-item">
+      <navigator url="/pages/select-address/index" hover-class="none">택배 수수료 설명</navigator>
+      <image src="../../../images/right-icon.png" />
+    </view>
+    <view class="my-item">
+      <navigator url="/pages/select-address/index" hover-class="none">그룹 구매 지침</navigator>
+      <image src="../../../images/right-icon.png" />
+    </view>
+  </view>
+</view>

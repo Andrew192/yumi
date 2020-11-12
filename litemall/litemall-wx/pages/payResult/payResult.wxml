@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="pay-result">
+    <view class="success" wx:if="{{status}}">
+      <view class="msg">지불 결과</view>
+      <view class="btns">
+        <navigator class="btn" url="/pages/ucenter/order/order" open-type="redirect">주문 확인</navigator>
+        <navigator class="btn" url="/pages/index/index" open-type="switchTab">쇼핑을 계속</navigator>
+      </view>
+    </view>
+    <view class="error" wx:if="{{!status}}">
+      <view class="msg">결제 실패</view>
+      <view class="tips">
+        <view class="p"> 반드시
+          <text class="time">30분 이내에</text> 결제를 완료해주세요.</view>
+        <view class="p">그렇지 않으면 시스템에서 주문이 취소됩니다.</view>
+      </view>
+      <view class="btns">
+        <navigator class="btn" url="/pages/ucenter/order/order" open-type="redirect">주문 확인</navigator>
+        <view class="btn" bindtap='payOrder'>결제</view>
+      </view>
+    </view>
+  </view>
+
+</view>

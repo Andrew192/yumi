@@ -1,0 +1,28 @@
+<view class="container">
+  <scroll-view class="coupon-list" scroll-y="true" scroll-top="{{scrollTop}}">
+
+    <view class="item" wx:for="{{couponList}}" wx:for-index="index" wx:for-item="item" wx:key="id" bindtap="getCoupon" data-index="{{item.id}}">
+      <view class="tag">{{item.tag}}</view>
+      <view class="content">
+        <view class="left">
+          <view class="discount">{{item.discount}}위안</view>
+          <view class="min"> 전체{{item.min}}위안</view>
+        </view>
+        <view class="right">
+          <view class="name">{{item.name}}</view>
+          <view class="time" wx:if="{{item.days != 0}}">유효기간：{{item.days}}일</view>
+          <view class="time" wx:else> 유효기간：{{item.startTime}} - {{item.endTime}}</view>
+        </view>
+      </view>
+      <view class="condition">
+        <text class="txt">{{item.desc}}</text>
+        <image src="{{item.pic}}" class="icon"></image>
+      </view>
+    </view>
+
+    <view class="page" wx:if="{{showPage}}">
+      <view class="prev {{ page <= 1 ? 'disabled' : ''}}" bindtap="prevPage">이전 페이지</view>
+      <view class="next {{ (count / limit) < page ? 'disabled' : ''}}" bindtap="nextPage">다음 페이지</view>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "신제품 출시",
+  "usingComponents": {
+    "goodList": "/components/goodList/goodList"
+  }
+}

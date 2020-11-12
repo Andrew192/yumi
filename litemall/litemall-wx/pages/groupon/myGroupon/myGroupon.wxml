@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="orders-switch">
+    <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>
+      <view class="txt">그룹 구매 시작</view>
+    </view>
+    <view class="item {{ showType == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>
+      <view class="txt">단체 구매</view>
+    </view>
+  </view>
+  <view class="no-order" wx:if="{{orderList.length <= 0}}">
+    <view class="c">
+      <text>그룹 구매에 참여하지 않았습니다.</text>
+    </view>
+  </view>
+
+  <view class="orders">
+    <navigator url="../grouponDetail/grouponDetail?id={{item.id}}" class="order" open-type="navigate" wx:for="{{orderList}}" wx:key="id">
+      <view class="h">
+        <van-tag type="primary" wx:if="{{item.groupon.status === 1}}">그룹 중</van-tag>
+        <van-tag type="success" wx:if="{{item.groupon.status === 2}}">그룹 성공</van-tag>
+        <van-tag type="danger" wx:if="{{item.groupon.status === 3}}">그룹 실패</van-tag>
+        <van-tag round type="warning" wx:if="{{!item.isCreator}}">{{item.creator}}시작</van-tag>
+      </view>
+      <view class="h">
+        <view class="l">주문 번호：{{item.orderSn}}</view>
+        <view class="r">{{item.orderStatusText}}</view>
+      </view>
+      <view class="j">
+        <view class="l">단체 구매 할인：￥{{item.rules.discount}}</view>
+        <view class="r">참가 시간：{{item.groupon.addTime}}</view>
+      </view>
+      <view class="i">
+        <view class="l">단체 구매 요건：{{item.rules.discountMember}}人</view>
+        <view class="r">위임：{{item.joinerCount}}人</view>
+      </view>
+      <view class="goods" wx:for="{{item.goodsList}}" wx:key="id" wx:for-item="gitem">
+        <view class="img">
+          <image src="{{gitem.picUrl}}"></image>
+        </view>
+        <view class="info">
+          <text class="name">{{gitem.goodsName}}</text>
+          <text class="number">共{{gitem.number}}아이템</text>
+        </view>
+        <view class="status"></view>
+      </view>
+      <view class="b">
+        <view class="l">지불가격：￥{{item.actualPrice}}</view>
+      </view>
+    </navigator>
+  </view>
+</view>

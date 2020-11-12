@@ -1,0 +1,47 @@
+<view class="container">
+  <view class="coupon-form">
+    <view class="input-box">
+      <input class="coupon-sn" placeholder="请输入优惠码" />
+      <image class="clear-icon" src="http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/clear-fb-dd9d604f86.png"></image>
+    </view>
+    <button class="add-btn disabled">교환</button>
+  </view>
+  <view class="help">사용 지침</view>
+  <view class="coupon-list">
+    <view class="item">
+      <view class="tag">신규 유저 전용</view>
+      <view class="content">
+        <view class="left">
+          <view class="name">기간 한정 무료 쿠폰</view>
+          <view class="time">2020.11.13-2020.11.14</view>
+        </view>
+        <view class="right">
+          <button class="go">사용</button>
+        </view>
+      </view>
+      <view class="condition">
+        <text class="txt">간단한 세라믹 머그 전용, Xiaomi 사용자 혜택, 기간 한정 구매, 3 석 혜택, 기프트 카드 및 세부 정보 페이지에 표시된 사용할 수없는 쿠폰이있는 특별 제품</text>
+        <image src="https://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/couponArrow-71315b4145.png" class="icon"></image>
+      </view>
+    </view>
+
+    <view class="item">
+      <view class="tag">신규 유저 전용</view>
+      <view class="content">
+        <view class="left">
+          <view class="name">기간 한정 무료 쿠폰</view>
+          <view class="time">2020.11.13-2020.11.14</view>
+        </view>
+        <view class="right">
+          <button class="go">사용</button>
+        </view>
+      </view>
+      <view class="condition">
+        <text class="txt">간단한 세라믹 머그 전용, Xiaomi 사용자 혜택, 기간 한정 구매, 3 석 혜택, 기프트 카드 및 세부 정보 페이지에 표시된 사용할 수없는 쿠폰이있는 특별 제품</text>
+        <image src="https://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/couponArrow-71315b4145.png" class="icon"></image>
+      </view>
+    </view>
+  </view>
+
+
+</view>
