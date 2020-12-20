@@ -1,184 +1,184 @@
-# 1 litemall系统
+# 1 litemall 시스템
 
-## 1.1 简介
+## 1.1 소개
 
-litemall是一个简单的商场系统，基于现有的开源项目，重新实现一个完整的前后端项目，包含小程序客户端、移动客户端和网页管理端。
+litemall은 기존 오픈 소스 프로젝트를 기반으로하는 간단한 쇼핑몰 시스템으로, 애플릿 클라이언트, 모바일 클라이언트 및 웹 관리를 포함한 완전한 프런트 엔드 및 백 엔드 프로젝트를 다시 구현합니다.
 
-![](./pics/project/project-structure.png)
+! [] (./ pics / project / project-structure.png)
 
 
-项目的架构是四个系统和九个模块：
+프로젝트의 아키텍처는 4 개의 시스템과 9 개의 모듈입니다.
 
-* 基础系统子系统(platform)
+* 기본 시스템 하위 시스템 (플랫폼)
 
-  由数据库、litemall-core模块、litemall-db模块和litemall-all模块组成;
+  데이터베이스, litemall-core 모듈, litemall-db 모듈 및 litemall-all 모듈로 구성됩니다.
 
-* 小商场子系统(wxmall，即weixin mall)
+* 소규모 쇼핑몰 서브 시스템 (wxmall, 즉 weixin mall)
 
-  由litemall-wx-api模块、litemall-wx模块和renard-wx模块组成；
+  litemall-wx-api 모듈, litemall-wx 모듈 및 renard-wx 모듈로 구성됩니다.
 
-* 轻商城子系统(mobmall，即mobile mall)
+* 가벼운 쇼핑몰 서브 시스템 (mobmall, 즉 모바일 쇼핑몰)
 
-  由litemall-wx-api模块和litemall-vue模块组成。
-  注意，目前这里移动商城子系统的后端和小商场子系统是一样的。
+  litemall-wx-api 모듈과 litemall-vue 모듈로 구성됩니다.
+  모바일 쇼핑몰 서브 시스템의 백엔드는 소형 쇼핑몰 서브 시스템과 동일합니다.
     
-* 管理后台子系统(admin)
+* 관리 백그라운드 하위 시스템 (관리자)
 
-  由litemall-admin-api模块和litemall-admin模块组成。
+  litemall-admin-api 모듈과 litemall-admin 모듈로 구성됩니다.
 
-而九个模块的开发设计到三种技术栈：
+그리고 9 개의 모듈에서 3 개의 기술 스택에 대한 개발 및 설계 :
 
-* Spring Boot技术栈
+* Spring Boot 기술 스택
 
-  采用IDEA开发工具，开发litemall-core、litemall-db、litemall-admin-api、
-  litemall-wx-api和litemall-all共五个模块；
+  IDEA 개발 도구를 사용하여 litemall-core, litemall-db, litemall-admin-api,
+  litemall-wx-api 및 litemall-all에는 5 개의 모듈이 있습니다.
   
-* miniprogram（微信小程序）技术栈
+* Miniprogram (WeChat Mini Program) 기술 스택
 
-  采用微信小程序开发工具，开发litemall-wx模块和renard-wx模块；
+  WeChat 애플릿 개발 도구를 사용하여 litemall-wx 및 renard-wx 모듈을 개발합니다.
   
-* Vue技术栈
+* Vue 기술 스택
 
-  采用VSC开发工具，开发litemall-admin模块和litemall-vue模块。
+  VSC 개발 도구를 사용하여 litemall-admin 모듈 및 litemall-vue 모듈을 개발하십시오.
 
-### 1.1.1 项目特点
+### 1.1.1 프로젝트 특징
 
-项目存在以下特点：
+이 프로젝트의 특징은 다음과 같습니다.
 
-* 数据库方面，只是简单的表，表和表之间的依赖关系没有采用外键设计，而是依赖Java代码在service层面或者业务层面保证。这样做的好处是数据库频繁改动很方便，不会因为外键而导致数据库难以修改;
-* 涉及三种技术栈，但是每种技术栈仅涉及最基础的技术；
-  * 后端技术栈，仅涉及 Spring，Spring Boot, Spring MVC和Mybatis技术，其他后端技术暂时不采用;
-  * 小程序技术栈，仅涉及miniprogram官方文档；
-  * 前端技术栈，仅涉及vue, vuex, vue-route和element技术；
-* 安全方面，仅采用最基本的代码，提供简单基本的安全服务;
-* 性能方面，没有涉及内存数据库缓存功能，而是完全依赖MySQL;
-* 对象存储服务方面，支持本地存储和第三方云存储方案。
-* 消息通知方面，支持邮件通知、第三方云短信通知和微信模板通知；
-* 部署方便，支持多服务部署和一键部署脚本；
-* 文档全面，虽然还在开发中，但是规划中文档和代码注释一定会完成，帮助开发者理解项目。
+* 데이터베이스 측면에서는 단순한 테이블 일뿐 테이블과 테이블 간의 종속성 관계는 외래 키로 설계되지 않고 Java 코드에 의존하여 서비스 수준 또는 비즈니스 수준에서 보장합니다. 이것의 장점은 데이터베이스를 자주 변경하는 것이 매우 편리하고 외래 키로 인해 데이터베이스를 수정하는 것이 어렵지 않다는 것입니다.
+* 세 가지 기술 스택이 관련되지만 각 기술 스택에는 가장 기본적인 기술 만 포함됩니다.
+  * 백엔드 기술 스택은 Spring, Spring Boot, Spring MVC 및 Mybatis 기술 만 포함하며 다른 백엔드 기술은 일시적으로 사용되지 않습니다.
+  * 공식 미니 프로그램 문서 만 포함하는 미니 프로그램 기술 스택
+  * 프런트 엔드 기술 스택은 vue, vuex, vue-route 및 요소 기술 만 포함합니다.
+* 보안 측면에서 가장 기본적인 코드 만 사용하여 간단하고 기본적인 보안 서비스를 제공합니다.
+* 성능 측면에서 메모리 데이터베이스 캐시 기능을 포함하지 않지만 완전히 MySQL에 의존합니다.
+* 개체 스토리지 서비스의 경우 로컬 스토리지 및 타사 클라우드 스토리지 솔루션을 지원합니다.
+* 메시지 알림의 경우 이메일 알림, 타사 클라우드 SMS 알림 및 WeChat 템플릿 알림을 지원합니다.
+* 간편한 배포, 다중 서비스 배포 및 원 클릭 배포 스크립트 지원
+* 문서는 포괄적이며 아직 개발 중이지만 개발자가 프로젝트를 이해하는 데 도움이되도록 계획의 문서 및 코드 주석이 확실히 완료 될 것입니다.
 
-总之，目前的系统只是为了学习技术和业务而开发的一个简单商场原型系统。虽然缺失很多企业级功能，但是是完整和合理的原型系统。
+요컨대, 현재 시스템은 학습 기술과 비즈니스를 위해 개발 된 단순한 쇼핑몰 프로토 타입 시스템 일뿐입니다. 엔터프라이즈 수준의 기능은 많지 않지만 완전하고 합리적인 프로토 타입 시스템입니다.
 
-注意：
-> 以上特点并不一定是优点。
+노트:
+> 위의 기능이 반드시 장점은 아닙니다.
 
-## 1.2 系统功能
+## 1.2 시스템 기능
 
-从业务功能上，目前由六个业务模块组成：
+비즈니스 기능 측면에서 현재 6 개의 비즈니스 모듈로 구성됩니다.
 
-* 会员业务模块
-* 商场业务模块
-* 商品业务模块
-* 推广业务模块
-* 系统业务模块
-* 配置业务模块
+* 회원 사업 모듈
+* 쇼핑몰 비즈니스 모듈
+* 상품 비즈니스 모듈
+* 프로모션 사업 모듈
+* 시스템 비즈니스 모듈
+* 비즈니스 모듈 구성
 
-### 1.2.1 小商城功能
+### 1.2.1 Small Mall 기능
 
-* 首页
-* 专题列表、专题详情
-* 分类列表、分类详情
-* 品牌列表、品牌详情
-* 新品首发、人气推荐
-* 团购
-* 搜索
-* 商品详情
-* 商品评价列表、商品评价
-* 购物车
-* 下单
-* 个人
-* 订单列表、订单详情、订单售后
-* 地址列表、地址添加、地址删除
-* 收藏、足迹、关于
+* 집
+* 주제 목록, 주제 세부 정보
+* 카테고리 목록, 카테고리 세부 정보
+* 브랜드 목록, 브랜드 세부 정보
+* 신제품 출시, 인기 추천
+* 그룹 구매
+* 검색
+* 제품 세부 정보
+* 제품 평가 목록, 제품 평가
+* 쇼핑 카트
+* 주문
+* 개인
+* 주문 목록, 주문 세부 정보, 주문 후 판매
+* 주소 목록, 주소 추가, 주소 삭제
+* 수집, 발자국, 정보
 
-### 1.2.2 轻商城功能
+### 1.2.2 라이트 몰 기능
 
-**目前还在开发中，不稳定**
+** 현재 개발 중, 불안정 **
 
-以下是准备完成的功能：
+다음은 완료해야 할 기능입니다.
 
-* 首页
-* 专题列表、专题详情
-* 分类列表、分类详情
-* 品牌列表、品牌详情
-* 新品首发、人气推荐
-* 团购
-* 搜索
-* 商品详情
-* 商品评价列表、商品评价
-* 购物车
-* 下单
-* 个人
-* 订单列表、订单详情
-* 地址列表、地址添加、地址删除
-* 收藏、足迹、关于
+* 집
+* 주제 목록, 주제 세부 정보
+* 카테고리 목록, 카테고리 세부 정보
+* 브랜드 목록, 브랜드 세부 정보
+* 신제품 출시, 인기 추천
+* 그룹 구매
+* 검색
+* 제품 세부 정보
+* 제품 평가 목록, 제품 평가
+* 쇼핑 카트
+* 주문
+* 개인
+* 주문 목록, 주문 세부 정보
+* 주소 목록, 주소 추가, 주소 삭제
+* 수집, 발자국, 정보
 
-### 1.2.3 管理平台功能
+### 1.2.3 관리 플랫폼 기능
 
-* 会员管理
-  * 会员管理
-  * 收货地址
-  * 会员收藏
-  * 会员足迹
-  * 搜索历史
-  * 意见反馈
-* 商城管理
-  * 行政区域
-  * 品牌制造商
-  * 订单管理
-  * 商品类目
-  * 通用问题
-  * 关键词
-  * 渠道管理（待定）
-* 商品管理
-  * 商品列表
-  * 商品上架
-  * 商品编辑
-  * 用户评论
-* 推广管理
-  * 广告管理
-  * 专题管理
-  * 团购规则
-  * 团购活动
-* 系统管理
-  * 管理员
-  * 通知管理
-  * 对象存储
-  * 权限管理
-  * 定时任务（待定）
-  * 操作日志
-* 配置管理
-  * 商场配置
-  * 小程序配置
-  * 运费配置
-  * 订单配置
-* 统计报表
-  * 用户统计
-  * 订单统计
-  * 商品统计
-* 个人
-  * 通知中心
-  * 密码修改
+* 회원 관리
+  * 회원 관리
+  * 배송 주소
+  * 회원 수집
+  * 회원 발자국
+  * 검색 기록
+  * 피드백
+* 매장 관리
+  * 행정 구역
+  * 브랜드 제조사
+  * 주문 관리
+  * 상품 카테고리
+  * 일반적인 질문들
+  * 키워드
+  * 채널 관리 (미정)
+* 상품 관리
+  * 상품 목록
+  * 선반에 상품
+  * 상품 편집기
+  * 사용자 의견
+* 프로모션 관리
+  * 광고 관리
+  * 주제별 관리
+  * 단체 구매 규정
+  * 그룹 구매 활동
+* 시스템 관리
+  * 관리자
+  * 알림 관리
+  * 개체 저장
+  * 권한 관리
+  * 타이밍 작업 (미정)
+  * 작업 로그
+* 구성 관리
+  * 쇼핑몰 구성
+  * 미니 프로그램 구성
+  * 배송 구성
+  * 주문 구성
+* 통계 보고서
+  * 사용자 통계
+  * 주문 통계
+  * 상품 통계
+* 개인
+  * 알림 센터
+  * 비밀번호 변경
 
-## 1.3 项目技术
+## 1.3 프로젝트 기술
 
-### 1.3.1 技术参考
+### 1.3.1 기술 참조
 
-#### 1.3.1.1 Spring Boot技术
+#### 1.3.1.1 스프링 부트 기술
 
-Spring Boot技术栈参考以下文档或者项目：
+Spring Boot 기술 스택에 대해서는 다음 문서 또는 프로젝트를 참조하십시오.
 
 1. MySQL
 
-   了解创建数据库和表、添加、查询、更新和删除即可。
+   데이터베이스 및 테이블 생성, 추가, 쿼리, 업데이트 및 삭제 방법을 알아 봅니다.
     
-2. Spring Boot 2.x
+2. 스프링 부트 2.x
 
     * https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/htmlsingle/#getting-started-introducing-spring-boot
     * https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/htmlsingle/#using-boot-maven
 
-    这里需要了解RestController, Service等注解，以及如何使用自动化配置。 
-    Spring Boot支持很多功能，开发者使用时查阅。
+    여기에서 RestController, Service 및 자동화 된 구성을 사용하는 방법과 같은 주석을 이해해야합니다.
+    Spring Boot는 많은 기능을 지원하며 개발자는 사용할 때 참조 할 수 있습니다.
     
 3. Mybatis
 
@@ -186,9 +186,9 @@ Spring Boot技术栈参考以下文档或者项目：
     * http://www.mybatis.org/mybatis-3/java-api.html
     * http://www.mybatis.org/mybatis-3/sqlmap-xml.html
  
-    这里可以简单了解，而使用Mybatis Generator来生成Java代码使用即可。
+    여기서 간단히 이해할 수 있으며 Mybatis Generator를 사용하여 Java 코드를 생성 할 수 있습니다.
     
-4. Mybatis Generator
+4. Mybatis 생성기
 
     * http://www.mybatis.org/generator/running/runningWithMaven.html
     * http://www.mybatis.org/generator/generatedobjects/results.html
@@ -198,32 +198,32 @@ Spring Boot技术栈参考以下文档或者项目：
 
     * https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/en/HowToUse.md
     
-#### 1.3.1.2 小程序技术
+#### 1.3.1.2 미니 프로그램 기술
 
-1. 小程序
+1. 미니 프로그램
 
     * https://developers.weixin.qq.com/miniprogram/dev/index.html
     * https://developers.weixin.qq.com/miniprogram/dev/component/
     * https://developers.weixin.qq.com/miniprogram/dev/api/
     * https://developers.weixin.qq.com/community/develop
     
-    建议小程序方面遇到问题，可以到官方社区查找。
+    미니 프로그램에 문제가 발생하면 공식 커뮤니티에서 찾을 수 있습니다.
 
-2. 微信支付
+2. 위챗 페이
 
     * https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1
     
-#### 1.3.1.3 Vue技术
+#### 1.3.1.3 Vue 기술
 
 1. Vue
 
     * https://cn.vuejs.org/index.html
 
-2. Vant
+2. 반트
 
     * https://youzan.github.io/vant/#/zh-CN/intro
 
-3. Element
+3. 요소
 
     * https://element.eleme.cn/#/zh-CN/component/installation
 
@@ -232,336 +232,332 @@ Spring Boot技术栈参考以下文档或者项目：
     * https://github.com/PanJiaChen/vue-element-admin
     * https://panjiachen.github.io/vue-element-admin-site/zh/
     
-### 1.3.2 项目阶段
+### 1.3.2 프로젝트 단계
 
-接下来，从项目的开发、部署（测试）和上线三个阶段介绍litemall。
+다음으로, 프로젝트 개발, 배포 (테스트) 및 출시의 3 단계에서 litemall을 소개합니다.
 
-![](./pics/project/stage.png)
+! [] (./ pics / project / stage.png)
 
-首先需要明确的是三个不同阶段：
+명확해야 할 첫 번째 단계는 세 가지 단계입니다.
 
 * dev
 
-即develop或者development, 这里指开发阶段，通常代码是直接在本地编译、运行和测试。
-此外，这里服务访问地址通常是localhost。这里的“用户”主要是指开发者本身。
+즉, 개발 또는 개발은 여기서 개발 단계를 나타내며 일반적으로 코드는 로컬에서 직접 컴파일, 실행 및 테스트됩니다.
+또한 여기서 서비스 액세스 주소는 일반적으로 localhost입니다. 여기서 "사용자"는 주로 개발자 자신을 나타냅니다.
 
-* dep
+* 배포
 
-即deploy或者deployment，这里指部署（测试阶段），通常代码已经编译打包运行在远程服务器中，
-可以对外服务。此外，这里服务访问地址通常是IP地址。如果IP是公网IP，那么
-部署以后就可以对外服务；如果是内网地址，那么只能内网访问。这里的“用户”主要是
-指开发者本身、测试者；当然，如果是局域网或者不介意IP访问的，那么这里的“用户”
-也可能是最终使用者用户。
+여기에서는 배포 (테스트 단계)를 나타내며 일반적으로 코드는 원격 서버에서 컴파일 및 패키징되고 실행됩니다.
+외부에서 제공 할 수 있습니다. 또한 여기서 서비스 액세스 주소는 일반적으로 IP 주소입니다. IP가 공용 IP 인 경우
+배포 후 외부에서 제공 할 수 있으며 인트라넷 주소 인 경우 인트라넷에서만 액세스 할 수 있습니다. 여기서 "사용자"는 주로
+개발자 자체, 테스터를 의미합니다. 물론 로컬 영역 네트워크이거나 IP 액세스를 신경 쓰지 않는 경우 여기에서 "사용자"가됩니다.
+최종 사용자 일 수도 있습니다.
 
-* prod
+* 찌르다
 
-即product或者production，这里指上线阶段，通常也是代码编译打包运行在远处服务器中可以对外服务。
-此外，这里服务访问地址通常是域名地址，同时端口是80web端口。上线以后直接面向的是最终用户。
-虽然服务的代码本身和dep是完全一样的，但是考虑到场景的不同，上线阶段可能在运行环境方面需要做
-调整，例如采用反向代理屏蔽内部实际项目结构。此外，最大的不同应该是上线环境下要使用域名和80端口，
-而部署阶段则更为自由。
+즉, 제품 또는 생산, 여기서는 온라인 단계를 나타내며, 일반적으로 코드는 외부 서비스를 위해 원격 서버에서 컴파일 및 패키징되고 실행됩니다.
+또한 여기서 서비스 액세스 주소는 일반적으로 도메인 이름 주소이고 포트는 80web 포트입니다. 온라인에 접속하면 최종 사용자와 직접 마주하게됩니다.
+서비스 코드 자체와 dep는 정확히 동일하지만 시나리오가 다르므로 운영 환경은 온라인 단계에서 수행해야 할 수 있습니다.
+역방향 프록시를 사용하여 실제 내부 프로젝트 구조를 보호하는 것과 같은 조정. 또한 가장 큰 차이점은 온라인 환경에서 도메인 이름과 포트 80을 사용하는 것입니다.
+배포 단계는 더 무료입니다.
 
-其次，需要明确的是，这里划分三种阶段不是简单的文档说明，还直接影响项目本身的行为
-和代码编译结果，因此开发者需要清晰的了解；
+둘째, 여기의 세 단계는 단순한 문서화가 아니라 프로젝트 자체의 동작에 직접적인 영향을 미친다는 점을 분명히해야합니다.
+그리고 코드 컴파일 결과, 따라서 개발자는 명확한 이해가 필요합니다.
 
-最后，其实dep和prod不存在先后关系。例如，如果开发者已经存在域名和生产环境，可以直接
-跳过dep阶段，而直接部署在线上环境中。因此有些时候，这里部署和上线是一个阶段。
+마지막으로 dep와 prod는 순차적 인 관계가 없습니다. 예를 들어 개발자가 이미 도메인 이름과 프로덕션 환경을 가지고있는 경우 직접
+dep 단계를 건너 뛰고 온라인 환경에서 직접 배포하십시오. 따라서 때로는 배포 및 출시가 여기에서 한 단계입니다.
 
-当然，这里仍然建议先dep后prod，是因为对于第一次开发而言，先dep阶段可以避免对域名、https证书等非业务相关工作的干扰。
+물론 첫 번째 개발 단계에서 첫 번째 개발 단계에서 도메인 이름 및 https 인증서와 같은 업무와 관련이없는 작업과의 간섭을 피할 수 있기 때문에 먼저 dep 한 다음 prod하는 것이 좋습니다.
 
-此外，有些业务功能（例如微信支付）必须是域名访问，那么开发和部署阶段可以先采用模拟或跳过的形式，
-先不开发和测试这样业务功能，等其他功能开发完毕和部署测试成功以后，再来开发这些线上环境才能
-运行的功能，此时会有一个好的基础。
+또한 일부 비즈니스 기능 (예 : WeChat 결제)은 도메인 이름 액세스 여야하므로 개발 및 배포 단계를 먼저 시뮬레이션하거나 건너 뛸 수 있습니다.
+이러한 비즈니스 기능을 먼저 개발하고 테스트하지 말고 이러한 온라인 환경을 개발하기 전에 다른 기능이 개발되고 성공적으로 배포 및 테스트 될 때까지 기다리십시오.
+기능 실행을위한 좋은 기반이있을 것입니다.
 
-接下来，分别从开发阶段、部署阶段和上线阶段三种阶段，分别介绍不同的方案实践要点。
+다음으로 개발 단계, 배포 단계 및 온라인 단계에서 각각 다른 솔루션의 요점을 소개합니다.
 
-## 1.4 开发方案
+## 1.4 개발 계획
 
-![](./pics/project/develop-stage.png)
+! [] (./ pics / project / develop-stage.png)
 
-如图所示，当前开发阶段的方案：
+그림에서 볼 수 있듯이 현재 개발 단계 계획 :
 
-* MySQL数据访问地址`jdbc:mysql://localhost:3306/litemall`
-* litemall-wx-api后端服务地址`http://localhost:8080/wx`，数据则来自MySQL
-* litemall-admin-api后端服务地址`http://localhost:8080/admin`,数据则来自MySQL
-* litemall-admin前端访问地址`http://localhost:9527`, 数据来自litemall-admin-api
-* litemall-wx没有前端访问地址，而是直接在微信小程序工具上编译测试开发，最终会部署到微信官方平台（即不需要自己部署web服务器），而数据则来自litemall-wx-api
+* MySQL 데이터 액세스 주소`jdbc : mysql : // localhost : 3306 / litemall`
+* litemall-wx-api 백엔드 서비스 주소`http : // localhost : 8080 / wx`, 데이터는 MySQL에서 가져옴
+* litemall-admin-api 백엔드 서비스 주소`http : // localhost : 8080 / admin`, 데이터는 MySQL에서 가져옴
+* litemall-admin의 프런트 엔드 액세스 주소는`http : // localhost : 9527`이고 데이터는 litemall-admin-api에서 가져옵니다.
+* litemall-wx에는 프런트 엔드 액세스 주소가 없지만 WeChat 애플릿 도구에서 직접 컴파일, 테스트 및 개발하며 결국 공식 WeChat 플랫폼에 배포됩니다 (즉, 웹 서버를 직접 배포 할 필요가 없음). 데이터는 litemall-wx-api에서 가져옵니다.
 
 
-### 1.4.1 数据库
+### 1.4.1 데이터베이스
 
-数据库环境设置过程如下：
+데이터베이스 환경 설정 과정은 다음과 같습니다.
 
-1. 安装MySQL;
+1. MySQL을 설치합니다.
 
-2. 创建数据库、用户权限、数据库表和测试数据;
-   数据库文件存放在litemall-db/sql文件夹中，请开发者在MySQL中
-   按照顺序运行以下脚本:
-   * litemall_schema.sql，用于创建数据库、用户和权限;
-   * litemall_table.sql，用于创建表;
-   * litemall_data.sql，用于导入测试数据。
+2. 데이터베이스, 사용자 권한, 데이터베이스 테이블 및 테스트 데이터를 만듭니다.
+   데이터베이스 파일은 litemall-db / sql 폴더에 저장되며 개발자는 MySQL에 저장하도록 요청합니다.
+   다음 스크립트를 순서대로 실행하십시오.
+   * 데이터베이스, 사용자 및 권한을 생성하는 데 사용되는 litemall_schema.sql
+   * litemall_table.sql, 테이블 생성에 사용
+   * litemall_data.sql, 테스트 데이터를 가져 오는 데 사용됩니다.
 
-注意：
-> 建议采用命令行或者MySQL Workbench。如果采用Navicat可能导入失败。
+노트:
+> 명령 줄 또는 MySQL Workbench를 사용하는 것이 좋습니다. Navicat을 사용하는 경우 가져 오기가 실패 할 수 있습니다.
 
-如果开发者运行litemall_schema.sql失败，可以打开该文件：
+개발자가 litemall_schema.sql을 실행하지 못하면 파일을 열 수 있습니다.
 ```
-drop database if exists litemall;
-drop user if exists 'litemall'@'%';
-create database litemall default character set utf8mb4 collate utf8mb4_unicode_ci;
-use litemall;
-create user 'litemall'@'%' identified by 'litemall123456';
-grant all privileges on litemall.* to 'litemall'@'%';
-flush privilege
+litemall이 있으면 데이터베이스를 삭제하십시오.
+존재하는 경우 사용자 삭제 'litemall'@ '%';
+데이터베이스 litemall 기본 문자 집합 만들기 utf8mb4 collate utf8mb4_unicode_ci;
+litemall을 사용하십시오.
+'litemall123456'로 식별되는 사용자 'litemall'@ '%'생성;
+litemall. *에 대한 모든 권한을 'litemall'@ '%'에게 부여합니다.
+플러시 권한
 ```
-可以看到几个命令，用于创建数据库、用户和访问权限，因此开发者可以利用
-命令或者工具完成这里的功能即可。
+데이터베이스, 사용자 및 액세스 권한을 생성하기위한 여러 명령을 볼 수 있으므로 개발자는
+명령 또는 도구는 여기에서 기능을 완료 할 수 있습니다.
 
-### 1.4.2 Spring Boot开发环境
+### 1.4.2 Spring Boot 개발 환경
 
-1. 安装JDK8（可以是Oracle JDK或者OpenJDK）
-2. 安装Maven
-3. 安装Git（可选）
-4. 安装IDEA Community，建议安装Maven插件和Git插件。
-   这里IDEA社区版即可，不要求IDEA商业版。
-   Eclipse没有试过，但应该也是可行的。
-5. IDEA导入本项目
-6. 采用Maven命令安装依赖库
+1. JDK8 설치 (Oracle JDK 또는 OpenJDK 일 수 있음)
+2. Maven 설치
+3. Git 설치 (선택 사항)
+4. IDEA Community를 설치합니다. Maven 플러그인과 Git 플러그인을 설치하는 것이 좋습니다.
+   여기에서는 IDEA 커뮤니티 버전이면 충분하며 IDEA 상용 버전은 필요하지 않습니다.
+   Eclipse는 시도하지 않았지만 실행 가능해야합니다.
+5. IDEA 가져 오기이 프로젝트
+6. Maven 명령을 사용하여 종속 라이브러리 설치
 
-   例如：
+   예 :
    ```
    cd litemall
-   mvn install
+   mvn 설치
    ```
    
-   或者采用IDEA的Maven插件安装本项目依赖库，点击`install`
+   또는 IDEA의 Maven 플러그인을 사용하여이 프로젝트의 종속 라이브러리를 설치하고 '설치'를 클릭합니다.
 
-    ![](./pics/project/idea-maven-insatll.png)
+    ! [] (./ pics / project / idea-maven-insatll.png)
 
-7. 采用Maven命令编译本项目
+7. Maven 명령으로이 프로젝트 컴파일
 
-   例如：
+   예 :
    ```
    cd litemall
-   mvn compile
+   mvn 컴파일
    ```
 
-   此时可以看到，litemall-wx-api等模块多了target文件夹，里面是编译出的文件。
+   이 시점에서 컴파일 된 파일을 포함하는 litemall-wx-api와 같은 모듈에 대한 더 많은 대상 폴더가 있음을 알 수 있습니다.
    
-   或者采用IDEA的Maven插件编译本项目，点击`compile`
+   또는 IDEA의 Maven 플러그인을 사용하여이 프로젝트를 컴파일하고 '컴파일'을 클릭합니다.
    
-   如果采用IDEA也可以跳过当前步骤，直接步骤8（因为运行时会自动编译再运行）。
+   IDEA를 사용하는 경우 현재 단계를 건너 뛰고 8 단계로 이동할 수도 있습니다 (이는 자동으로 컴파일 된 다음 런타임 중에 실행되기 때문입니다).
    
-8. 采用Maven命令运行本项目的litemall-all
+8. Maven 명령을 사용하여이 프로젝트의 모든 것을 실행합니다.
 
-   例如：
+   예 :
    ```
-   cd litemall/litemall-all
-   mvn spring-boot:run
+   cd litemall / litemall-all
+   mvn spring-boot : run
    ```
    
-   如果采用IDEA，则litemall-all模块的Application类
-   右键` Run Application.main()`方式运行该模块,
+   IDEA를 사용하는 경우 litemall-all 모듈의 Application 클래스
+   `Run Application.main ()`을 마우스 오른쪽 버튼으로 클릭하여 모듈을 실행하고
    
-   ![](./pics/project/idea-run-all.png)
+   ! [] (./ pics / project / idea-run-all.png)
    
-   打开浏览器，输入
+   브라우저를 열고 다음을 입력하십시오.
     ```
-    http://localhost:8080/wx/index/index
-    http://localhost:8080/admin/index/index
+    http : // localhost : 8080 / wx / index / index
+    http : // localhost : 8080 / admin / index / index
     ```
-    如果出现JSON数据，则litemall-all模块运行正常。
+    JSON 데이터가 나타나면 litemall-all 모듈이 정상적으로 작동하는 것입니다.
     
-注意：
-> 1. 上述步骤中，既介绍了Maven命令方式，也介绍了IDEA方式，
->    但是建议开发者开发阶段采用IDEA。
-> 2. 上述步骤只是一种实践方式，开发者可不拘泥于这些步骤，多实践。
->    当然，如果开发者不采用这里步骤而出现问题，请自行解决。
-> 3. 开发者使用IDEA导入项目或者运行项目时可能会出现**软件卡顿**的现象，这通常是litemall-admin或者litemall-vue的
->    node_modules文件夹内自动下载了大量的依赖库，当IDEA尝试索引该文件夹内的大量文件时
->    则出现IDEA卡顿的现象，具体解决方式可以参见[FAQ](./FAQ.md)
+노트:
+> 1. 위 단계에서는 Maven 명령 방법과 IDEA 방법이 모두 도입되었습니다.
+> 그러나 개발자는 개발 단계에서 IDEA를 사용하는 것이 좋습니다.
+> 2. 위의 단계는 실용적인 방법 일 뿐이며 개발자는이 단계를 고수하지 않고도 더 많은 것을 연습 할 수 있습니다.
+> 물론 개발자가이 단계를 사용하지 않고 문제가있는 경우 직접 해결하시기 바랍니다.
+> 3. 개발자가 IDEA를 사용하여 프로젝트를 가져 오거나 프로젝트를 실행할 때 일반적으로 litemall-admin 또는 litemall-vue 인 "소프트웨어 동결"현상이 발생할 수 있습니다.
+> IDEA가 폴더에있는 많은 수의 파일을 인덱싱하려고 할 때 많은 종속 라이브러리가 node_modules 폴더에 자동으로 다운로드됩니다.
+> IDEA가 중단됩니다. 구체적인 해결 방법은 [FAQ] (./ FAQ.md)를 참조하십시오.
 
-### 1.4.3 微信小程序开发环境
+### 1.4.3 WeChat Mini 프로그램 개발 환경
 
-1. 安装微信小程序开发工具；
-2. 导入本项目的litemall-wx模块(或者renard-wx模块)文件夹；
-3. 编译前，请确定litemall-all模块已经运行，而litemall-wx模块的config文件夹中的api.js已经设置正确的后端数据服务地址；
-4. 点击`编译`，如果出现数据和图片，则运行正常
+1. WeChat 애플릿 개발 도구를 설치합니다.
+2.이 프로젝트의 litemall-wx 모듈 (또는 renard-wx 모듈) 폴더를 가져옵니다.
+3. 컴파일하기 전에 litemall-all 모듈이 실행 중인지, litemall-wx 모듈의 config 폴더에있는 api.js가 올바른 백엔드 데이터 서비스 주소로 설정되었는지 확인하십시오.
+4. 'Compile'을 클릭하면 데이터와 그림이 나타나면 정상적으로 실행됩니다.
 
-注意：
-> 开发者编译以后，可以看到图片和数据，但是采用微信登录或者微信支付是肯定会失败的。
-> 原因是这里的配置信息没有正确设置，例如appid，具体详细配置见1.4.5节。
+노트:
+> 개발자가 컴파일 한 후 사진과 데이터를 볼 수 있지만 WeChat 로그인 또는 WeChat 결제를 사용하면 확실히 실패합니다.
+> 그 이유는 여기에있는 구성 정보가 appid 등 올바르게 설정되지 않았기 때문이며 자세한 구성은 1.4.5 항을 참조하십시오.
 
-### 1.4.4 Vue开发环境
+### 1.4.4 Vue 개발 환경
 
-1. 安装[nodejs](https://nodejs.org/en/)
-2. 安装依赖库
-    
-    ```
-    cd litemall/litemall-admin
-    npm install -g cnpm --registry=https://registry.npm.taobao.org
-    cnpm install
-    ```
-    
-3. 编译并运行
+1. [nodejs] (https://nodejs.org/en/) 설치
+2. 종속 라이브러리 설치
     
     ```
-    cnpm run dev
+    cd litemall / litemall-admin
+    npm install -g cnpm --registry = https : //registry.npm.taobao.org
+    cnpm 설치
     ```
-    然后，打开浏览器，输入`http://localhost:9527`。
-    如果出现管理后台登录页面，则表明管理后台的前端运行正常；
     
-4. 请确定litemall-all模块已经运行，然后点击`登录`，如果能够成功登录，则表明管理后台的前端和后端对接成功，运行正常。
+3. 컴파일 및 실행
+    
+    ```
+    cnpm 개발자 실행
+    ```
+    그런 다음 브라우저를 열고`http : // localhost : 9527`을 입력합니다.
+    관리 배경의 로그인 페이지가 나타나면 관리 배경의 프런트 엔드가 정상적으로 작동하고 있음을 의미합니다.
+    
+4. litemall-all 모듈이 실행 중인지 확인하고 'Login'을 클릭합니다. 성공적으로 로그인 할 수 있다면 관리 배경의 프런트 엔드와 백 엔드가 성공적으로 연결되어 정상적으로 실행되고 있음을 의미합니다.
 
-本项目采用VSC（Visual Studio Code）开发litemall-admin模块，开发者也可以采用其他熟悉的IDE。
+이 프로젝트는 VSC (Visual Studio Code)를 사용하여 litemall-admin 모듈을 개발하며 개발자는 다른 친숙한 IDE도 사용할 수 있습니다.
 
-### 1.4.5 项目配置
+### 1.4.5 프로젝트 구성
 
-当安装好Spring Boot开发环境、Vue开发环境和小程序开发环境以后，启动相应的模块，已经可以看到一些数据或者效果。
-但是还有一些特性或者功能没有启动，这是因为需要开发者进行配置才能正确启用。
+Spring Boot 개발 환경, Vue 개발 환경 및 애플릿 개발 환경을 설치 한 후 해당 모듈을 시작하면 이미 일부 데이터 또는 효과를 볼 수 있습니다.
+그러나 아직 활성화되지 않은 일부 기능은 개발자가이를 올바르게 활성화하도록 구성해야하기 때문입니다.
 
-**项目配置结构**
+** 프로젝트 구성 구조 **
 
-1. 管理后台前端，即litemall-admin模块，配置文件在litemall-admin中，存在三个配置文件`env.development`,`env.deployment`
-和`.env.production`。这里面配置信息都是一样，最主要的配置是`VUE_APP_BASE_API`，即管理后台的服务根地址。
+1. 관리 백엔드 프런트 엔드, 즉 litemall-admin 모듈, 구성 파일은 litemall-admin에 있으며 구성 파일`env.development`,`env.deployment`가 있습니다.
+그리고`.env.production`. 여기서 설정 정보는 동일하며 가장 중요한 설정은 관리 배경의 서비스 루트 주소 인`VUE_APP_BASE_API`입니다.
 
-   * 开发阶段，开发者运行命令`cnpm run dev`，这里就会采用`env.development`配置文件；
-   * 部署阶段，当开发者运行命令`cnpm run build:dep`，这里就会采用`env.deployment`配置文件；
-   * 上线阶段，当开发者运行命令`cnpm run build:prod`，这里就会采用`.env.production`配置文件。
+   * 개발 단계에서 개발자는`cnpm run dev` 명령을 실행하고`env.development` 구성 파일이 여기에 사용됩니다.
+   * 배포 단계에서 개발자가`cnpm run build : dep` 명령을 실행하면`env.deployment` 구성 파일이 여기에 사용됩니다.
+   * 온라인 단계에서 개발자가`cnpm run build : prod` 명령을 실행하면`.env.production` 구성 파일이 여기에 사용됩니다.
 
-2. 小商场前端，即litemall-wx模块，配置文件是`litemall-wx/project.config.json`和`litemall-wx/api.js`。
-这里面最主要的配置信息是`project.config.json`中的`appid`，开发者需要设置自己申请的appid；
-以及`apis.js`中的`WxApiRoot`，即小商场服务根地址。
+2. 작은 쇼핑몰의 프런트 엔드, 즉 litemall-wx 모듈, 구성 파일은`litemall-wx / project.config.json` 및`litemall-wx / api.js`입니다.
+여기서 가장 중요한 구성 정보는`project.config.json`의`appid`이며 개발자는 자신이 적용한 appid를 설정해야합니다.
+그리고 작은 쇼핑몰의 서비스 루트 주소 인`apis.js`의`WxApiRoot`.
 
     ```
-    // 本机开发时使用
-     var WxApiRoot = 'http://localhost:8080/wx/';
-    // 局域网测试使用
-    // var WxApiRoot = 'http://192.168.0.101:8080/wx/';
-    // 云平台部署时使用
-    // var WxApiRoot = 'http://122.51.199.160:8080/wx/';
-    // 云平台上线时使用
-    // var WxApiRoot = 'https://www.menethil.com.cn/wx/';
+    //이 기계를 개발할 때 사용
+     var WxApiRoot = 'http : // localhost : 8080 / wx /';
+    // LAN 테스트 사용
+    // var WxApiRoot = 'http : //192.168.0.101 : 8080 / wx /';
+    // 클라우드 플랫폼 배포에 사용
+    // var WxApiRoot = 'http : //122.51.199.160 : 8080 / wx /';
+    // 클라우드 플랫폼이 온라인 일 때 사용
+    // var WxApiRoot = 'https : //www.menethil.com.cn/wx/';
 
     ```
 
-3. 管理后台后端和小商城后端，即多个Spring Boot模块，配置文件是每个模块的`litemall-xx/src/main/java/resources`的
-`application.yml`和`application-xx.yml`配置文件。这里会发现每个模块都会有两个配置文件，但是实际上当前模块的配置信息
-都是在`application-xx.yml`文件中，而`application.yml`文件仅仅用于引入其他模块的配置文件。
+3. 관리 백엔드 및 소규모 몰 백엔드, 즉 여러 Spring Boot 모듈, 구성 파일은 각 모듈의`litemall-xx / src / main / java / resources`입니다.
+`application.yml` 및`application-xx.yml` 구성 파일. 여기에서 각 모듈에는 두 개의 구성 파일이 있지만 실제로는 현재 모듈 구성 정보가 있습니다.
+이들은 모두`application-xx.yml` 파일에 있으며`application.yml` 파일은 다른 모듈의 구성 파일을 가져 오는 데만 사용됩니다.
 
-   例如litemall-all模块的`application.yml`的内容是
+   예를 들어 litemall-all 모듈의`application.yml` 내용은 다음과 같습니다.
    ```
-    spring:
-        profiles:
-            active: db, core, admin, wx
-        message:
-            encoding: UTF-8
+    봄:
+        프로필 :
+            활성 : db, core, admin, wx
+        메시지:
+            인코딩 : UTF-8
     ```
-    因此启动litemall-all模块时，程序首先加载litemall-all的`application.yml`，然后通过`spring.profiles.active`信息
-    再次依次加载`application-db.yml`,`application-core.yml`,`application-admin.yml`和`application.yml-wx`四个配置文件。
+    따라서 litemall-all 모듈을 시작할 때 프로그램은 먼저 litemall-all의`application.yml`을로드 한 다음`spring.profiles.active` 정보를 전달합니다.
+    4 개의 구성 파일`application-db.yml`,`application-core.yml`,`application-admin.yml` 및`application.yml-wx`를 순서대로 다시로드합니다.
     
-这里后端服务模块的配置如下所示。
+여기서 백엔드 서비스 모듈의 구성은 다음과 같습니다.
 
-#### 1.4.5.1 日志配置
+#### 1.4.5.1 로그 구성
 
-如果开发者启动litemall-all模块，则需要配置该模块的`logback-spring.xml`文件
+개발자가 litemall-all 모듈을 시작하면 모듈의`logback-spring.xml` 파일을 구성해야합니다.
 ```
-    <logger name="org.mybatis" level="ERROR" />
-    <logger name="org.springframework" level="ERROR" />
-    <logger name="org.linlinjava.litemall.core" level="DEBUG" />
-    <logger name="org.linlinjava.litemall.db" level="DEBUG" />
-    <logger name="org.linlinjava.litemall.admin" level="DEBUG" />
-    <logger name="org.linlinjava.litemall.wx" level="DEBUG" />
-    <logger name="org.linlinjava.litemall" level="DEBUG" />
-```
-
-具体如何配置，请自行学习Spring Boot的日志配置和logback日志配置。
-
-`org.linlinjava.litemall.core`定义litemall-core模块的日志级别
-`org.linlinjava.litemall.db`定义litemall-db模块的日志级别
-`org.linlinjava.litemall.wx`定义litemall-wx-api模块的日志级别
-`org.linlinjava.litemall.admin`定义litemall-admin-api模块的日志级别
-`org.linlinjava.litemall`而定义litemall所有后端模块的日志级别
-
-当然，如果开发者这里启动litemall后端模块级别是DEBUG时，可能会发现并没有很多日志，
-这是因为代码内部没有写很多日志，开发者可以根据需要添加。
-
-注意：
-> 如果开发者独立启动litemall-wx-api模块，那么则需要配置litemall-wx-api模块的
-> 日志配置方式。
-
-#### 1.4.5.2 数据库连接配置
-
-在litemall-db模块的`application-db.yml`文件中配置数据库连接和druid：
-
+    <logger name = "org.mybatis"level = "ERROR"/>
+    <logger name = "org.springframework"level = "ERROR"/>
+    <로거 이름 = "org.linlinjava.litemall.core"level = "DEBUG"/>
+<logger name = "org.linlinjava.litemall.db"level = "DEBUG"/>
+    <로거 이름 = "org.linlinjava.litemall.admin"level = "DEBUG"/>
+    <로거 이름 = "org.linlinjava.litemall.wx"level = "DEBUG"/>
+    <로거 이름 = "org.linlinjava.litemall"level = "DEBUG"/>
 ```
 
-spring:
-  datasource:
-    druid:
-      url:  jdbc:mysql://localhost:3306/litemall?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false
-      driver-class-name:  com.mysql.jdbc.Driver
-      username:  litemall
-      password:  litemall123456
-      initial-size:  10
-      max-active:  50
-      min-idle:  10
-      max-wait:  60000
-      pool-prepared-statements:  true
-      max-pool-prepared-statement-per-connection-size:  20
-      validation-query:  SELECT 1 FROM DUAL
-      test-on-borrow:  false
-      test-on-return:  false
-      test-while-idle:  true
-      time-between-eviction-runs-millis:  60000
-      filters:  stat,wall
+특정 구성에 대해서는 Spring Boot 로그 구성 및 로그 백 로그 구성을 직접 학습하십시오.
+
+`org.linlinjava.litemall.core`는 litemall-core 모듈의 로그 수준을 정의합니다.
+`org.linlinjava.litemall.db`는 litemall-db 모듈의 로그 수준을 정의합니다.
+`org.linlinjava.litemall.wx`는 litemall-wx-api 모듈의 로그 수준을 정의합니다.
+`org.linlinjava.litemall.admin`은 litemall-admin-api 모듈의 로그 수준을 정의합니다.
+`org.linlinjava.litemall`은 litemall의 모든 백엔드 모듈의 로그 수준을 정의합니다.
+
+물론 백엔드 모듈 수준이 DEBUG 일 때 개발자가 여기서 litemall을 시작하면 로그가 많지 않다는 것을 알 수 있습니다.
+코드 내부에 기록 된 로그가 많지 않아 개발자가 필요에 따라 추가 할 수 있기 때문입니다.
+
+노트:
+> 개발자가 litemall-wx-api 모듈을 독립적으로 시작하는 경우 litemall-wx-api 모듈을 구성해야합니다.
+> 로그 구성 방법.
+
+#### 1.4.5.2 데이터베이스 연결 설정
+
+litemall-db 모듈의`application-db.yml` 파일에서 데이터베이스 연결 및 druid를 구성합니다.
+
 ```
 
-#### 1.4.5.3 微信登录配置
+봄:
+  데이터 소스 :
+    드루이드 :
+      URL : jdbc : mysql : // localhost : 3306 / litemall? useUnicode = true & characterEncoding = UTF-8 & serverTimezone = UTC & allowPublicKeyRetrieval = true & verifyServerCertificate = false & useSSL = false
+      드라이버 클래스 이름 : com.mysql.jdbc.Driver
+      사용자 이름 : litemall
+      비밀번호 : litemall123456
+      초기 크기 : 10
+      최대 활성 : 50
+      최소 유휴 : 10
+      최대 대기 : 60000
+      pool-prepared-statements : true
+      연결 당 최대 풀 준비 문 크기 : 20
+      유효성 검사 쿼리 : SELECT 1 FROM DUAL
+      대출시 테스트 : 거짓
+      반환시 테스트 : 거짓
+      유휴 상태 테스트 : 참
+      축출 실행 간격 (밀리 초) : 60000
+      필터 : 통계, 벽
+```
 
-微信登录需要配置两个地方，
-首先是小商场前端litemall-wx模块（或renard-wx模块）中`project.config.json`文件的appid
-其次是小商场后端litemall-core模块的`application-core.yml`文件：
+#### 1.4.5.3 WeChat 로그인 구성
+
+WeChat 로그인은 두 위치를 구성해야합니다.
+첫 번째는 소규모 쇼핑몰 프런트 엔드의 litemall-wx 모듈 (또는 renard-wx 모듈)에있는`project.config.json` 파일의 appid입니다.
+두 번째는 소규모 쇼핑몰 백엔드에있는 litemall-core 모듈의`application-core.yml` 파일입니다.
 ```bash
-litemall:
-  wx:
-    app-id: wxa5b486c6b918ecfb
-    app-secret: e04004829d4c383b4db7769d88dfbca1
+litemall :
+  wx :
+    앱 ID : wxa5b486c6b918ecfb
+    앱 비밀 : e04004829d4c383b4db7769d88dfbca1
 ```
 
-这里的`app-id`和`app-secret`需要开发者在[微信公众平台](https://mp.weixin.qq.com/)注册获取。
+여기에서`app-id`와`app-secret`은 개발자가 [WeChat Public Platform] (https://mp.weixin.qq.com/)에서 등록해야합니다.
 
-注意
-> 这里开发者可能会疑惑：小商场后端应该配置在litemall-wx-api模块的`application-wx.yml`文件更合适。
-> 这里放置在`application-core.yml`文件中是因为litemall-core模块也依赖小程序appid配置信息。
+노트
+> 개발자는 여기서 혼란 스러울 수 있습니다. 작은 쇼핑몰의 백엔드는 litemall-wx-api 모듈의`application-wx.yml` 파일에서 구성되어야합니다.
+> litemall-core 모듈도 애플릿 appid 구성 정보에 의존하기 때문에`application-core.yml` 파일에 배치됩니다.
 
-#### 1.4.5.4 微信支付配置
+#### 1.4.5.4 WeChat 결제 구성
 
-在litemall-core模块的`application-core.yml`文件中配置微信支付：
+litemall-core 모듈의`application-core.yml` 파일에서 WeChat 결제를 구성합니다.
 ```
-litemall:
-  wx:
-    mch-id: 111111
-    mch-key: xxxxxx
-    notify-url: https://www.example.com/wx/order/pay-notify
+litemall :
+  wx :
+    mch-id : 111111
+    mch-key : xxxxxx
+    알림 URL : https://www.example.com/wx/order/pay-notify
 ```
 
-这里的`mch-id`和`mch-key`需要开发者在[微信商户平台](https://pay.weixin.qq.com/)注册获取。
+여기서 'mch-id'및 'mch-key'는 개발자가 [WeChat Merchant Platform] (https://pay.weixin.qq.com/)에서 등록해야합니다.
 
-而这里的`notify-url`则应该是项目上线以后微信支付回调地址，当微信支付成功或者失败，
-微信商户平台将向回调地址发生成功或者失败的数据，因此需要确保该地址是
-litemall-wx-api模块的WxOrderController类的payNotify方法所服务的API地址。
+여기서 'notify-url'은 프로젝트가 시작된 후의 WeChat 결제 콜백 주소 여야합니다. WeChat 결제 성공 또는 실패시,
+WeChat 판매자 플랫폼은 콜백 주소로 성공 또는 실패 데이터를 전송하므로 주소가 다음과 같은지 확인해야합니다.
+litemall-wx-api 모듈의 WxOrderController 클래스의 payNotify 메서드에서 제공하는 API 주소입니다.
 
-开发阶段可以采用一些技术实现临时外网地址映射本地，开发者可以百度关键字“微信 内网穿透”自行学习。
-
-#### 1.4.5.5 邮件通知配置
-
-在litemall-core模块的`application-core.yml`文件中配置邮件通知服务：
+개발 단계에서 일부 기술을 사용하여 임시 외부 네트워크 주소 매핑을 로컬로 구현할 수 있으며 개발자는 Baidu 키워드 "WeChat 인트라넷 침투"를 스스로 배울 수 있습니다.
 ```
 litemall:
   notify:
     mail:
-      # 邮件通知配置,邮箱一般用于接收业务通知例如收到新的订单，sendto 定义邮件接收者，通常为商城运营人员
+      # 이메일 알림 구성, 사서함은 일반적으로 새 주문 수신과 같은 비즈니스 알림을 수신하는 데 사용되며 sendto는 이메일 수신자, 일반적으로 쇼핑몰 운영자를 정의합니다.
       enable: false
       host: smtp.exmail.qq.com
       username: ex@ex.com.cn
@@ -570,31 +566,31 @@ litemall:
       sendto: ex@qq.com
 ```
 
-配置方式：
-1. 邮件服务器开启smtp服务
-2. 开发者在配置文件中设置`enable`的值`true`，然后其他信息设置相应的值。
-这里只测试过QQ邮箱，开发者需要自行测试其他邮箱。
+구성 방법 :
+1. 메일 서버가 smtp 서비스를 엽니 다.
+2. 개발자는 구성 파일에서 'enable'값을 'true'로 설정하고 다른 정보는 해당 값을 설정합니다.
+여기서는 QQ 사서함 만 테스트되었으며 개발자는 다른 사서함을 직접 테스트해야합니다.
 
-应用场景：
-目前邮件通知场景也很简单，就是用户下单以后系统会自动向`sendto`用户发送一封邮件，告知用户下单的订单信息。
-以后可能需要继续优化扩展。当然，如果不需要邮件通知订单信息，可以默认关闭即可。
+애플리케이션 시나리오 :
+현재 이메일 알림 시나리오도 매우 간단합니다. 사용자가 주문을하면 시스템이 자동으로 'sendto'사용자에게 이메일을 보내 사용자에게 주문 정보를 알려줍니다.
+향후 확장을 계속 최적화해야 할 수도 있습니다. 물론 주문 정보에 대한 이메일 알림이 필요하지 않은 경우 기본적으로 사용 중지 할 수 있습니다.
 
-验证配置成功：
-当配置好信息以后，开发者可以运行litemall-core模块的`MailTest`测试类，
-独立发送邮件，然后登录邮箱查看邮件是否成功接收。
+구성이 성공적인지 확인하십시오.
+정보를 구성한 후 개발자는 litemall-core 모듈의`MailTest` 테스트 클래스를 실행할 수 있습니다.
+개별적으로 메일을 보낸 다음 메일함에 로그인하여 메일이 성공적으로 수신되었는지 확인합니다.
 
-#### 1.4.5.6 短信通知配置
+#### 1.4.5.6 SMS 알림 구성
 
-在litemall-core模块的`application-core.yml`文件中配置短信通知服务：
+litemall-core 모듈의`application-core.yml` 파일에서 SMS 알림 서비스를 구성합니다.
 ```
 litemall:
   notify:
-    # 短消息模版通知配置
-    # 短信息用于通知客户，例如发货短信通知，注意配置格式；template-name，template-templateId 请参考 NotifyType 枚举值
+    # SMS 템플릿 알림 구성
+     # SMS는 고객에게 전달 SMS 알림, 구성 형식에주의를 알리는 데 사용됩니다. template-name, template-templateId는 NotifyType 열거 값을 참조하십시오.
     sms:
       enable: false
-      # 如果是腾讯云短信，则设置active的值tencent
-      # 如果是阿里云短信，则设置active的值aliyun
+      # Tencent Cloud SMS 인 경우 활성 값 tencent를 설정합니다.
+       # 알리바바 클라우드 SMS 인 경우 활성 값 알리 윤 설정
       active: tencent
       sign: litemall
       template:
@@ -615,36 +611,36 @@ litemall:
         accessKeySecret: xxx
 ```        
 
-配置方式：
-1. 腾讯云短信平台或者阿里云短信平台申请，然后设置四个场景的短信模板；
-2. 开发者在配置文件设置`enable`的值`true`，设置`active`的值`tencent`或`aliyun`
-3. 然后配置其他信息，例如腾讯云短信平台申请的appid等值。
-这里只测试过腾讯云短信平台和阿里云短信平台，开发者需要自行测试其他短信云平台。
+구성 방법 :
+1. Tencent Cloud SMS 플랫폼 또는 Alibaba Cloud SMS 플랫폼을 신청 한 다음 네 가지 시나리오에 대한 SMS 템플릿을 설정합니다.
+2. 개발자는 구성 파일에서`enable` 값을`true`로 설정하고`active` 값을`tencent` 또는`aliyun`으로 설정합니다.
+3. 그런 다음 Tencent Cloud SMS 플랫폼에서 적용한 appid 값과 같은 기타 정보를 구성합니다.
+여기서는 Tencent Cloud SMS 플랫폼과 Alibaba Cloud SMS 플랫폼 만 테스트되었으며 개발자는 다른 SMS 클라우드 플랫폼을 직접 테스트해야합니다.
 
-应用场景：
-目前短信通知场景只支持支付成功、验证码、订单发送、退款成功四种情况。
-以后可能需要继续优化扩展。
+애플리케이션 시나리오 :
+현재 SMS 알림 시나리오는 결제 성공, 확인 코드, 주문 전송 및 환불 성공의 네 가지 시나리오 만 지원합니다.
+향후 확장을 계속 최적화해야 할 수도 있습니다.
 
-验证配置成功：
-当配置好信息以后，开发者可以litemall-core模块的`SmsTest`测试类中设置手机号和
-模板所需要的参数值，独立启动`SmsTest`测试类发送短信，然后查看手机是否成功接收短信。
+구성이 성공적인지 확인하십시오.
+정보를 구성한 후 개발자는 litemall-core 모듈의 휴대폰 번호 및 "SmsTest"테스트 클래스를 설정할 수 있습니다.
+템플릿에 필요한 매개 변수 값은 'SmsTest'테스트 클래스를 독립적으로 시작하여 SMS를 보낸 다음 휴대폰이 SMS를 성공적으로 수신하는지 확인합니다.
 
-短信模板参数命名：
-这里存在一个问题，即腾讯云短信的官方平台中申请短信模板格式的模板参数是数组，
-例如“你好，验证码是{0}，时间是{1}"; 
-而阿里云短信的官方平台中申请短信模板的模板参数是JSON,
-例如“你好，验证码是{param1}，时间是{param2}"。
-为了保持当前代码的通用性，本项目采用数组传递参数，而对阿里云申请模板的参数做了一定的假设：
-1. 腾讯云模块参数，申请模板时按照官方设置即可，例如“你好，验证码是{0}，时间是{1}"; 
-2. 阿里云模板参数，本项目假定开发者在官方申请的参数格式应该采用"{ code: xxx, code1: xxx, code2: xxx }"，
-例如“你好，验证码是{code}，时间是{code1}"。开发者可以查看`AliyunSmsSender`类的`sendWithTemplate`方法的
-源代码即可理解。如果觉得不合理，可以自行调整相关代码。
+SMS 템플릿 매개 변수의 이름 :
+여기서 문제가있다. 즉, Tencent Cloud SMS의 공식 플랫폼에서 SMS 템플릿 형식을 적용하기위한 템플릿 매개 변수가 배열이다.
+예 : "안녕하세요, 인증 코드는 {0}이고 시간은 {1}"입니다.
+Alibaba Cloud SMS의 공식 플랫폼에서 SMS 템플릿을 신청하기위한 템플릿 매개 변수는 JSON입니다.
+예 : "안녕하세요, 인증 코드는 {param1}이고 시간은 {param2}입니다."
+현재 코드의 다양성을 유지하기 위해이 프로젝트는 배열을 사용하여 매개 변수를 전달하고 Alibaba Cloud 애플리케이션 템플릿의 매개 변수에 대한 특정 가정을합니다.
+1. Tencent Cloud 모듈 매개 변수는 템플릿을 신청할 때 "안녕하세요, 확인 코드는 {0}이고 시간은 {1}입니다"와 같은 공식 설정을 따릅니다.
+2. Alibaba Cloud 템플릿 매개 변수이 프로젝트는 개발자가 공식적으로 신청 한 매개 변수의 형식이 "{code : xxx, code1 : xxx, code2 : xxx}"를 사용해야한다고 가정합니다.
+예 : "안녕하세요, 인증 코드는 {code}이고 시간은 {code1}"입니다. 개발자는`AliyunSmsSender` 클래스의`sendWithTemplate` 메소드를 확인할 수 있습니다.
+소스 코드를 이해할 수 있습니다. 불합리하다고 생각되면 관련 코드를 직접 조정할 수 있습니다.
 
-#### 1.4.5.8 物流配置
+#### 1.4.5.8 물류 구성
 
-物流配置是查询商品物流信息，这里主要是基于[第三方快递鸟服务](http://www.kdniao.com/api-track)。
+물류 구성은 주로 [타사 특급 조류 서비스] (http://www.kdniao.com/api-track)를 기반으로하는 상품 물류 정보를 조회하는 것입니다.
 
-在litemall-core模块的`application-core.yml`文件中配置快递鸟物流服务：
+litemall-core 모듈의`application-core.yml` 파일에서 익스프레스 버드 물류 서비스를 구성합니다.
 ```
 litemall:
   notify:
@@ -682,65 +678,65 @@ litemall:
       name: "FEDEX联邦(国际件)"
 ```        
 
-配置方式：
-1. [快递鸟平台](http://www.kdniao.com/)申请；
-2. 开发者在配置文件设置`enable`的值`true`，然后其他信息设置
-快递鸟平台中的appId和appKey。
+구성 방법 :
+1. [익스프레스 버드 플랫폼] (http://www.kdniao.com/) 애플리케이션
+2. 개발자는 구성 파일에서 'enable'값을 'true'로 설정하고 다른 정보를 설정합니다.
+익스프레스 버드 플랫폼의 appId 및 appKey.
 
-应用场景：
-小商场查询订单详情时，如果商品已发货，小商城后端会返回详细物流信息。
+애플리케이션 시나리오 :
+소규모 쇼핑몰에서 주문 내역을 조회 할 때 상품이 배송 된 경우 소규모 쇼핑몰 백엔드에서 자세한 물류 정보를 반환합니다.
 
-验证配置成功：
-当配置好信息以后，开发者可以litemall-core模块的`ExpressTest`测试类中设置快递公司编码和
-真实测试快递单号，独立启动`ExpressTest`测试类查询物流信息。
+구성이 성공적인지 확인하십시오.
+정보를 구성한 후 개발자는 litemall-core 모듈의 'ExpressTest'테스트 클래스에서 익스프레스 회사 코드 및 코드를 설정할 수 있습니다.
+익스프레스 번호를 실제 테스트하고 독립적으로`ExpressTest` 테스트 클래스를 시작하여 물류 정보를 쿼리합니다.
 
-注意：
-> 一部分快递公司（例如顺丰速运、申通快递等）的轨迹查询在开发环境下不支持，
-> 具体支持情况或者使用限制请阅读[官方资料](http://www.kdniao.com/UserCenter/v2/UserHome.aspx)
+노트:
+> 일부 택배 회사 (예 : SF Express, Shentong Express 등)는 개발 환경에서 추적 쿼리를 지원하지 않습니다.
+> 특정 지원 또는 사용 제한 사항은 [공식 정보] (http://www.kdniao.com/UserCenter/v2/UserHome.aspx)를 참조하십시오.
 
-#### 1.4.5.9 对象存储配置
+#### 1.4.5.9 오브젝트 스토리지 구성
 
-对象存储，即存储和下载文件。
+오브젝트 스토리지, 즉 파일 저장 및 다운로드.
 
-在litemall-core模块的`application-core.yml`文件中配置对象存储服务：
+litemall-core 모듈의`application-core.yml` 파일에서 객체 스토리지 서비스를 구성합니다.
 
-* 本地对象存储配置
-如果开发者采用当前服务器保存上传的文件，则需要配置：
+* 로컬 개체 저장소 구성
+개발자가 현재 서버를 사용하여 업로드 된 파일을 저장하는 경우 다음을 구성해야합니다.
 ```
-litemall:
-  storage:
-    # 当前工作的对象存储模式，分别是local、aliyun、tencent、qiniu
-    active: local
-    # 本地对象存储配置信息
-    local:
-      storagePath: storage
-      # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
-      address: http://localhost:8080/wx/storage/fetch/
-```
-
-配置方式：
-配置文件设置`active`的值`local`，表示当前对象存储模式是本地对象存储；
-而`storagePath`是上传文件保存的路径；`address`则是访问文件的对外路径。
-
-* 阿里云对象存储配置
-
-```
-litemall:
-  storage:
-    # 当前工作的对象存储模式，分别是local、aliyun、tencent、qiniu
-    active: aliyun
-    aliyun:
-      endpoint: oss-cn-shenzhen.aliyuncs.com
-      accessKeyId: 111111
-      accessKeySecret: xxxxxx
-      bucketName: litemall
+litemall :
+  저장:
+    # 현재 작업 객체 저장 모드는 local, aliyun, tencent, qiniu입니다.
+    활성 : 로컬
+    # 로컬 오브젝트 스토리지 구성 정보
+    현지:
+      storagePath : 스토리지
+      #이 장소는 wx 모듈의 WxStorageController의 fetch 메소드에 해당하는 주소 여야합니다.
+      주소 : http : // localhost : 8080 / wx / storage / fetch /
 ```
 
-配置方式：
-1. 阿里云官网注册
-2. 配置文件设置`active`的值`aliyun`，表示当前对象存储模式是阿里云对象存储；
+구성 방법 :
+구성 파일은`active` 값을`local`로 설정하여 현재 오브젝트 스토리지 모드가 로컬 오브젝트 스토리지임을 나타냅니다.
+그리고`storagePath`는 업로드 된 파일이 저장되는 경로이고`address`는 파일에 액세스하기위한 외부 경로입니다.
 
-* 腾讯云对象存储配置
+* Alibaba Cloud Object Storage 구성
+
+```
+litemall :
+  저장:
+    # 현재 작업 객체 저장 모드는 local, aliyun, tencent, qiniu입니다.
+    활성 : aliyun
+    알리 윤 :
+      끝점 : oss-cn-shenzhen.aliyuncs.com
+      accessKeyId : 111111
+      accessKeySecret : xxxxxx
+      bucketName : litemall
+```
+
+구성 방법 :
+1. 알리바바 클라우드 공식 웹 사이트 등록
+2. 구성 파일은`active`의`aliyun` 값을 설정합니다. 이는 현재 오브젝트 스토리지 모드가 Alibaba Cloud Object Storage임을 의미합니다.
+
+* Tencent 클라우드 개체 스토리지 구성
 
 ```
 litemall:
@@ -756,12 +752,11 @@ litemall:
       bucketName: litemall
 ```
 
-配置方式：
-1. 腾讯云官网注册
-2. 配置文件设置`active`的值`tencent`，表示当前对象存储模式是腾讯云对象存储；
+구성 방법 :
+1. Tencent Cloud 공식 웹 사이트 등록
+2. 구성 파일은`active` 값을`tencent`로 설정하여 현재 오브젝트 스토리지 모드가 Tencent Cloud Object Storage임을 나타냅니다.
 
-* 七牛云对象存储配置
-
+* Qiniu 클라우드 개체 스토리지 구성
 ```
 litemall:
   storage:
@@ -775,106 +770,106 @@ litemall:
       bucketName: litemall
 ```
 
-配置方式：
-1. 七牛云官网注册
-2. 配置文件设置`active`的值`qiniu`，表示当前对象存储模式是七牛云对象存储；
+구성 방법 :
+1. Qiniu Cloud 공식 웹 사이트 등록
+2. 구성 파일은`active`의`qiniu` 값을 설정합니다. 이는 현재 오브젝트 스토리지 모드가 Qiniu Cloud Object Storage임을 의미합니다.
 
-#### 1.4.5.10 其他配置
+#### 1.4.5.10 기타 구성
 
-除上述配置信息，本项目还存在其他配置。
-目前仅采用默认值即可，开发者可以自己实践或者扩展新的配置信息。
+위의 구성 정보 외에도이 프로젝트에 대한 다른 구성이 있습니다.
+현재는 기본값 만 사용되며 개발자는 스스로 새로운 구성 정보를 연습하거나 확장 할 수 있습니다.
 
-## 1.5 部署方案
+## 1.5 배포 계획
  
-在1.4节中介绍的是开发阶段时一些关键性开发流程。本节将介绍代码开发成功以后开始部署项目时一些关键性流程。
+섹션 1.4에서는 개발 단계에서 몇 가지 주요 개발 프로세스를 소개합니다. 이 섹션에서는 성공적인 코드 개발 후 프로젝트를 배포 할 때 몇 가지 주요 프로세스를 소개합니다.
 
-首先，需要明确的是开发时项目使用的服务地址是本地地址，即localhost；而部署时则应该根据具体情况设置合理的服务器地址和端口。
+우선 개발 과정에서 프로젝트에서 사용하는 서비스 주소가 로컬 주소, 즉 localhost임을 명확히해야하며, 배포 과정에서 구체적인 상황에 따라 적절한 서버 주소와 포트를 설정해야합니다.
 
-其次，需要明确的是各模块之间的关系：
+둘째, 명확히해야 할 것은 모듈 간의 관계입니다.
   
-  * litemall-wx-api模块会包含litemall-core模块和litemall-db模块，部署在服务器中
-  * litemall-admin-api模块会包含litemall-core模块和litemall-db模块，部署在服务器中
-  * litemall-all模块则会包装litemall-wx-api模块和litemall-admin-api模块；
-  * litemall-wx模块部署在微信开发者工具中，此外数据API地址指向litemall-wx-api所在服务qi地址
-  * litemall-admin编译出的静态文件放在web服务器或者tomcat服务器，此外服务器地址设置指向3中litemall-admin-api所在地址
+  * litemall-wx-api 모듈에는 litemall-core 모듈과 litemall-db 모듈이 포함되며 이는 서버에 배포됩니다.
+  * litemall-admin-api 모듈에는 서버에 배포 된 litemall-core 모듈과 litemall-db 모듈이 포함됩니다.
+  * litemall-all 모듈은 litemall-wx-api 모듈과 litemall-admin-api 모듈을 패키징합니다.
+  * litemall-wx 모듈은 WeChat 개발자 도구에 배포되며 데이터 API 주소는 litemall-wx-api가있는 서비스 qi 주소를 가리 킵니다.
+  * litemall-admin에 의해 컴파일 된 정적 파일은 웹 서버 또는 tomcat 서버에 배치되고 서버 주소 설정은 3의 litemall-admin-api가있는 주소를 가리 킵니다.
   
-最后，**如果项目部署云服务器，则根据开发者的部署环境在以下文件中或代码中修改相应的配置。**
+마지막으로 ** 프로젝트가 클라우드 서버를 배포하는 경우 개발자의 배포 환경에 따라 다음 파일 또는 코드에서 해당 구성을 수정합니다. **
 
-1. MySQL数据库设置合适的用户名和密码信息；
-2. 后端服务模块设置合适的配置信息；
-3. 小商场前端litemall-wx模块`config/api.js`的`WxApiRoot`设置小商场后端服务的服务地址；
-4. 管理后台前端litemall-admin模块`.env.deployment`中的`VUE_APP_BASE_API`设置管理后台后端服务的服务地址。
+1. MySQL 데이터베이스에 대한 적절한 사용자 이름 및 암호 정보를 설정합니다.
+2. 백엔드 서비스 모듈에 대한 적절한 구성 정보를 설정합니다.
+3. 소형 몰 프론트 엔드의 litemall-wx 모듈`config / api.js`의`WxApiRoot`는 소형 몰의 백엔드 서비스의 서비스 주소를 설정한다.
+4. litemall-admin 모듈`.env.deployment`의`VUE_APP_BASE_API`에서 백엔드 관리 서비스의 서비스 주소를 설정합니다.
 
-实际上，最终的部署方案是灵活的：
+실제로 최종 배포 계획은 유연합니다.
 
-* 可以是同一云服务器中安装一个Spring Boot服务，同时提供litemall-admin、litemall-admin-api和litemall-wx-api三种服务
-* 可以单一云服务器中仅安装一个tomcat/nginx服务器部署litemall-admin静态页面分发服务，
-  然后部署两个Spring Boot的后端服务；
-* 也可以把litemall-admin静态页面托管第三方cdn，然后开发者部署两个后端服务
-* 当然，甚至多个服务器，采用集群式并发提供服务。
+* 동일한 클라우드 서버에 Spring Boot 서비스를 설치할 수 있으며 litemall-admin, litemall-admin-api, litemall-wx-api의 세 가지 서비스를 제공합니다.
+* litemall-admin 정적 페이지 배포 서비스를 배포하기 위해 단일 클라우드 서버에 하나의 tomcat / nginx 서버 만 설치할 수 있습니다.
+  그런 다음 두 개의 Spring Boot 백엔드 서비스를 배포합니다.
+* 타사 CDN을 사용하여 litemall-admin 정적 페이지를 호스팅 할 수도 있으며 개발자는 두 개의 백엔드 서비스를 배포합니다.
+* 물론 여러 서버에서도 클러스터링을 사용하여 동시에 서비스를 제공합니다.
 
-注意
-> 1. `本机`指的是是当前的开发机
-> 2. `云服务器`指的是开发者购买并部署的远程服务器
+노트
+> 1. '네이티브'는 현재 개발중인 머신을 의미합니다.
+> 2. '클라우드 서버'는 개발자가 구매하여 배포 한 원격 서버를 의미합니다.
 
-以下简单列举几种方案。
+몇 가지 옵션이 아래에 간략하게 나열되어 있습니다.
 
-### 1.5.1 单机单服务部署方案
+### 1.5.1 단일 머신 단일 서비스 배포 계획
 
-本节介绍基于腾讯云的单机单服务部署方案，面向的是服务器数据和应用部署在云服务器单机中用于演示的场景。
-其他云应该也是可行的。
+이 섹션에서는 Tencent Cloud를 기반으로 한 단일 서버 단일 서비스 배포 솔루션을 소개합니다. 데모를 위해 서버 데이터와 애플리케이션이 단일 클라우드 서버에 배포되는 시나리오를 대상으로합니다.
+다른 클라우드도 가능해야합니다.
 
-主要流程是：创建云服务器，安装ubuntu操作系统，按照JDK和MySQL应用运行环境，部署单一Spring Boot服务。
+주요 프로세스는 클라우드 서버 생성, 우분투 운영 체제 설치, JDK 및 MySQL 애플리케이션 운영 환경에 따라 단일 Spring Boot 서비스 배포입니다.
 
-![](./pics/project/deploy-single.png)
+! [] (./ pics / project / deploy-single.png)
 
-#### 1.5.1.1 云服务器
+#### 1.5.1.1 클라우드 서버
 
-1. 创建云服务器
+1. 클라우드 서버 생성
 
-   请参考腾讯云、阿里云或者其他云平台的官方文档进行相关操作。
-   建议最低配置是**1核2G**。
+   관련 작업은 Tencent Cloud, Alibaba Cloud 또는 기타 클라우드 플랫폼의 공식 문서를 참조하십시오.
+   권장되는 최소 구성은 ** 1 코어 2G **입니다.
    
-2. 安装操作系统
+2. 운영 체제 설치
 
-   本项目采用ubuntu 16.04.1，但是并不限制其他操作系统。
+   이 프로젝트는 우분투 16.04.1을 사용하지만 다른 운영 체제를 제한하지 않습니다.
 
-3. 创建安全组
+3. 보안 그룹 생성
 
-    ![](./pics/project/security-group.png)
+    ! [] (./ pics / project / security-group.png)
 
-    目前允许的端口：8080，80，443，22，3306
+    현재 허용되는 포트 : 8080, 80, 443, 22, 3306
     
-    注意：
-    这里其实只需要8080端口，允许其他端口只是方便开发阶段的测试和调试。
-    特别是3306端口，作为MySQL的远程访问端口，请在上线阶段关闭。
+    노트:
+    실제로 여기에는 포트 8080 만 필요하며 다른 포트를 허용하는 것은 개발 단계에서 테스트 및 디버깅을 용이하게하기위한 것입니다.
+    특히 3306 포트는 MySQL의 원격 액세스 포트로 온라인 단계에서 닫으십시오.
     
-4. 设置SSH密钥（可选）
+4. SSH 키 설정 (선택 사항)
 
-    建议开发者设置SSH密钥，可以免密码登录云服务器，以及用于脚本自动上传应用。
+    개발자는 비밀번호없이 클라우드 서버에 로그인 할 수 있고 스크립트에서 애플리케이션을 자동으로 업로드하는 데 사용할 수있는 SSH 키를 설정하는 것이 좋습니다.
 
-5. 使用PuTTY远程登录云服务器
+5. PuTTY를 사용하여 클라우드 서버에 원격으로 로그인
 
-    如果开发者设置SSH密钥，可以采用免密码登录；否则采用账号和密码登录。
+    개발자가 SSH 키를 설정하면 비밀번호없이 로그인 할 수 있고, 그렇지 않으면 계정과 비밀번호로 로그인 할 수 있습니다.
     
 #### 1.5.1.2 OpenJDK8
 
-这里可以安装openjdk-8-jre
+Openjdk-8-jre는 여기에 설치할 수 있습니다.
 
 ```bash
 sudo apt-get update
 sudo apt-get install openjdk-8-jre
 ```
 
-如果希望采用jdk，而不是jre，则可以运行
+jre 대신 jdk를 사용하려면 다음을 실행할 수 있습니다.
 
 ```bash
 sudo apt-get update
 sudo apt-get install openjdk-8-jdk
 ```
 
-注意
-> 如果用户想采用Oracle JDK8或者其他JDK环境，请查阅相关资料安装。
+노트
+> 사용자가 Oracle JDK8 또는 기타 JDK 환경을 사용하려면 설치 관련 정보를 참조하십시오.
 
 #### 1.5.1.3 MySQL
 
@@ -907,171 +902,171 @@ sudo mysql_secure_installation
     cp -f ./litemall-all/target/litemall-all-*-exec.jar ./deploy/litemall/litemall.jar
     ```
     
-    这里脚本的作用是：
+    이 스크립트의 역할은 다음과 같습니다.
     
-    1. 把数据库文件拷贝到deploy/db文件夹；
-    2. 编译litemall-admin项目；
-    3. 编译litemall-all模块，同时把litemall-admin编译得到的静态文件拷贝到
-       litemall-all模块的static目录。
+    1. 데이터베이스 파일을 deploy / db 폴더에 복사합니다.
+    2. litemall-admin 프로젝트를 컴파일합니다.
+    3. litemall-all 모듈을 컴파일하고 litemall-admin으로 컴파일 한 정적 파일을 다음 위치에 복사합니다.
+       litemall-all 모듈의 정적 디렉토리입니다.
        
-2. 修改litemall文件夹下面的*.yml外部配置文件，当litemall-all模块启动时会
-    加载外部配置文件，而覆盖默认jar包内部的配置文件。
-    例如，配置文件中一些地方需要设置成远程服务器的IP地址
+2. litemall 폴더 아래의 * .yml 외부 구성 파일을 수정합니다. litemall-all 모듈이 시작되면
+    외부 구성 파일을로드하고 기본 jar 패키지 내의 구성 파일을 재정의합니다.
+    예를 들어, 구성 파일의 일부 위치는 원격 서버의 IP 주소로 설정해야합니다.
     
-此时deploy部署包结构如下：
+이때 배포 배포 패키지 구조는 다음과 같습니다.
 
-* bin
-存放远程服务器运行的脚本，包括deploy.sh脚本和reset.sh脚本
+* 빈
+deploy.sh 스크립트 및 reset.sh 스크립트를 포함하여 원격 서버에서 실행되는 저장소 스크립트
 
 * db
-存放litemall数据库文件
+litemall 데이터베이스 파일 저장
 
 * litemall
-存放远程服务器运行的代码，包括litemall-all二进制可执行包和litemall外部配置文件
+litemall-all 바이너리 실행 패키지 및 litemall 외부 구성 파일을 포함하여 원격 서버에서 실행중인 코드를 저장합니다.
 
-* util
-存放开发服务器运行的脚本，包括package.sh脚本和lazy.sh脚本。
-由于是本地开发服务器运行，因此开发者可以不用上传到远程服务器。
+* 유틸리티
+package.sh 스크립트 및 lazy.sh 스크립트를 포함하여 개발 서버에서 실행하는 스크립트를 저장합니다.
+로컬 개발 서버에서 실행되기 때문에 개발자는 원격 서버에 업로드 할 필요가 없습니다.
 
-#### 1.5.1.5 项目部署
+#### 1.5.1.5 프로젝트 배포
 
-1. 远程服务器环境（MySQL和JDK1.8）已经安装好，请确保云服务器的安全组已经允许相应的端口。
-2. 导入db/litemall.sql
+1. 원격 서버 환경 (MySQL 및 JDK1.8)이 설치되어 있습니다. 클라우드 서버의 보안 그룹이 해당 포트를 허용하는지 확인하십시오.
+2. db / litemall.sql 가져 오기
     ```bash
     cd /home/ubuntu/deploy/db
     mysql -h localhost -u $ROOT -p$PASSWORD < litemall.sql
     ```
-3. 启动服务
+3. 서비스 시작
     ```bash
     sudo service litemall stop
     sudo ln -f -s /home/ubuntu/deploy/litemall/litemall.jar /etc/init.d/litemall
     sudo service litemall start
     ```
-4. 测试是否部署成功(xxx.xxx.xxx.xxx是云服务器IP）：
+4. 배포 성공 여부 테스트 (xxx.xxx.xxx.xxx는 클라우드 서버 IP 임）：
     ```
     http://xxx.xxx.xxx.xxx:8080/wx/index/index
     http://xxx.xxx.xxx.xxx:8080/admin/index/index
     http://xxx.xxx.xxx.xxx:8080/#/login
     ```
 
-注意：
-> 开发者访问以上三个地址都能成功，但是管理后台点击登录时会报错网络连接不成功。
-> 这里很可能是开发者litemall-admin模块的`config/dep.env.js`或者`condig/prod.env.js`
-> 没有设置正确的管理后台后端地址，例如这里的`http://xxx.xxx.xxx.xxx:8080/admin`
+노트:
+> 개발자는 위의 세 주소에 성공적으로 액세스 할 수 있지만 관리 배경에서 로그인을 클릭하면 네트워크 연결이 실패합니다.
+> 이것은 아마도 개발자의 litemall-admin 모듈의`config / dep.env.js` 또는`condig / prod.env.js` 일 것입니다.
+> 'http://xxx.xxx.xxx.xxx:8080/admin'과 같은 올바른 관리 백엔드 주소가 설정되지 않았습니다.
 
-#### 1.5.1.6 deploy部署脚本
+#### 1.5.1.6 배포 스크립트 배포
 
-在前面的项目打包和项目部署中都是采用手动命令来部署。
-这里可以写一些脚本简化：
+이전 프로젝트 패키징 및 프로젝트 배포에서는 배포에 수동 명령이 사용되었습니다.
+여기에 몇 가지 스크립트를 작성하여 단순화 할 수 있습니다.
 
-* util/packet.sh
+* util / packet.sh
 
-在开发服务器运行可以自动项目打包
+개발 서버에서 실행하면 프로젝트를 자동으로 패키징 할 수 있습니다.
 
-* util/lazy.sh
+* util / lazy.sh
 
-在开发服务器运行可以自动项目打包、项目上传远程服务器、自动登录系统执行项目部署脚本。
+개발 서버에서 실행하면 프로젝트를 자동으로 패키징하고, 프로젝트를 원격 서버에 업로드하고, 시스템에 자동으로 로그인하여 프로젝트 배포 스크립트를 실행할 수 있습니다.
     
-注意：
-> 1. 开发者需要在util/lazy.sh中设置相应的远程服务器登录账号和密钥文件路径。
-> 2. 开发者需要在bin/reset.sh设置远程服务器的MySQL的root登录账户。
+노트:
+> 1. 개발자는 util / lazy.sh에서 해당 원격 서버 로그인 계정과 키 파일 경로를 설정해야합니다.
+> 2. 개발자는 bin / reset.sh에서 원격 서버의 MySQL 루트 로그인 계정을 설정해야합니다.
     
-* bin/deploy.sh
+* bin / deploy.sh
 
-在远程服务器运行可以自动部署服务
+원격 서버에서 실행하면 서비스를 자동으로 배포 할 수 있습니다.
 
-* bin/reset.sh
+* bin / reset.sh
 
-在远程服务器运行可以自动项目导入数据、删除本地上传图片、再执行bin/deploy.sh部署服务。
+원격 서버에서 실행하면 자동으로 데이터를 가져오고 로컬에 업로드 된 사진을 삭제 한 다음 bin / deploy.sh 배포 서비스를 실행할 수 있습니다.
 
-注意：
-> 开发者需要在bin/reset.sh设置远程服务器的MySQL的root登录账户。
+노트:
+> 개발자는 bin / reset.sh에서 원격 서버의 MySQL 루트 로그인 계정을 설정해야합니다.
 
-总结，当开发者设置好配置信息以后，可以在本地运行lazy.sh脚本自动一键部署:
+요약하면 개발자가 구성 정보를 설정 한 후 lazy.sh 스크립트를 로컬에서 실행하여 한 번의 클릭으로 자동 배포 할 수 있습니다.
 ```bash
 cd litemall
 ./deploy/util/lazy.sh
 ```
 
-不过由于需要设置的信息会包含敏感安全信息，强烈建议开发者参考这里的deploy文件夹，
-然后实现自己的deploy文件夹，妥善处置外部配置文件和脚本中的敏感安全信息!!!
+그러나 설정해야하는 정보에는 민감한 보안 정보가 포함되어 있으므로 개발자는 여기에서 배포 폴더를 참조하는 것이 좋습니다.
+그런 다음 자체 배포 폴더를 구현하여 외부 구성 파일 및 스크립트에있는 중요한 보안 정보를 적절하게 폐기하십시오 !!!
 
-#### 1.5.1.7 docker部署脚本
+#### 1.5.1.7 Docker 배포 스크립트
 
-本项目也简单实现了docker部署方案，具体可以看docker文件夹。
+이 프로젝트는 단순히 docker 배포 계획을 구현합니다. 자세한 내용은 docker 폴더를 참조하세요.
 
-### 1.5.2 单机多服务部署方案
-
-
-### 1.5.3 集群式云部署方案
-
-由于本项目是面向微小型企业的小商城系统，因此预期的分布式部署方案是
-
-1. 专门的云数据库部署数据
-2. 专门的云存储方案
-3. 专门的CDN分发管理后台的静态文件
-4. 一台云服务器部署管理后台的后端服务
-5. 一台或多台云服务器部署小商场的后端服务
-
-虽然由于环境原因没有正式测试过，但是这种简单的集群式场景应该是可行的。
-在1.5.2节中所演示的三个服务是独立的，因此延伸到这里分布式是非常容易的。
-
-但是，如果需要实现互联网式分布式云部署，目前的项目架构和方案不支持。
-至少每个功能模块应该是独立服务系统。此外，需要引入单点登录系统、集群、缓存
-和消息队列等多种技术。因此如果开发者需要这种形式的分布式方案，请参考其他项目。
-
-## 1.6 上线方案
-
-在1.5节部署方案中，我们介绍了多种部署的方案，但是实际上这些方案都不能立即用于正式环境：
-
-1. 正式环境需要域名和HTTPS证书
-2. 小商场的小程序端对服务器域名存在接入要求。
-
-本节采用`www.example.com`域名作为示例。
-
-注意
-> `www.example.com`仅作为实例，不是真实环境下的域名。
-
-这里列举一种基于1.5.1的单机单服务上线方案，即一个all后端服务，同时提供三种数据：
-* 提供管理后台的前端文件；
-* 提供管理后台前端所需要的数据；
-* 提供小商城前端所需要的数据。
-
-![](./pics/project/online-deploy.png)
+### 1.5.2 단일 머신 다중 서비스 배포 체계
 
 
-开发者可以基于自身业务采用其他上线方案。
+### 1.5.3 클러스터 클라우드 배포 계획
 
-### 1.6.1 域名
+이 프로젝트는 소규모 및 중소기업을위한 소규모 쇼핑몰 시스템이므로 예상되는 분산 배포 계획은 다음과 같습니다.
 
-1. 注册域名，通常商业性的网站采用`.com`
-2. 解析域名到服务器公网IP，采用`ping`命令查看是否解析成功
-3. 备案
+1. 전용 클라우드 데이터베이스 배포 데이터
+2. 전용 클라우드 스토리지 솔루션
+3. 특수 CDN은 관리 백그라운드에서 정적 파일을 배포합니다.
+4. 클라우드 서버는 관리 백그라운드에서 백엔드 서비스를 배포합니다.
+5. 하나 이상의 클라우드 서버가 소규모 쇼핑몰을위한 백엔드 서비스를 배포합니다.
+
+환경 적 이유로 인해 공식적으로 테스트되지는 않았지만이 간단한 클러스터 시나리오는 가능해야합니다.
+1.5.2 절에 설명 된 세 가지 서비스는 독립적이므로 여기에 배포하도록 확장하는 것이 매우 쉽습니다.
+
+그러나 인터넷 스타일의 분산 클라우드 배포가 필요한 경우 현재 프로젝트 아키텍처 및 계획이이를 지원하지 않습니다.
+최소한 각 기능 모듈은 독립적 인 서비스 시스템이어야합니다. 또한 단일 사인온 시스템, 클러스터 및 캐시를 도입해야합니다.
+그리고 메시지 대기열 및 기타 기술. 따라서 개발자가 이러한 형태의 분산 솔루션이 필요한 경우 다른 프로젝트를 참조하십시오.
+
+## 1.6 온라인 계획
+
+섹션 1.5 배포 계획에서 다양한 배포 계획을 소개했지만 실제로 이러한 계획 중 어느 것도 공식 환경에서 즉시 사용할 수 없습니다.
+
+1. 공식 환경에는 도메인 이름과 HTTPS 인증서가 필요합니다.
+2. 소규모 쇼핑몰의 애플릿에는 서버 도메인 이름에 대한 액세스 요구 사항이 있습니다.
+
+이 섹션에서는`www.example.com` 도메인 이름을 예로 사용합니다.
+
+노트
+>`www.example.com`은 실제 환경에서 도메인 이름이 아닌 예시로만 사용됩니다.
+
+다음은 1.5.1을 기반으로 한 단일 서버 단일 서비스 온라인 솔루션입니다. 즉, 세 가지 유형의 데이터를 동시에 제공하는 모든 백엔드 서비스입니다.
+* 관리 배경에 대한 프런트 엔드 파일을 제공합니다.
+* 백엔드 프런트 엔드를 관리하는 데 필요한 데이터를 제공합니다.
+* 소규모 쇼핑몰 프런트 엔드에서 필요한 데이터를 제공합니다.
+
+! [] (./ pics / project / online-deploy.png)
+
+
+개발자는 자신의 비즈니스를 기반으로 다른 온라인 솔루션을 채택 할 수 있습니다.
+
+### 1.6.1 도메인
+
+1. 도메인 이름을 등록합니다. 일반적으로 상업용 웹 사이트는`.com`을 사용합니다.
+2. 도메인 이름을 서버의 공용 네트워크 IP로 확인하고`ping` 명령을 사용하여 확인이 성공했는지 확인합니다.
+3. 제출
 
 ### 1.6.2 nginx
 
 https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04
 
-#### 1.6.2.1 nginx安装
+#### 1.6.2.1 nginx 설치
 
-采用命令
+명령 채택
 ```bash
-sudo apt-get update
-sudo apt-get install nginx
+sudo apt-get 업데이트
+sudo apt-get nginx 설치
 ```
 
-有的文档会指出需要防火墙设置，但是腾讯云服务器防火墙默认没有开启。
-开发者这里自己可以开启设置，或者直接不开启。
+일부 문서에는 방화벽 설정이 필요하다고 표시되어 있지만 Tencent Cloud 서버 방화벽은 기본적으로 활성화되어 있지 않습니다.
+개발자는 직접 설정을 사용하거나 사용하지 않을 수 있습니다.
 
-打开浏览器，输入以下地址：
+브라우저를 열고 다음 주소를 입력하십시오.
 ```
 http://www.example.com
 ```
 
-此时，如果看到nginx的欢迎页面，则安装成功。
+이 시점에서 nginx의 시작 페이지가 표시되면 설치가 완료된 것입니다.
 
-安装以后：
-* `/var/www/html`：默认静态web文件目录
+설치 후 :
+* `/var/www/html`：기본 정적 웹 파일 디렉토리
 * `/etc/nginx`:
 * `/etc/nginx/nginx.conf`:
 * `/etc/nginx/sites-avaiable`:
@@ -1082,18 +1077,18 @@ http://www.example.com
 
 #### 1.6.2.2 https
 
-1. 申请证书
+1. 인증서 신청
    
-   可以参考[腾讯云 域名型证书申请流程](https://cloud.tencent.com/document/product/400/6814)
+    [Tencent Cloud 도메인 이름 인증서 신청 절차] (https://cloud.tencent.com/document/product/400/6814)를 참조하세요.
 
-2. 下载证书
+2. 인증서 다운로드
 
-   这里使用nginx文件夹下面的密钥文件，例如`1_www.example.com_bundle.crt`和`2_www.example.com.key`
+    여기서는 nginx 폴더 아래의 키 파일 (예 :`1_www.example.com_bundle.crt` 및`2_www.example.com.key`)이 사용됩니다.
 
-3. 部署证书到nginx
+3. nginx에 인증서 배포
 
-   可以参考[腾讯云 证书安装指引](https://cloud.tencent.com/document/product/400/4143)
-   把两个密钥文件保存的`/etc/nginx`文件夹，然后修改`/etc/nginx/nginx.conf`文件：
+    [Tencent 클라우드 인증서 설치 가이드 라인] (https://cloud.tencent.com/document/product/400/4143)을 참조하세요.
+    두 개의 키 파일을`/ etc / nginx` 폴더에 저장 한 다음`/ etc / nginx / nginx.conf` 파일을 수정합니다.
    ```
 	  server {
 		listen 443;
@@ -1108,18 +1103,18 @@ http://www.example.com
       }
    ```
    
-4. 重启nginx
+4. nginx 다시 시작
 
-打开浏览器，输入以下地址：
+브라우저를 열고 다음 주소를 입력하십시오.
 ```
 https://www.example.com
 ```
 
-此时，可以看到https协议的nginx欢迎页面。
+이 시점에서 https 프로토콜의 nginx 시작 페이지를 볼 수 있습니다.
 
-#### 1.6.2.3 反向代理Spring Boot后端
+#### 1.6.2.3 리버스 프록시 스프링 부트 백엔드
 
-修改`/etc/nginx/nginx.conf`文件，配置nginx静态web文件目录
+/ etc / nginx / nginx.conf` 파일 수정, nginx 정적 웹 파일 디렉토리 구성
 ```
 server {
     location / {
@@ -1131,18 +1126,18 @@ server {
 }
 ```
 
-打开浏览器，输入以下地址：
+브라우저를 열고 다음 주소를 입력하십시오.
 ```
 https://www.example.com/wx/index/index
 https://www.example.com/admin/index/index
 https://www.example.com/admin/index/index
 ```
 
-此时，看到后端数据说明反向代理配置成功。
+브라우저를 열고 다음 주소를 입력하십시오. 이때 백엔드 데이터를 보면 역방향 프록시 구성이 성공했음을 나타냅니다.
 
-#### 1.6.2.4 全站加密
+#### 1.6.2.4 사이트 전체 암호화
 
-服务器自动把http的请求重定向到https
+서버는 자동으로 http 요청을 https로 리디렉션합니다.
 
 ```
 server {
@@ -1152,33 +1147,33 @@ server {
 }
 ```
 
-打开浏览器，输入以下地址：
+브라우저를 열고 다음 주소를 입력하십시오.
 ```
 http://www.example.com
 ```
 
-总结，经过以上不同方面的配置，nginx这里最终的配置是如下：
-1. 证书`1_www.example.com_bundle.crt`和`2_www.example.com.key`放置在
-    `/etc/nginx/`文件夹内。
-2. 把`/etc/nginx/nginx.conf`文件进行修改，具体可以参考[本项目的nginx.conf](./conf/nginx.conf)
-3. 重启nginx
+요약하면, 구성의 위의 다른 측면 이후에 nginx의 최종 구성은 다음과 같습니다.
+1. 인증서`1_www.example.com_bundle.crt` 및`2_www.example.com.key`는
+    `/ etc / nginx /`폴더에 있습니다.
+2.`/ etc / nginx / nginx.conf` 파일을 수정합니다. [이 프로젝트의 nginx.conf] (./ conf / nginx.conf)를 참조하십시오.
+3. nginx 다시 시작
 
-注意：
-> 更多配置方法和功能，请开发者自行学习。
+노트:
+> 더 많은 구성 방법과 기능을 위해 개발자는 스스로 학습해야합니다.
 
-### 1.6.3 小商场上线
+### 1.6.3 소규모 쇼핑몰이 온라인 상태입니다
 
-在1.6.2.3节"反向代理Spring Boot后端"成功以后，其实小商场的后端已经上线成功。
-这里介绍小商场的前端上线过程：
+1.6.2.3 절의 "Reverse proxy Spring Boot backend"성공 이후 소규모 쇼핑몰의 백엔드가 성공적으로 런칭되었습니다.
+다음은 소규모 쇼핑몰의 프런트 엔드 온라인 프로세스에 대한 소개입니다.
 
-上线之前需要修改代码或者配置文件：
-1. litemall-wx-api模块的WxOrderController类的payNotify方法的链接换成合适的地址。
+온라인으로 전환하기 전에 코드 또는 구성 파일을 수정해야합니다.
+1. litemall-wx-api 모듈의 WxOrderController 클래스의 payNotify 메서드 링크를 적절한 주소로 바꿉니다.
 
-   注意：
-   > 换成什么地址都可以，但是这里不应该暴露出来。也就是说这个地址是微信商户平台
-   > 和这里的小商场后端服务之间的交互API，对外公开会存在安全隐患。
+   노트:
+   > 모든 주소로 변경할 수 있지만 여기에 노출되어서는 안됩니다. 즉,이 주소는 WeChat 판매자 플랫폼입니다.
+   > 이곳의 소규모 쇼핑몰 백엔드 서비스와의 상호 작용 API는 보안 위험에 노출 될 수 있습니다.
    
-2. litemall-core模块需要配置application-core.yml
+2. litemall-core 모듈은 application-core.yml로 구성해야합니다.
 
     ```
     litemall:
@@ -1190,131 +1185,131 @@ http://www.example.com
             notify-url: http://www.example.com/wx/order/pay-notify
     ```
     
-    这里的`litemall.wx.notify-url`就是前面开发者自定义的地址。
+    여기서`litemall.wx.notify-url`은 이전 개발자가 사용자 정의한 주소입니다.
     
-3. litemall-wx模块的`project.config.json`文件调整相应的值，
-   特别是`appid`要设置成开发者申请的appid。
+3. litemall-wx 모듈의`project.config.json` 파일에서 해당 값을 조정합니다.
+   특히`appid`는 개발자가 적용한 appid로 설정해야합니다.
 
-### 1.6.4 管理后台上线
+### 1.6.4 관리 배경이 온라인 상태입니다.
 
-在1.6.2.3节"反向代理Spring Boot后端"成功以后，其实管理后台已经上线成功，
-包括管理后台的前端和后端，会同时对外提供管理后台的前端文件和后端数据。
-当然，这里开发者需要自己的线上环境在以下文件中或代码中修改相应的配置。
+1.6.2.3 절의 "Reverse proxy Spring Boot backend"가 성공한 후 관리 백엔드가 성공적으로 시작되었습니다.
+백엔드 관리의 프론트 엔드와 백엔드를 포함하고 백엔드 관리의 프론트 엔드 파일과 백엔드 데이터를 동시에 제공합니다.
+물론 여기에서 개발자는 다음 파일 또는 코드에서 해당 구성을 수정하기 위해 자신의 온라인 환경이 필요합니다.
 
-1. MySQL数据库设置合适的用户名和密码信息；
-2. 管理后台后端服务模块设置合适的配置信息，建议开发者参考deploy/litemall的外部配置文件，
-   这样可以避免开发者对模块内部的开发配置文件造成修改；
-3. 管理后台前端litemall-admin模块`.env.production`中的`VUE_APP_BASE_API`设置管理后台后端服务的服务地址。
+1. MySQL 데이터베이스에 대한 적절한 사용자 이름 및 암호 정보를 설정합니다.
+2. 관리 배경의 백엔드 서비스 모듈에 대한 적절한 구성 정보를 설정하고 개발자는 deploy / litemall의 외부 구성 파일을 참조하는 것이 좋습니다.
+   이는 개발자가 모듈 내부의 개발 구성 파일을 수정하지 못하게 할 수 있습니다.
+3. 관리 백엔드 프론트 엔드의 litemall-admin 모듈`.env.production`의`VUE_APP_BASE_API`는 백엔드 관리 서비스의 서비스 주소를 설정합니다.
 
-### 1.6.5 项目评估
+### 1.6.5 프로젝트 평가
 
-本项目只是参考项目，项目代码质量和功能不可能符合开发者的最终需求，
-因此开发者**请务必仔细评估项目代码**。
+이 프로젝트는 참조 프로젝트 일뿐 프로젝트 코드의 품질과 기능은 개발자의 최종 요구 사항을 충족 할 수 없습니다.
+따라서 개발자는 프로젝트 코드 **를주의 깊게 평가해야합니다.
 
-特别提醒，上线前管理员用户名和密码请更改，不能采用这里的默认值。
+온라인에 접속하기 전에 관리자 사용자 이름과 비밀번호를 변경하시기 바랍니다. 여기서 기본값은 사용할 수 없습니다.
 
-### 1.6.6 项目优化
+### 1.6.6 프로젝트 최적화
 
-以下是部署方案中出现而在上线方案中可以优化的一些步骤。
+다음은 배포 계획에 표시되지만 온라인 계획에서 최적화 할 수있는 몇 가지 단계입니다.
 
-#### 1.6.6.1 管理后台前端文件启动优化
+#### 1.6.6.1 관리 백그라운드 프런트 엔드 파일 시작 최적화
 
-litemall-admin编译得到的前端文件在第一次加载时相当耗时，这里需要一些措施来优化启动速度
+litemall-admin에 의해 컴파일 된 프런트 엔드 파일은 처음로드 할 때 시간이 많이 걸리며 시작 속도를 최적화하려면 몇 가지 조치가 필요합니다.
 
-* 静态文件托管CDN
+* 정적 파일 호스팅 CDN
 
-  在上节中，采用Spring Boot来分发管理后台的静态文件。
-  这里可以进一步地，把静态文件托管到CDN，当然这里是需要收费。
+  이전 섹션에서 Spring Boot는 관리 백그라운드에서 정적 파일을 배포하는 데 사용되었습니다.
+  여기에서 한 단계 더 나아가 CDN에 정적 파일을 호스팅 할 수 있습니다. 물론 요금이 부과됩니다.
 
-* gzip压缩
+* gzip 압축
 
-* 动态加载
+* 동적 로딩
 
-#### 1.6.6.2 后端服务内部访问
+#### 1.6.6.2 백엔드 서비스의 내부 액세스
 
-原来后端服务（包括小商城的后端服务和管理后台的后端服务）可以通过域名或者IP直接对外服务，而这里采用nginx反向代理后可以
-通过80端口访问后端服务。因此，会存在这样一种结果：
-* 用户可以https协议的80端口访问后端服务（nginx反向代理）
-* 用户也可以通过http协议的8080访问后端服务（spring boot）
-由于http不是安全的，这里可能存在安全隐患
+원래 백엔드 서비스 (소형 몰의 백엔드 서비스 및 관리 백엔드의 백엔드 서비스 포함)는 도메인 이름 또는 IP를 통해 직접 서비스 할 수 있으며 여기에서 nginx 역방향 프록시를 사용할 수 있습니다.
+포트 80을 통해 백엔드 서비스에 액세스합니다. 따라서 다음과 같은 결과가 나타납니다.
+* 사용자는 https 프로토콜 (nginx 역방향 프록시)의 포트 80에서 백엔드 서비스에 액세스 할 수 있습니다.
+* 사용자는 http 프로토콜의 8080을 통해 백엔드 서비스 (봄 부팅)에 액세스 할 수도 있습니다.
+http는 안전하지 않으므로 여기에 보안 위험이있을 수 있습니다.
 
-而如果取消后端服务的对外访问，这样可以保证用户只能采用安全的https协议访问后端服务。
-同时，对外也能屏蔽内部具体技术架构细节。
+또한 백엔드 서비스의 외부 액세스가 취소되면 사용자가 백엔드 서비스에 액세스하는 데 보안 https 프로토콜 만 사용할 수 있도록 보장 할 수 있습니다.
+동시에 내부의 특정 기술 아키텍처 세부 사항도 외부로부터 보호 할 수 있습니다.
 
-#### 1.6.6.4 nginx优化
+#### 1.6.6.4 nginx 최적화
 
-建议开发者根据自己业务或架构情况优化。
+개발자는 자신의 비즈니스 또는 아키텍처에 따라 최적화하는 것이 좋습니다.
 
-### 1.6.7 项目安全
+### 1.6.7 프로젝트 보안
 
-项目一旦正式上线，即对外正式服务。但是服务同时，可能会存在安全隐患甚至黑客攻击。
+프로젝트가 공식적으로 시작되면 공식적으로 서비스됩니다. 그러나 동시에 보안 위험과 해커 공격이있을 수 있습니다.
 
-本节仅列举一些注意事项，欢迎开发者补充和完善。
+이 섹션에는 몇 가지주의 사항 만 나열되어 있으며 개발자는 추가 및 개선 할 수 있습니다.
 
-#### 1.6.7.1 账户安全
+#### 1.6.7.1 계정 보안
 
-这里的账号安全，既包括商城端用户账户，也包括管理后台端管理员账户。
+여기에서 계정 보안에는 몰 측의 사용자 계정과 관리 백엔드 측의 관리자 계정이 모두 포함됩니다.
 
-目前账号安全还缺乏一点的保护措施，例如
+현재 계정 보안에는 다음과 같은 일부 보호 조치가 여전히 부족합니다.
 
-* 用户密码失败超过阈值，则显示验证码；
-* 用户密码失败超过阈值，则取消登录；
-* 用户密码失败超过阈值，则需要手机验证码；
+* 사용자 암호가 실패하고 임계 값을 초과하면 확인 코드가 표시됩니다.
+* 사용자 암호가 실패하고 임계 값을 초과하면 로그인이 취소됩니다.
+* 사용자 암호가 임계 값을 초과하지 않을 경우 휴대폰 인증 코드가 필요합니다.
 
-#### 1.6.7.2 关键业务记录
+#### 1.6.7.2 주요 사업 기록
 
-有关订单或者金钱相关的操作，建议开发者尽可能记录在数据库中，以便以后回溯。
+주문 또는 금전 관련 작업과 관련하여 개발자는 향후 검토를 위해 최대한 데이터베이스에 기록하는 것이 좋습니다.
 
-#### 1.6.7.3 API统一调整
+#### 1.6.7.3 API 통합 조정
 
-本项目公布了参考API接口，如果出现BUG可能会被黑客作为入口。
-建议开发者上线之前可以统一调整接口，以减少安全隐患。
+이 프로젝트는 레퍼런스 API 인터페이스를 공개했으며, BUG가 있으면 해커가 입구로 사용될 수 있습니다.
+개발자는 보안 위험을 줄이기 위해 온라인으로 전환하기 전에 인터페이스를 균일하게 조정하는 것이 좋습니다.
 
-#### 1.6.7.4 对账
+#### 1.6.7.4 조정
 
-本项目管理后台没有对账功能，建议开发者可以开发对账比对商场的状态是否正常。
+프로젝트 관리 백엔드에는 조정 기능이 없으므로 개발자가 쇼핑몰의 상태가 정상인지 확인하기 위해 조정 기능을 개발할 것을 권장합니다.
 
-#### 1.6.7.5 取消或者限制退款
+#### 1.6.7.5 환불 취소 또는 제한
 
-本项目不支持自动退款功能，而是在管理后台通过管理员点击退款按钮来人工退款。
-但是仍然可能存在隐患，例如黑客通过漏洞进入管理后台从而进行不合理的退款操作。
+이 프로젝트는 자동 환불 기능을 지원하지 않지만 관리자를 통한 수동 환불은 관리 배경에서 환불 버튼을 클릭합니다.
+그러나 해커가 허점을 통해 관리 배경에 진입하여 불합리한 환불 작업을 수행하는 등 여전히 숨겨진 위험이있을 수 있습니다.
 
-因此建议开发者可以取消管理后台的退款按钮，而仅仅保持退款信息，管理员可以登录
-微信官方支付平台进行退款操作。
+따라서 개발자는 관리 배경에서 환불 버튼을 취소하고 환불 정보 만 유지하는 것이 좋습니다. 관리자는 로그인 할 수 있습니다.
+WeChat 공식 결제 플랫폼은 환불 작업을 수행합니다.
 
-或者建议开发者基于一定的业务逻辑或场景限制管理后台的退款功能。例如，设置当天
-退款限额从而保证不会产生无限退款操作。
+또는 개발자가 특정 비즈니스 로직 또는 시나리오를 기반으로 관리 백엔드의 환불 기능을 제한하는 것이 좋습니다. 예를 들어, 요일 설정
+환불 한도는 무제한 환불 작업이 없음을 보장합니다.
 
-#### 1.6.7.6 资源限制访问
+#### 1.6.7.6 리소스 제한 액세스
 
-一些API操作涉及到后端服务器资源，因此需要做一定的限制，防止有限资源被恶意消耗。
+일부 API 작업에는 백엔드 서버 리소스가 포함되므로 제한된 리소스가 악의적으로 사용되지 않도록 특정 제한을 적용해야합니다.
 
-有限资源可能包括：
+제한된 리소스에는 다음이 포함될 수 있습니다.
 
-* 验证码
-* 图片上传
+* 확인 코드
+* 사진 업로드
 
-一些限制措施可能包括：
+몇 가지 제한 사항은 다음과 같습니다.
 
-* 限制单个IP的访问频率
-* 限制用户上传图片数量
+* 단일 IP의 액세스 빈도 제한
+* 사용자가 업로드하는 사진 수 제한
 
-#### 1.6.7.n 跟踪本项目进展
+#### 1.6.7.n이 프로젝트의 진행 상황 추적
 
-一旦有开发者反馈BUG，本项目会优先解决并及时上传补丁。
-因此建议开发者跟踪本项目进展，留意每次BUG修复的commit。
+개발자가 BUG에 대한 피드백을 받으면이 프로젝트는 문제 해결에 우선 순위를 부여하고 적시에 패치를 업로드합니다.
+따라서 개발자는이 프로젝트의 진행 상황을 추적하고 각 버그 수정의 커밋에주의를 기울이는 것이 좋습니다.
 
-同时也希望开发者发现任何BUG都及时反馈。
+동시에 개발자가 발견 된 모든 BUG에 대해 즉시 피드백을 제공하기를 바랍니다.
 
-目前还不存在LTS版本，未来业务稳定后可能会发布。
+현재 LTS 버전은 없으며 향후 사업이 안정되면 출시 될 수 있습니다.
 
-## 1.7 项目管理
+## 1.7 프로젝트 관리
 
-这里简述一些当前项目开发的要点。
+다음은 현재 프로젝트 개발의 몇 가지 핵심 사항입니다.
 
-### 1.7.1 项目.gitignore
+### 1.7.1 project.gitignore
 
-当前项目的.gitignore不是单一文件，而是多个模块都存在：
+현재 프로젝트의 .gitignore는 단일 파일이 아니지만 여러 모듈이 있습니다.
 * deploy/.gitignore
 * litemall-admin/.gitignore
 * litemall-admin-api/.gitignore
@@ -1324,126 +1319,126 @@ litemall-admin编译得到的前端文件在第一次加载时相当耗时，这
 * litemall-all/.gitignore
 * .gitignore
 
-开发者可以采用单一.gitignore文件。
+개발자는 단일 .gitignore 파일을 사용할 수 있습니다.
 
-### 1.7.2 项目自动部署
+### 1.7.2 자동 프로젝트 배포
 
-#### 1.7.2.1 deploy部署
+#### 1.7.2.1 배포 배포
 
-当前项目存在deploy部署文件夹，这个是上述1.5.1节部署腾讯云服务器所采取的一些脚本。
+현재 프로젝트에는 배포 배포 폴더가 있습니다. 위의 섹션 1.5.1에서 Tencent Cloud 서버를 배포하는 데 사용되는 몇 가지 스크립트입니다.
 
-流程如下：
-1. util脚本是当前开发服务器运行，用来打包项目和上传腾讯云服务器；
-2. 打包项目时，会编译打包项目相关模块到litemall和db文件夹中；
-3. bin脚本是云服务器运行，用来安装数据库、导入数据、启动项目服务。
+과정은 다음과 같습니다.
+1. util 스크립트는 프로젝트를 패키징하고 Tencent Cloud 서버를 업로드하는 데 사용되는 현재 개발 서버에서 실행 중입니다.
+2. 프로젝트가 패키징되면 패키징 된 프로젝트의 관련 모듈이 litemall 및 db 폴더로 컴파일됩니다.
+3. 데이터베이스를 설치하고 데이터를 가져오고 프로젝트 서비스를 시작하기 위해 클라우드 서버에서 bin 스크립트를 실행합니다.
 
-这里deploy部署方式比较简单不灵活，开发者可以参考开发自己的项目脚本。
+여기서 배포 방법은 비교적 간단하고 융통성이 없으며 개발자는 자신의 프로젝트 스크립트를 참조하고 개발할 수 있습니다.
 
-#### 1.7.2.2 .gitlab-ci.yml部署
+#### 1.7.2.2 .gitlab-ci.yml 배포
 
-目前不支持
+현재 지원되지 않음
 
-#### 1.7.2.3 docker部署
+#### 1.7.2.3 도커 배포
 
-目前不支持
+현재 지원되지 않음
 
-### 1.7.3 项目代码风格
+### 1.7.3 프로젝트 코드 스타일
 
-由于本项目涉及三种技术栈，因此针对这三种技术栈也存在三种代码风格。
+이 프로젝트에는 세 가지 기술 스택이 포함되므로이 세 가지 기술 스택에 대한 세 가지 코드 스타일도 있습니다.
 
-如果开发者想要贡献代码，建议尽可能保证代码符合这里的规范。
+개발자가 코드를 제공하려는 경우 코드가 가능한 한 여기의 사양을 준수하는지 확인하는 것이 좋습니다.
 
-#### 1.7.3.1 Spring Boot技术栈代码风格
+#### 1.7.3.1 Spring Boot 기술 스택 코드 스타일
 
-这里的代码风格采用IDEA默认代码风格。
+여기의 코드 스타일은 IDEA의 기본 코드 스타일을 채택합니다.
 
-修改代码后，利用`Code`菜单的`Reformat Code`即可格式化代码。
+코드를 수정 한 후 '코드'메뉴의 '코드 재 형식화'를 사용하여 코드 형식을 지정합니다.
 
-#### 1.7.3.2 小程序技术栈代码风格
+#### 1.7.3.2 미니 프로그램 기술 스택 코드 스타일
 
-这里的代码风格采用微信开发者工具默认代码风格。
+여기에서 코드 스타일은 WeChat 개발자 도구의 기본 코드 스타일을 채택합니다.
 
-修改代码以后，利用`编辑`菜单的`格式化代码`即可格式化代码。
+코드를 수정 한 후 '편집'메뉴의 '코드 서식'을 사용하여 코드 서식을 지정합니다.
 
-#### 1.7.3.3 Vue技术栈代码风格
+#### 1.7.3.3 Vue 기술 스택 코드 스타일
 
-这里的代码风格采用ESLint配置代码风格，具体参考vue-element-admin下项目的
-[ESLint文档](https://panjiachen.github.io/vue-element-admin-site/zh/guide/advanced/eslint.html),
-特别是`vscode 配置 ESLint`内容。
+여기서 코드 스타일은 ESLint 구성 코드 스타일을 채택합니다. 자세한 내용은 vue-element-admin 아래의 프로젝트를 참조하십시오.
+[ESLint 문서] (https://panjiachen.github.io/vue-element-admin-site/zh/guide/advanced/eslint.html),
+특히`vscode는 ESLint` 콘텐츠를 구성합니다.
 
-注意：
-> Visual Studio Code编辑器中右键存在`格式化代码`的选项，但是请不要使用这种方式，
-> 因为VSC自带的格式化代码风格和ESLint代码风格可能不完全一致。
+노트:
+> Visual Studio Code 편집기에서 마우스 오른쪽 버튼을 클릭하면`Format Code` 옵션이 있지만이 방법은 사용하지 마십시오.
+> VSC 및 ESLint 코드 스타일의 서식 코드 스타일이 정확히 같지 않을 수 있기 때문입니다.
 
-### 1.7.4 Spring Boot多模块多阶段配置
+### 1.7.4 Spring Boot 다중 모듈 다중 단계 구성
 
-目前后端服务采用Spring Boot多模块方案，结构清晰、易于测试。
+현재 백엔드 서비스는 구조가 명확하고 테스트하기 쉬운 Spring Boot 다중 모듈 솔루션을 채택하고 있습니다.
 
-但是存在一个问题，即多模块配置依赖。
-例如，litemall-db模块存在数据库配置信息，那么其他模块如何引入
-litemall-db模块的配置信息呢？
+그러나 문제, 즉 다중 모듈 구성 종속성이 있습니다.
+예를 들어 litemall-db 모듈에 데이터베이스 구성 정보가있는 경우 다른 모듈을 가져 오는 방법
+litemall-db 모듈의 구성 정보는 어떻습니까?
 
-最简单的方式，就是其他模块把litemall-db模块的配置信息拷贝到自己的
-application配置文件中，但是问题就是数据库信息一旦改变则其他模块又要
-再次手动修改，非常不方便。
+가장 간단한 방법은 litemall-db 모듈의 구성 정보를 다른 모듈에서 자신의 모듈로 복사하는 것입니다.
+응용 프로그램 구성 파일이 있지만 문제는 데이터베이스 정보가 변경되면 다른 모듈이
+다시 수동 수정은 매우 불편합니다.
 
-目前本项目采用一种基于`spring.profiles.active`的方式，细节如下：
-1. litemall-db模块存在application.yml和application-db.yml两个配置文件，
-    在application-db.yml配置文件中存放数据库配置信息；
-2. litemall-core模块也存在application.yml和application-core.yml两个配置文件,
-    在application-core.yml配置文件中存放core模块的一些配置信息，而在application.yml
-    中存在这样一个配置：
+현재이 프로젝트는 'spring.profiles.active'기반의 메소드를 채택하고 있으며 세부 내용은 다음과 같다.
+1. litemall-db 모듈에는 application.yml 및 application-db.yml의 두 구성 파일이 있습니다.
+    application-db.yml 구성 파일에 데이터베이스 구성 정보를 저장합니다.
+2. litemall-core 모듈에는 application.yml 및 application-core.yml의 두 구성 파일도 있습니다.
+    코어 모듈의 일부 구성 정보는 application-core.yml 구성 파일 및 application.yml에 저장됩니다.
+    다음과 같은 구성이 있습니다.
     ```
     spring:
         profiles:
             active: core, db
     ```
-    因此，如果单独启动litemall-core模块，则会先读取application.yml配置文件，然后基于
-    系统会根据`spring.profiles.active`读取application-db.yml和application-core.yml配置文件，
-    因此就会自动读取litemall-db模块的配置文件。
-3. 以此类推，在litemall-all模块中存在application.yml配置文件，其中内容是
+    따라서 litemall-core 모듈이 별도로 시작되면 application.yml 구성 파일을 먼저 읽은 다음
+     시스템은`spring.profiles.active`에 따라 application-db.yml 및 application-core.yml 구성 파일을 읽습니다.
+     따라서 litemall-db 모듈의 구성 파일을 자동으로 읽습니다.
+3. 비유하자면 litemall-all 모듈에 application.yml 구성 파일이 있습니다. 여기서 내용은
     ```
     spring:
         profiles:
             active:  db, core, admin, wx
     ```
-    因此，系统启动litemall-all模块以后，则会先读取application.yml配置文件，然后基于
-    `spring.profiles.active`进一步读取application-db.yml、application-core.yml、
-    application-admin.yml和application-wx.yml四个模块的配置文件。
+    따라서 시스템이 litemall-all 모듈을 시작한 후 먼저 application.yml 구성 파일을 읽은 다음
+    `spring.profiles.active`는 application-db.yml, application-core.yml,
+    4 개 모듈, application-admin.yml 및 application-wx.yml의 구성 파일.
     
-但是，虽然以上方案解决了多模块配置依赖问题，但是又会导致另外一个问题，如何支持不同profile，
-也就是开发阶段、测试阶段和上线阶段配置不同。
+그러나 위의 솔루션이 다중 모듈 구성 종속성 문제를 해결하더라도 다른 프로필을 지원하는 방법,
+즉, 개발 단계, 테스트 단계 및 온라인 단계의 구성이 다릅니다.
 
-这里介绍本项目的思路，就是基于Spring Boot的配置加载顺序，采用外部配置文件覆盖jar包内部配置文件。
-1. 开发阶段，系统的配置信息在模块的resources目录配置文件中；
-2. 测试或者部署阶段，系统打包成一个litemall.jar二进制jar包，jar包内部配置文件是之前
-    开发阶段的配置文件，此时在litemall.jar的同级目录创建相同的配置文件，在这些配置文件则
-    保存了测试或者部署阶段的配置信息。启动litemall.jar时，系统会读取当前目录的配置文件，而
-    不再读取jar包内部的配置文件。
-3. 上线阶段，同样地，在litemall.jar包同级目录创建上线配置文件。
+이 프로젝트의 아이디어는 Spring Boot의 구성 로딩 시퀀스를 기반으로 여기에서 소개되며 외부 구성 파일을 사용하여 jar 패키지의 내부 구성 파일을 덮어 씁니다.
+1. 개발 단계에서 시스템의 구성 정보는 모듈의 리소스 디렉토리 구성 파일에 있습니다.
+2. 테스트 또는 배포 단계에서 시스템은 litemall.jar 바이너리 jar 패키지로 패키징되며 jar 패키지의 내부 구성 파일은 이전 파일입니다.
+    개발 단계의 구성 파일에 대해서는 이때 litemall.jar의 동일한 수준 디렉토리에 동일한 구성 파일을 만듭니다. 이러한 구성 파일에서
+    테스트 또는 배포 단계의 구성 정보가 저장됩니다. litemall.jar을 시작할 때 시스템은 현재 디렉토리의 구성 파일을 읽습니다.
+    jar 패키지 내의 구성 파일은 더 이상 읽히지 않습니다.
+3. 마찬가지로 온라인 단계에서 litemall.jar 패키지의 동일한 수준 디렉토리에 온라인 구성 파일을 만듭니다.
 
-此外，这里还可以采用另外一种思路，如下图：
-![](./pics/project/maven-profile.png)
-![](./pics/project/spring-profile.png)
-![](./pics/project/yml-resource.png)
+또한 아래와 같이 다른 사고 방식을 사용할 수 있습니다.
+! [] (./ pics / project / maven-profile.png)
+! [] (./ pics / project / spring-profile.png)
+! [] (./ pics / project / yml-resource.png)
 
-其实原理也很简单，就是配置文件采用application-{module}-{profile}.yml来支持不同模块不同阶段的配置需求。
+사실 원칙도 매우 간단합니다. 즉, 구성 파일은 application- {module}-{profile} .yml을 사용하여 여러 단계에서 서로 다른 모듈의 구성 요구 사항을 지원합니다.
 
-### 1.7.5 前后端校验
+### 1.7.5 프런트 엔드 및 백 엔드 확인
 
-本项目是前后端分离项目，当用户或者管理员在系统中输入数据时，
-数据需要进行两层校验。
+이 프로젝트는 프론트 엔드와 백엔드 분리 프로젝트로 사용자 나 관리자가 시스템에 데이터를 입력하면
+데이터에는 두 가지 수준의 확인이 필요합니다.
 
-* 第一层是前端校验，是对参数格式校验。
-* 第二层是后端校验，不仅对参数校验，还会根据业务场景进行校验。
+* 첫 번째 계층은 매개 변수 형식을 확인하는 프런트 엔드 확인입니다.
+* 두 번째 계층은 백엔드 검증으로, 매개 변수를 검증 할뿐만 아니라 비즈니스 시나리오에 따라 검증합니다.
 
-注意
-> 目前项目校验思路是这样，但是实际代码的校验还不完善，
-> 例如前端校验代码不完善，导致用户体验较差。
+노트
+> 현재 프로젝트 검증 아이디어는 이렇지 만 실제 코드 검증은 완벽하지 않습니다.
+> 예를 들어 프런트 엔드 인증 코드가 완벽하지 않아 사용자 경험이 저하됩니다.
 
-### 1.7.6 后端响应错误码
+### 1.7.6 백엔드 응답 오류 코드
 
-后端服务的响应结果是：
+백엔드 서비스의 응답 결과는 다음과 같습니다.
 ```
 {
     errno： 错误码，
@@ -1452,67 +1447,67 @@ application配置文件中，但是问题就是数据库信息一旦改变则其
 }
 ```
 
-当errno是0时，则data保存业务数据；
-当error是非0时，则业务失败，errmsg保存具体错误信息。
+errno가 0이면 데이터는 비즈니스 데이터를 저장합니다.
+오류가 0이 아니면 서비스가 실패하고 errmsg가 특정 오류 정보를 저장합니다.
 
-目前，errno存在四种形式：
-* 4xx，前端错误，说明前端开发者需要重新了解后端接口使用规范：
-  * 401，参数错误，即前端没有传递后端需要的参数；
-  * 402，参数值错误，即前端传递的参数值不符合后端接收范围。
-* 5xx，后端系统错误，除501外，说明后端开发者应该继续优化代码，尽量避免返回后端系统错误码：
-  * 501，验证失败，即后端要求用户登录；
-  * 502，系统内部错误，即没有合适命名的后端内部错误；
-  * 503，业务不支持，即后端虽然定义了接口，但是还没有实现功能；
-  * 504，更新数据失效，即后端采用了乐观锁更新，而并发更新时存在数据更新失效；
-  * 505，更新数据失败，即后端数据库更新失败（正常情况应该更新成功）。
-* 6xx，管理后台后端业务错误码，具体见litemall-admin-api模块的`AdminResponseCode`类。
-* 7xx，小商城后端业务错误码，具体见litemall-wx-api模块的`WxResponseCode`类。
+현재 errno는 네 가지 형태로 존재합니다.
+* 4xx, 프런트 엔드 오류는 프런트 엔드 개발자가 백 엔드 인터페이스 사용 사양을 다시 학습해야 함을 나타냅니다.
+  * 401, 매개 변수 오류, 즉 프런트 엔드가 백 엔드에 필요한 매개 변수를 전달하지 않았습니다.
+  * 402, 매개 변수 값이 잘못되었습니다. 즉, 프런트 엔드에서 전달한 매개 변수 값이 백 엔드의 수신 범위를 충족하지 않습니다.
+* 5xx, 백엔드 시스템 오류 (501 제외)는 백엔드 개발자가 계속해서 코드를 최적화하고 백엔드 시스템 오류 코드의 반환을 피해야 함을 나타냅니다.
+  * 501, 확인에 실패했습니다. 즉, 백엔드에서 사용자가 로그인해야합니다.
+  * 502, 시스템 내부 오류, 즉 적절하게 명명 된 백엔드 내부 오류가 없습니다.
+  * 503, 비즈니스는 지원하지 않습니다. 즉, 백엔드가 인터페이스를 정의하지만 기능을 구현하지 않았습니다.
+  * 504, 업데이트 데이터가 잘못되었습니다. 즉, 백엔드가 낙관적 잠금 업데이트를 사용하고 동시 업데이트 중에 데이터 업데이트 무효화가 있습니다.
+  * 505, 데이터 업데이트 실패, 즉 백엔드 데이터베이스 업데이트 실패 (일반적인 상황에서 업데이트가 성공해야 함).
+* 6xx, 관리 백엔드 비즈니스 오류 코드, 자세한 내용은 litemall-admin-api 모듈의`AdminResponseCode` 클래스를 참조하십시오.
+* 소규모 쇼핑몰의 백엔드 비즈니스 오류 코드 7xx, 자세한 내용은 litemall-wx-api 모듈의`WxResponseCode` 클래스를 참조하십시오.
 
-需要指出的是，小商场后端可能返回4xx、5xx和6xx错误码；管理后台后端则可能返回4xx、5xx和7xx错误码。
-这样设计原因是方便小商场前端和管理后台前端区别对待。
+소규모 쇼핑몰의 백엔드는 4xx, 5xx, 6xx 오류 코드를 반환 할 수 있고, 관리 백엔드의 백엔드는 4xx, 5xx 및 7xx 오류 코드를 반환 할 수 있다는 점에 유의해야합니다.
+이 디자인의 이유는 작은 쇼핑몰의 프런트 엔드를 관리 배경의 프런트 엔드와 다르게 취급하는 것이 편리하기 때문입니다.
 
-小商城前端处理后端响应错误码，存在三种处理方式：
-* 如果是4xx，说明前端开发者请求后端API时使用方式存在问题。
-例如，后端需要参数“name”，但是前端却没有传值，这个时候后端返回”用户名不对“
-没有任何意义，因为这里前端使用错误。相反，简单地返回“参数不对”反而会及早提醒
-前端开发者使用出现了问题。
-* 如果是5xx，（除501外）说明后端系统出现错误，后端开发者应该修复或者优化，此外
-前端可以在请求响应处统一处理5xx错误，而不是把错误信息返回到具体页面。
-例如，后端返回“更新数据失败”，说明数据库更新时出现异常，因此前端请求响应处
-统一简单报错“系统出错，联系管理员”，这样管理员可以及时联系后端开发者。而后端开发者
-则需要评估具体错误码和错误信息，例如这里的“更新数据失败”很可能是数据表调整字段
-导致Java代码的模型对象和数据库表不一致，此时后端开发者就可以及时修复。
-此外，对于501验证失败，则前端请求响应处可以统一处理跳转登录页面。
-* 如果是6xx，则说明是具体业务错误，此时前端需要在业务具体页面显示错误信息即可，同时
-这里也要求后端开发者书写良好友好的业务错误信息，因为会向最终用户显示。
+소규모 쇼핑몰의 프런트 엔드 응답에서 오류 코드를 처리하는 방법에는 세 가지가 있습니다.
+* 4xx라면 프론트 엔드 개발자가 백엔드 API를 요청하는 방식에 문제가 있음을 의미합니다.
+예를 들어 백엔드에는 '이름'매개 변수가 필요하지만 프런트 엔드는 값을 전달하지 않습니다. 이때 백엔드는 '잘못된 사용자 이름'을 반환합니다.
+여기서 프런트 엔드가 잘못 사용 되었기 때문에 말이되지 않습니다. 반대로 단순히 "매개 변수가 잘못되었습니다"를 반환하면 조기에 알 수 있습니다.
+프런트 엔드 개발자에 문제가 있습니다.
+* 5xx 인 경우 (501 제외) 백엔드 시스템에 오류가 있으며 백엔드 개발자가이를 수정하거나 최적화해야합니다.
+프런트 엔드는 특정 페이지에 오류 정보를 반환하는 대신 요청 응답에서 5xx 오류를 균일하게 처리 할 수 ​​있습니다.
+예를 들어 백엔드는 데이터베이스 업데이트 중에 예외가 발생했음을 나타내는 "데이터 업데이트 실패"를 반환하므로 프런트 엔드 요청 응답은
+관리자가 적시에 백엔드 개발자에게 연락 할 수 있도록 통합되고 단순한 오류 "시스템 오류, 관리자에게 문의". 그리고 백엔드 개발자
+특정 오류 코드 및 오류 정보를 평가해야합니다. 예를 들어 여기에서 "데이터 업데이트 실패"는 데이터 테이블 조정 필드 일 수 있습니다.
+결과적으로 Java 코드의 모델 객체는 데이터베이스 테이블과 일치하지 않으며 백엔드 개발자는 시간 내에이를 복구 할 수 있습니다.
+또한 501 검증 실패의 경우 프론트 엔드 요청 응답 부서에서 통합 방식으로 리디렉션 페이지를 처리 ​​할 수 ​​있습니다.
+* 6xx이면 특정 업무 오류임을 의미하며, 이때 Front-end는 특정 업무 페이지에 오류 정보를 표시 함과 동시에
+또한 백엔드 개발자는 최종 사용자에게 표시되기 때문에 훌륭하고 친숙한 비즈니스 오류 메시지를 작성해야합니다.
 
-和小商场前端类似，管理后台前端处理后端响应错误码也存在三种类似的处理方式。
+소규모 쇼핑몰의 프런트 엔드와 유사하게 백엔드 응답 오류 코드를 처리하기 위해 관리 배경의 프런트 엔드에 대해 세 가지 유사한 처리 방법이 있습니다.
 
-注意：
-> 这里的4xx和5xx错误码，和HTTP中的4xx和5xx状态码不是一个概念。
+노트:
+> 여기서 4xx 및 5xx 오류 코드는 HTTP의 4xx 및 5xx 상태 코드와 동일하지 않습니다.
 
 ### 1.7.7 TODO
 
-本项目存在一些TODO，**强烈建议**开发者上线前仔细审阅是否存在问题和做相应调整。
-开发者可以使用IDE找到这些TODO。
+이 프로젝트에는 몇 가지 TODO가 있습니다. ** 적극 권장 ** 개발자는 문제가 있는지 신중하게 검토하고 온라인으로 전환하기 전에 해당 조정을 수행합니다.
+개발자는 IDE를 사용하여 이러한 TODO를 찾을 수 있습니다.
 
-下面列出一些重要的TODO：
+몇 가지 중요한 TODO는 다음과 같습니다.
 
-#### 1.7.7.1 微信退款TODO
+#### 1.7.7.1 WeChat 환불 TODO
 
-管理后台管理员点击退款按钮时，管理后台会通过微信退款API请求微信商户平台退款。
-但是从安全角度考虑，**强烈建议**开发者删除微信退款代码，而登录微信商户平台手动退款。
-或者开发者添加安全相关代码，例如实现短信验证码。
+관리 배경 관리자가 환불 버튼을 클릭하면 관리 배경이 WeChat 환불 API를 통해 WeChat 판매자 플랫폼에 환불을 요청합니다.
+그러나 보안 관점에서 개발자는 WeChat 환불 코드를 삭제하고 WeChat 판매자 플랫폼에 로그인하여 수동으로 환불하는 것이 좋습니다.
+또는 개발자는 SMS 인증 코드 구현과 같은 보안 관련 코드를 추가 할 수 있습니다.
 
-见`AdminOrderController`类
+`AdminOrderController` 클래스 참조
 
-再次提醒，本项目不承担任何使用后果。
+다시 말하지만,이 프로젝트는 어떤 결과도 초래하지 않습니다.
 
-#### 1.7.7.2 未完善TODO
+#### 1.7.7.2 불완전한 TODO
 
-有些业务只是实现基本功能，因此这里TODO提醒开发者自行思考。
+일부 비즈니스는 기본 기능 만 구현하므로 여기서 TODO는 개발자가 스스로 생각하도록 상기시킵니다.
 
-#### 1.7.7.3 重构TODO
+#### 1.7.7.3 리팩터링 TODO
 
-有些业务需求不是很清晰，导致实现时可能存在不合理地方，这里TODO提醒
-开发者审阅代码逻辑。
+일부 비즈니스 요구 사항은 명확하지 않아 구현시 불합리한 위치로 이어질 수 있습니다.
+개발자는 코드 로직을 검토합니다.
