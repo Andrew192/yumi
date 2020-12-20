@@ -1,10 +1,10 @@
-# 5 litemall轻商城
+# 5 litemall
 
-litemall轻商城，是商城移动版本。
+litemall의 모바일버전
 
-技术：
+적용기술：
 
-* 轻商城前端，即litemall-vue模块
+* litemall-vue 모듈
   * vue-cli3 
   * Vue + Vue-router + Vant + Sass
   * axios
@@ -12,7 +12,7 @@ litemall轻商城，是商城移动版本。
   * babel-polyfill
   * @xkeshi/vue-countdown
   * Vant
-* 轻商城后端，即litemall-wx-api模块，也就是和小商城后端是一样的。
+* litemall-wx-api
   * Spring Boot 2.x
   * Spring MVC
   * [weixin-java-tools](https://gitee.com/binary/weixin-java-tools)
@@ -20,10 +20,8 @@ litemall轻商城，是商城移动版本。
 
 ## 5.1 litemall-wx-api
 
-可以阅读3.1
+3.1 확인
 
 ## 5.2 litemall-vue
 
-这里的代码基于[vant--mobile-mall](https://github.com/qianzhaoy/vant--mobile-mall)
-
-文档未完成。
+코드는 [vant--mobile-mall] (https://github.com/qianzhaoy/vant--mobile-mall)을 기반으로합니다.
