@@ -1,84 +1,84 @@
-# 2 litemall基础系统
+# 2 litemall 기본 시스템
 
-目前litemall基础系统由以下部分组成：
+현재 litemall 기본 시스템은 다음 부분으로 구성됩니다.
 
-* litemall-core模块
-* litemall-db模块
-* litemall-all模块
-* litemall-all-war模块
+* litemall-core 모듈
+* litemall-db 모듈
+* litemall-all 모듈
+* 전 전쟁 모듈
 
-litemall-db模块提供数据库访问服务。
+litemall-db 모듈은 데이터베이스 액세스 서비스를 제공합니다.
 
-litemall-core模块提供通用服务。
+litemall-core 모듈은 일반 서비스를 제공합니다.
 
-litemall-all模块则只是一个包裹模块，几乎没有任何代码。该模块的作用是融合两个spring boot模块
-和litemall-admin模块静态文件到一个单独Spring Boot可执行jar包中。
+litemall-all 모듈은 코드가 거의없는 패키지 모듈입니다. 이 모듈의 기능은 두 개의 스프링 부트 모듈을 통합하는 것입니다.
+그리고 litemall-admin 모듈 정적 파일을 단일 Spring Boot 실행 가능 jar 패키지로 만듭니다.
 
-litemall-all-war模块和litemall-all模块是一样的作用，只是采用war打包方式。
+litemall-all-war 모듈은 war 패키징을 사용한다는 점을 제외하면 litemall-all 모듈과 동일한 기능을 갖습니다.
 
 ## 2.2 litemall-db
 
-litemall-db模块是一个普通的Spring Boot应用，基于mybatis框架实现数据库访问操作，对外提供业务数据访问服务。
+litemall-db 모듈은 일반적인 Spring Boot 애플리케이션으로 mybatis 프레임 워크를 기반으로 데이터베이스 액세스 작업을 구현하고 외부 비즈니스 데이터 액세스 서비스를 제공합니다.
 
-此外，litemall-db最终是作为一个类库被其他模块所依赖使用，因此并不对外
-直接服务，没有使用Spring MVC技术。
+또한 litemall-db는 궁극적으로 다른 모듈에서 라이브러리로 사용되므로 외부가 아닙니다.
+Spring MVC 기술을 사용하지 않고 직접 서비스합니다.
 
-技术：
-* Spring Boot 2.x
+과학 기술:
+* 스프링 부트 2.x
 * MySQL
-* Druid
+* 드루이드
 * Mybatis
 * PageHelper
-* Mybatis Generator
-* Mybatis Generator非官方插件mybatis-generator-plugin
+* Mybatis 생성기
+* Mybatis Generator 비공식 플러그인 mybatis-generator-plugin
 
-![](./pics/platform/db-main.png)
+! [] (./ pics / platform / db-main.png)
 
-这里litemall-db模块可以分成以下几种代码：
+여기서 litemall-db 모듈은 다음 코드로 나눌 수 있습니다.
 
-* mybatis数据库访问代码
-  * generator生成代码
-  * 非generator手动代码
-* 业务代码
-* mybatis generator支持代码
+* mybatis 데이터베이스 액세스 코드
+  * 생성기는 코드를 생성
+  * 비 발전기 수동 코드
+* 비즈니스 코드
+* mybatis 생성기 지원 코드
 
-### 2.2.1 mybatis数据库访问代码
+### 2.2.1 Mybatis 데이터베이스 액세스 코드
 
-mybatis数据库访问代码是指dao接口代码、dao数据库XML文件和domain代码:
-* dao接口代码，声明了数据库访问接口
-* dao数据库XML文件，实现了数据库访问操作
-* domain代码，则是保存数据库返回数据。
+mybatis 데이터베이스 액세스 코드는 dao 인터페이스 코드, dao 데이터베이스 XML 파일 및 도메인 코드를 참조합니다.
+* dao 인터페이스 코드, 데이터베이스 액세스 인터페이스 선언
+* dao 데이터베이스 XML 파일, 데이터베이스 액세스 작업 실현
+* 도메인 코드는 데이터베이스에서 반환 된 데이터를 저장하는 것입니다.
 
-此外，这里的数据库访问代码又进一步分成
-* mybatis generator自动生成代码，即基于mybatis generator相关插件自动生成上述三种代码或文件；
-* 非mybatis generator手动代码，则是需要开发者自己编写上述三种代码。
+또한 여기의 데이터베이스 액세스 코드는
+* Mybatis 생성기는 자동으로 코드를 생성합니다. 즉, 위의 세 코드 또는 파일은 mybatis 생성기의 관련 플러그인을 기반으로 자동 생성됩니다.
+* 비 mybatis 생성기 수동 코드, 위의 세 가지 코드를 직접 작성해야합니다.
 
-#### 2.2.1.1 自动生成代码
+#### 2.2.1.1 자동 코드 생성
 
-![](./pics/platform/mybatis-generator.png)
+! [] (./ pics / platform / mybatis-generator.png)
 
-如上图所示，双击`mybatis-generator:generate`，则mybatis generator插件会：
+위 그림과 같이`mybatis-generator : generate`를 두 번 클릭하면 mybatis 생성기 플러그인이 다음을 수행합니다.
 
-1. 读取`mybatis-generator`文件夹下的`generatorConfig.xml`文件
-2. 根据`jdbcConnection`访问数据库
-3. 根据`table`, 自动生成三种代码:
-   * src文件夹`org.linlinjava.litemall.db.dao` 包内的Java代码
-   * src文件夹`org.linlinjava.litemall.db.domain` 包内的Java代码
-   * resources文件夹`org.linlinjava.litemall.db.domain.dao` 内的XML文件
+1.`mybatis-generator` 폴더에서`generatorConfig.xml` 파일을 읽습니다.
+2.`jdbcConnection`에 따라 데이터베이스에 액세스합니다.
+3. '테이블'에 따라 자동으로 생성되는 세 종류의 코드 :
+   * src 폴더`org.linlinjava.litemall.db.dao` 패키지의 자바 코드
+   * src 폴더`org.linlinjava.litemall.db.domain` 패키지의 Java 코드
+   * 리소스 폴더`org.linlinjava.litemall.db.domain.dao`의 XML 파일
 
-以上三种代码即可封装对数据库的操作，开发者无需直接操作sql代码，
-而是直接操作Java代码来完成对数据库的访问处理。
+위의 세 코드는 데이터베이스의 작동을 캡슐화 할 수 있으며 개발자는 SQL 코드를 직접 조작 할 필요가 없습니다.
+대신 Java 코드를 직접 조작하여 데이터베이스에 대한 액세스 처리를 완료하십시오.
 
-关于如何基于mybatis的Example代码来访问数据库，请查阅相关资料，
-或者参考本模块`org.linlinjava.litemall.db.service` 包内的Java代码。
+mybatis 예제 코드를 기반으로 데이터베이스에 액세스하는 방법은 관련 정보를 참조하십시오.
+또는이 모듈`org.linlinjava.litemall.db.service`의 패키지에있는 Java 코드를 참조하십시오.
 
-当然，为了达到数据库访问效率，开发者也可以手动自定义mapper文件和对应的Java代码。
-例如，当需要访问两个表的数据时，这里是在业务层通过Java代码遍历的形式来访问两个表，
-也可以通过自定义的mapper文件来实现。
+물론 데이터베이스 액세스 효율성을 달성하기 위해 개발자는 매퍼 파일과 해당 Java 코드를 수동으로 사용자 지정할 수도 있습니다.
+예를 들어, 두 테이블의 데이터에 액세스해야하는 경우 비즈니스 계층에서 Java 코드 순회 형식으로 두 테이블에 액세스해야합니다.
+사용자 정의 매퍼 파일을 통해서도 가능합니다.
 
-接下来，以`litemall_brand`表举例说明如何自动生成代码：
+다음으로`litemall_brand` 테이블을 예로 들어 코드를 자동으로 생성하는 방법을 보여줍니다.
 
-1. mybatis generator插件会读取`table`标签
+1. mybatis 생성기 플러그인은`table` 태그를 읽습니다.
 
     ```
     <generatorConfiguration>
@@ -88,11 +88,11 @@ mybatis数据库访问代码是指dao接口代码、dao数据库XML文件和doma
     </generatorConfiguration>
     ```
     
-2. 自动生产src文件夹下domain包内的LitemallBrand.java类、LitemallBrandExample.java类、
-    dao包内的LitemallBrandMapper.java接口和resources文件夹下dao包内的LitemallBrandMapper.xml文件。
+2. src 폴더 아래의 도메인 패키지에 LitemallBrand.java 및 LitemallBrandExample.java 자동 생성
+     dao 패키지의 LitemallBrandMapper.java 인터페이스와 리소스 폴더 아래의 dao 패키지에있는 LitemallBrandMapper.xml 파일.
 
-3. 手动在service包内创建LitemallBrandService.java来对外提供具体的服务。
-   例如，为了得到Brand列表，那么创建list方法，基于前面创建的三个Java来来实现。
+3. 서비스 패키지에 LitemallBrandService.java를 수동으로 생성하여 특정 서비스를 제공합니다.
+    예를 들어 브랜드 목록을 얻으려면 이전에 만든 세 가지 Java를 기반으로 목록 메서드를 만듭니다.
    
    ```java
     @Service
@@ -109,33 +109,33 @@ mybatis数据库访问代码是指dao接口代码、dao数据库XML文件和doma
     }
    ```
 
-关于mybatis generator的用法，可以自行查阅官网或文档。
+mybatis 생성기 사용에 대해서는 공식 웹 사이트 또는 문서를 직접 참조 할 수 있습니다.
 
-#### 2.2.1.2 手动代码
+#### 2.2.1.2 매뉴얼 코드
 
-虽然mybatis generator可以自动生产代码，帮助开发者简化开发工作，但是在涉及到多表操作或特殊数据库操作时，
-仍然需要开发者自己手动编写基于mybatis框架的相关代码。
+mybatis 생성기는 개발자가 개발 작업을 단순화하는 데 도움이되는 코드를 자동으로 생성 할 수 있지만 다중 테이블 작업이나 특수 데이터베이스 작업의 경우에는
+개발자는 여전히 mybatis 프레임 워크를 기반으로 관련 코드를 수동으로 작성해야합니다.
 
-具体如何基于mybatis框架编写代码，请开发者自己查找资料。
+특히 mybatis 프레임 워크를 기반으로 코드를 작성하는 방법은 직접 정보를 찾으십시오.
 
-这里，以统计功能举例说明：
+여기에서 통계 함수를 예로 들어 보겠습니다.
 
-1. dao代码
+1. dao 코드
 
-   在src文件夹`org.linlinjava.litemall.db.domain` 包内的StatMapper.java代码定义了数据库访问的接口
+   src 폴더`org.linlinjava.litemall.db.domain` 패키지의 StatMapper.java 코드는 데이터베이스 액세스 인터페이스를 정의합니다.
 
-2. domain代码
+2. 도메인 코드
  
-   如果希望数据库操作返回数据模型，可以在src文件夹`org.linlinjava.litemall.db.domain` 包内创建相应代码。
-   而这里统计功能是采用简化的`List<Map>`保存数据，没有定义domain代码。
+   데이터베이스 작업이 데이터 모델을 반환하도록하려면 src 폴더`org.linlinjava.litemall.db.domain` 패키지에 해당 코드를 생성 할 수 있습니다.
+   여기서 통계 함수는 도메인 코드를 정의하지 않고 단순화 된`List <Map>`을 사용하여 데이터를 저장합니다.
 
-3. XML文件
+3. XML 파일
 
-   在resources文件夹`org.linlinjava.litemall.db.domain.dao` 内的StatMapper.xml文件则是实现真正的数据库访问操作。
+   리소스 폴더`org.linlinjava.litemall.db.domain.dao`의 StatMapper.xml 파일은 실제 데이터베이스 액세스 작업을위한 것입니다.
 
-4. service代码
+4. 서비스 코드
 
-   这里可以在`org.linlinjava.litemall.db.service` 内定义一个StatServie.java代码，调用底层mapper代码，对外服务。
+   여기서`org.linlinjava.litemall.db.service`에 StatServie.java 코드를 정의하고 기본 매퍼 코드를 호출하고 외부에서 제공 할 수 있습니다.
     ```
     @Service
     public class StatService {
@@ -156,50 +156,50 @@ mybatis数据库访问代码是指dao接口代码、dao数据库XML文件和doma
     }
     ```
    
-### 2.2.2 业务代码
+### 2.2.2 비즈니스 코드
 
-虽然2.2.1节所述代码已经能够提供数据库访问操作，但是这里需要进一步地抽象出业务访问层代码，
-即基于2.2.1所述代码和实际业务需求实现一些具体业务相关的操作，对其他模块提供便捷业务数据服务。
+섹션 2.2.1에 설명 된 코드가 이미 데이터베이스 액세스 작업을 제공 할 수 있지만 여기에서 비즈니스 액세스 계층 코드를 더 추상화해야합니다.
+즉, 2.2.1에 설명 된 코드와 실제 비즈니스 요구 사항을 기반으로 특정 비즈니스 관련 작업을 구현하고 다른 모듈에 대한 편리한 비즈니스 데이터 서비스를 제공합니다.
 
-需要指出的是，这里的业务代码往往是单表相关的业务代码，而涉及到多表操作的java代码通常是在其他高层模块中实现。
-这里的业务分层并不是绝对的。例如，开发者可以取消这里的业务代码，而在其他模块中直接调用2.2.1所述代码。
+여기서 비즈니스 코드는 종종 단일 테이블과 관련된 비즈니스 코드이며 다중 테이블 작업을 포함하는 Java 코드는 일반적으로 다른 상위 수준 모듈에서 구현된다는 점을 지적해야합니다.
+여기서 비즈니스 계층은 절대적인 것이 아닙니다. 예를 들어 개발자는 여기에서 비즈니스 코드를 취소하고 다른 모듈에서 2.2.1에 설명 된 코드를 직접 호출 할 수 있습니다.
 
-通常业务层代码在src文件夹`org.linlinjava.litemall.db.service` 包中。
+일반적으로 비즈니스 계층 코드는 src 폴더`org.linlinjava.litemall.db.service` 패키지에 있습니다.
 
-### 2.2.3 mybatis generator支持代码
+### 2.2.3 mybatis 생성기 지원 코드
 
-mybatis generator自动生成代码时，通过内置类型转换器自动把数据库类型转换成Java类。
-例如数据库类型`varchar`自动转化成`java.lang.String`。
+mybatis 생성기가 자동으로 코드를 생성 할 때 데이터베이스 유형은 내장 유형 변환기를 통해 Java 클래스로 자동 변환됩니다.
+예를 들어 데이터베이스 유형 'varchar'는 자동으로 'java.lang.String'으로 변환됩니다.
 
-但是某些情况下，可以通过自定义TypeHandler的方式来采用自定义的类型转换器。
-开发者可以自行阅读相关资料了解。
+그러나 경우에 따라 TypeHandler를 사용자 지정하여 사용자 지정 형식 변환기를 사용할 수 있습니다.
+개발자는 이해하기 위해 관련 자료를 읽을 수 있습니다.
 
-本项目中，为了简化数据表的设计，某些字段采用`varchar`来存储Json格式的数据。
-例如商品的图片列表可以直接采用`[url0, url1, ...]`来存储，而不需要设计一个专门商品图片表。
+이 프로젝트에서 데이터 테이블의 디자인을 단순화하기 위해 일부 필드는 'varchar'를 사용하여 데이터를 Json 형식으로 저장합니다.
+예를 들어 특별한 제품 이미지 테이블을 디자인 할 필요없이`[url0, url1, ...]`을 사용하여 제품 이미지 목록을 직접 저장할 수 있습니다.
 
-这里通过自定义TypeHandler，可以实现Java的`String[]`和数据库类型`varchar`的自动转换。
+여기서 TypeHandler를 커스터마이즈하면 Java`String []`과 데이터베이스 유형`varchar` 간의 자동 변환이 가능합니다.
 
-1. 实现JsonStringArrayTypeHandler类；
-2. 在mybatis generator配置文件中，配置需要的字段；
+1. JsonStringArrayTypeHandler 클래스를 구현합니다.
+2. mybatis 생성기 구성 파일에서 필수 필드를 구성합니다.
     ```
         <table tableName="litemall_goods">
             <columnOverride column="gallery" javaType="java.lang.String[]"
                             typeHandler="org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler"/>
         </table>
     ```
-3. 使用mybatis generator自动生成代码，可以看到LitemallGoods的gallery是`String[]`类型。
+3. mybatis 생성기를 사용하여 자동으로 코드를 생성하면 LitemallGoods의 갤러리가`String []`유형임을 알 수 있습니다.
 
-目前只实现了两个自定义TypeHandler：
-* JsonStringArrayTypeHandler类，实现`String[]`和`varchar`的转换，保存的JSON数据格式是`[string0, string1, ...]`
-* JsonIntegerArrayTypeHandler类，实现`Integer[]`和`varchar`的转换，保存的JSON数据格式是`[integer0, integer1, ...]`
+현재 두 개의 사용자 정의 TypeHandler 만 구현됩니다.
+* JsonStringArrayTypeHandler 클래스는`String []`과`varchar` 간의 변환을 구현하며 저장된 JSON 데이터 형식은`[string0, string1, ...]`입니다.
+* JsonIntegerArrayTypeHandler 클래스는`Integer []`와`varchar` 간의 변환을 구현하며 저장된 JSON 데이터 형식은`[integer0, integer1, ...]`입니다.
 
-如果开发者需要保存其他格式的JSON数据或者自定义格式的数据，请自行开发。
+개발자가 JSON 데이터를 다른 형식으로 저장하거나 사용자 지정 형식으로 데이터를 저장해야하는 경우 직접 개발하십시오.
 
-### 2.2.4 新服务组件
+### 2.2.4 새로운 서비스 구성 요소
 
-本节介绍如果基于一个表创建新的服务组件。
+이 섹션에서는 테이블을 기반으로 새 서비스 구성 요소를 만드는 방법을 설명합니다.
 
-1. 在数据库里面创建一个表，例如`litemall_demo`:
+1. 데이터베이스에 테이블을 만듭니다 (예 :`litemall_demo`).
 
     ```sql
     CREATE TABLE `litemall`.`litemall_demo` (
@@ -212,7 +212,7 @@ mybatis generator自动生成代码时，通过内置类型转换器自动把数
     VALUES ('1', 'hello', 'world');
     ```
 
-2. 在generatorConfig.xml中增加一个新的table标签
+2. generatorConfig.xml에 새 테이블 태그 추가
 
     ```
     <generatorConfiguration>
@@ -221,10 +221,10 @@ mybatis generator自动生成代码时，通过内置类型转换器自动把数
          </table>
     </generatorConfiguration>
     ```
-3. 双击mybatis generator插件，检查LitemallDemo.java类、LitemallDemoExample.java类、
-   LitemallDemoMapper.java接口和LitemallDemoMapper.xml是否生产。
+3. mybatis 생성기 플러그인을 두 번 클릭하고 LitemallDemo.java 클래스, LitemallDemoExample.java 클래스를 확인합니다.
+    LitemallDemoMapper.java 인터페이스 및 LitemallDemoMapper.xml이 생성되는지 여부.
    
-4. 在service里面新建LitemallDemoService.java类，
+4. 서비스에 새 LitemallDemoService.java 클래스를 만듭니다.
 
    ```java
     @Service
@@ -239,8 +239,8 @@ mybatis generator自动生成代码时，通过内置类型转换器自动把数
     }
    ```
 
-5. 可以在`src/test/java/org.linlinjava.litemall.db`包里面创建LitemallDemoTest.java类,
-    使用Junit进行测试。
+5.`src / test / java / org.linlinjava.litemall.db` 패키지에 LitemallDemoTest.java 클래스를 생성 할 수 있습니다.
+     테스트에 Junit을 사용하십시오.
 
     ```java
     @WebAppConfiguration
@@ -259,7 +259,7 @@ mybatis generator自动生成代码时，通过内置类型转换器自动把数
     }
     ```
 
-6. 同样地，可以在Controller中使用LitemallDemoService来对外提供服务。
+6. 마찬가지로 LitemallDemoService를 컨트롤러에서 사용하여 외부 서비스를 제공 할 수 있습니다.
     
     ```java
     @RestController
@@ -276,138 +276,138 @@ mybatis generator自动生成代码时，通过内置类型转换器自动把数
     }
     ```
 
-### 2.2.5 逻辑删除
+### 2.2.5 논리적 삭제
 
-数据删除可以直接进行物理删除，也可以采用设置删除字段进行逻辑删除。
-根据具体业务，也有可能部分数据可以物理删除，部分数据只能逻辑删除。
+데이터 삭제는 물리적으로 직접 삭제하거나 삭제 필드를 설정하여 논리적으로 삭제할 수 있습니다.
+특정 비즈니스에 따라 일부 데이터는 물리적으로 삭제 될 수 있고 일부 데이터는 논리적으로 만 삭제 될 수 있습니다.
 
-目前本项目所有删除操作都是逻辑删除。
-开发者可以自行修改代码进行真正的物理删除，来避免数据库保存无用数据。
+현재이 프로젝트의 모든 삭제 작업은 논리적 삭제입니다.
+개발자는 데이터베이스가 쓸모없는 데이터를 저장하지 않도록 실제 물리적 삭제를 수행하도록 코드를 스스로 수정할 수 있습니다.
 
-### 2.2.6 并发访问
+### 2.2.6 동시 접속
 
-由于服务是多线程并发的，因此这带来了多线程同时操作数据库中同一数据的问题。
-由于数据极少删除或者是逻辑删除，因此操作数据，可以简化成更新数据。
-也就是说，需要解决多线程更新数据库同一数据的并发问题。
+이 서비스는 다중 스레드 및 동시 서비스이기 때문에 여러 스레드가 데이터베이스에서 동일한 데이터를 동시에 작동하는 문제가 발생합니다.
+데이터가 거의 삭제되지 않거나 논리적으로 삭제되기 때문에 운영 데이터를 단순화하여 데이터를 업데이트 할 수 있습니다.
+즉, 데이터베이스에서 동일한 데이터를 업데이트하는 여러 스레드의 동시성 문제를 해결해야합니다.
 
 * https://blog.csdn.net/qq315737546/article/details/76850173
 * http://baijiahao.baidu.com/s?id=1571172971189129
 * https://blog.csdn.net/speedme/article/details/48525119
 
-例如，下单操作中，用户A购买商品G的数量是1个，而用户B同一时间也购买商品G的
-数量也是1个，那么如果没有很好地并发控制，有可能商品G的数量仅仅是减1，而不是
-设想的2。
+예를 들어, 주문을하는 과정에서 사용자 A가 상품 G를 구매하는 수는 1이고 사용자 B도 상품 G를 동시에 구매합니다.
+수량도 1입니다. 양호한 동시성 제어가없는 경우 상품 G의 수량이 대신 1만큼만 감소 할 수 있습니다.
+잉태 2.
 
-通常采用悲观锁或者乐观锁来处理并发更新问题，
+일반적으로 비관적 잠금 또는 낙관적 잠금은 동시 업데이트 문제를 처리하는 데 사용됩니다.
 
-本项目目前采用基于`update_time`字段的乐观锁机制。
-原理是：
+이 프로젝트는 현재`update_time` 필드를 기반으로하는 낙관적 잠금 메커니즘을 사용합니다.
+원칙은 다음과 같습니다.
 
-1. 每个表都存在update_time字段
-2. 更新前，先查询数据，得到表的业务数据和update_time字段
-3. 更新时，通过where条件查询当前update_time字段和数据库中当前update_time字段是否相同。
-   * 如果相同，说明数据没有改变则可以更新，数据更新同时update_time设置当前更新时间；
-   * 如果不相同，则说明数据改变了则更新失败，不能修改数据。   
+1. 모든 테이블에는 update_time 필드가 있습니다.
+2. 업데이트하기 전에 데이터를 쿼리하여 테이블의 비즈니스 데이터 및 update_time 필드를 가져옵니다.
+3. 업데이트시 where 조건을 통해 데이터베이스의 현재 update_time 필드와 현재 update_time 필드가 동일한 지 쿼리합니다.
+   * 동일하다면 데이터를 변경없이 업데이트 할 수 있으며, 동시에 데이터가 업데이트됨을 의미합니다. update_time은 현재 업데이트 시간을 설정합니다.
+   * 동일하지 않은 경우 데이터가 변경되어 업데이트가 실패하고 데이터를 수정할 수 없음을 의미합니다.
    
-当然，由于采用乐观锁，这里也会带来另外一个问题：
-数据库有可能更新失败，那么如何处理更新失败的情况？
-目前只是简单地报错更新失败。
+물론 낙관적 잠금을 사용하기 때문에 또 다른 문제가 있습니다.
+데이터베이스 업데이트에 실패 할 수 있으므로 업데이트 실패를 어떻게 처리해야합니까?
+현재는 업데이트가 실패했다는 오류 만보고합니다.
 
-### 2.2.7 事务管理
+### 2.2.7 트랜잭션 관리
 
-litemall-db模块中不涉及到事务管理，而是在其他后台服务模块中涉及。
-但是其他后台服务模块因为依赖litemall-db模块，因此这里列出。
+litemall-db 모듈은 트랜잭션 관리를 포함하지 않지만 다른 백그라운드 서비스 모듈을 포함합니다.
+그러나 다른 백그라운드 서비스 모듈은 litemall-db 모듈에 의존하기 때문에 여기에 나열됩니다.
 
-事务管理的问题出现在多个表的修改操作中。
+트랜잭션 관리의 문제는 여러 테이블의 수정 작업에서 나타납니다.
 
-例如用户A修改表1，再修改表2，而如果修改表2的时候出现错误推出，
-此时如果没有引入事务管理，那么这里会存在表1数据已更新，表2数据
-未更新的问题。
+예를 들어 사용자 A는 테이블 1을 수정 한 다음 테이블 2를 수정하고, 테이블 2를 수정할 때 오류가 발생하면
+이때 트랜잭션 관리가 도입되지 않은 경우 업데이트 된 표 1의 데이터와 표 2의 데이터가 있습니다.
+질문이 업데이트되지 않았습니다.
 
-解决的方案是采用spring自带的事务管理机制。
-当事务管理中的任何SQL操作出现错误而抛出异常时，则回滚之前的操作。
+해결책은 Spring 고유의 트랜잭션 관리 메커니즘을 사용하는 것입니다.
+트랜잭션 관리의 SQL 작업에서 오류가 발생하고 예외가 발생하면 이전 작업이 롤백됩니다.
 
-注意：
-> 并发访问是多个用户同时操作单个表时可能出现的问题；
-> 而事务管理是单个用户操作多个表时可能出现的问题。
+노트:
+> 동시 액세스는 여러 사용자가 동시에 단일 테이블을 운영 할 때 발생할 수있는 문제입니다.
+> 그리고 트랜잭션 관리는 단일 사용자가 여러 테이블을 운영 할 때 발생할 수있는 문제입니다.
 
-### 2.2.8 mybatis增强框架
+### 2.2.8 Mybatis 강화 프레임 워크
 
-通过mybatis-generator已经自动生成了很多代码，而且具有一定的功能，
-但是开发者仍然需要基于生成的代码写一些固定的CRUD代码。
+mybatis-generator를 통해 많은 코드가 자동으로 생성되었으며 특정 기능이 있습니다.
+그러나 개발자는 생성 된 코드를 기반으로 고정 된 CRUD 코드를 작성해야합니다.
 
-目前发现已经有两个mybatis增强的框架可以进一步简化代码和功能增强：
-* [mybatis-plus](https://github.com/baomidou/mybatis-plus)
-* [Mapper](https://github.com/abel533/Mapper)
+코드를 더욱 단순화하고 기능을 향상시킬 수있는 두 개의 mybatis 강화 프레임 워크가 이미 있습니다.
+* [mybatis-plus] (https://github.com/baomidou/mybatis-plus)
+* [매퍼] (https://github.com/abel533/Mapper)
 
-目前没有采用，以后可能会基于其中之一重构数据库访问代码。
-开发者感兴趣的可以自行研究使用。
+현재 채택되지 않았으며 데이터베이스 액세스 코드는 향후 이들 중 하나를 기반으로 리팩토링 될 수 있습니다.
+관심있는 개발자는 스스로 공부하고 사용할 수 있습니다.
 
-## 2.3 litemall-core
+## 2.3 리 테몰 코어
 
-litemall-core模块是本项目通用的代码：
+litemall-core 모듈은이 프로젝트의 공통 코드입니다.
 
-* config
+* 구성
 
-  通用配置，例如开启Spring Boot异步功能。
+  Spring Boot 비동기 기능 활성화와 같은 일반 구성.
 
-* util
+* 유틸리티
 
-  工具代码。
+  도구 코드.
 
 * qcode
 
-  本项目定制的分享二维码图片。
+  이 프로젝트에 맞춤 설정된 공유 QR 코드 사진입니다.
   
-* storage
+* 저장
 
-  存储功能，支持本地存储、腾讯云存储、阿里云存储和七牛云存储。
+  스토리지 기능, 로컬 스토리지, Tencent 클라우드 스토리지, Ali 클라우드 스토리지 및 Qiniu 클라우드 스토리지를 지원합니다.
       
-* notify
+* 알림
 
-  通知提醒功能，支持邮件通知、短信通知和微信通知。
+  알림 알림 기능은 이메일 알림, SMS 알림 및 WeChat 알림을 지원합니다.
 
-* express
+* 표현하다
 
-  物流服务，查询订单物流信息。
+  물류 서비스, 주문 물류 정보 조회.
   
-* system
+* 시스템
 
-  通过litemall-db模块的数据库访问，读取本项目系统配置信息。
+  litemall-db 모듈의 데이터베이스 액세스를 통해이 프로젝트의 시스템 구성 정보를 읽습니다.
 
-* validator
+* 검증 인
 
-  提供两个校验注解，帮助后端验证请求参数。
+  백엔드 확인 요청 매개 변수를 돕기 위해 두 개의 확인 주석이 제공됩니다.
   
-### 2.3.1 config
+### 2.3.1 구성
 
 #### 2.3.1.1 CorsConfig
 
-目前开发过程中，CORS配置是允许所有请求。
+현재 개발 프로세스에서 CORS 구성은 모든 요청을 허용합니다.
 
-真正部署时，开发者需要做一些调整，来保证当前的服务只接受来自所设置域名的请求。
+실제로 배포 할 때 개발자는 현재 서비스가 설정된 도메인 이름의 요청 만 수락하도록 몇 가지 조정을해야합니다.
 
 #### 2.3.1.2 GlobalExceptionHandler
 
-如果系统内部产生了异常而开发者没有catch，那么异常的内容会发送到前端。
-这里通过提供全局异常处理器，来处理所有开发者没有处理的异常，返回
-“系统内部错误”之类的信息给前端从而达到保护系统的效果。
+시스템에서 예외가 발생하고 개발자가 catch하지 않으면 예외 내용이 프런트 엔드로 전송됩니다.
+여기에서 전역 예외 처리기를 제공하여 개발자가 처리하지 않은 모든 예외를 처리하기 위해
+시스템을 보호하기 위해 "내부 시스템 오류"와 같은 정보가 프런트 엔드로 전송됩니다.
 
 #### 2.3.1.3 JacksonConfig
 
-Jackson做一些设置。
+Jackson은 몇 가지 설정을했습니다.
 
-### 2.3.2 util
+### 2.3.2 유틸리티
 
-注意
-> 这里的util代码不会涉及具体业务，例如litemall-db模块中存在一个
-> OrderUtil类处理数据库中litemall_order表的一些转换工作。
+노트
+> 여기서 util 코드는 특정 비즈니스를 포함하지 않습니다. 예를 들어 litemall-db 모듈에 하나가 있습니다.
+> OrderUtil 클래스는 데이터베이스에서 litemall_order 테이블의 일부 변환 작업을 처리합니다.
 
 #### 2.3.2.1 ResponseUtil
 
-这里是用于设置response中body的内容格式。
+응답에서 본문의 내용 형식을 설정하는 데 사용됩니다.
 
-如果是成功则是 ：
+성공하면 다음과 같습니다.
 
 ```json
 {
@@ -417,7 +417,7 @@ Jackson做一些设置。
 }
 ```
 
-如果失败则是：
+실패하면 다음과 같습니다.
 
 ```json
 {
@@ -428,35 +428,35 @@ Jackson做一些设置。
 
 #### 2.3.2.2 JacksonUtil
 
-当请求时POST时，请求的json内容在body。
-通常存在存在两种方式取出数据：
-* 如果json内容正好对应一个POJO，那么在方法中使用POJO时，spring会自动解析填充数据；
-* 或者开发者自己采用jackson或者其他json处理库手动解析数据。
+POST가 요청되면 요청 된 json 콘텐츠가 본문에 있습니다.
+일반적으로 데이터를 검색하는 두 가지 방법이 있습니다.
+* json 내용이 POJO에 해당하는 경우 POJO가 메서드에서 사용될 때 spring은 자동으로 채우기 데이터를 구문 분석합니다.
+* 또는 개발자 자신이 jackson 또는 기타 json 처리 라이브러리를 사용하여 데이터를 수동으로 구문 분석합니다.
 
-这里JacksonUtil简化解析工作。这里代码有局限性，开发者请谨慎使用，或者熟悉Jackson
-使用的开发者欢迎优化代码。
+여기서 JacksonUtil은 분석 작업을 단순화합니다. 이 코드에는 제한이 있으므로 개발자는주의를 기울이거나 Jackson에 익숙해야합니다.
+사용하는 개발자는 코드를 최적화 할 수 있습니다.
 
 #### 2.3.2.3 CharUtil
 
-生成固定长度的随机字母字符串或者随机数字字符串。
+고정 길이 임의의 문자 문자열 또는 임의의 숫자 문자열을 생성합니다.
 
 #### 2.3.2.4 bcypt
 
-这里是用于对用户密码或者管理员密码加密存储。
+사용자 암호 또는 관리자 암호를 암호화하고 저장하는 데 사용됩니다.
 
-bcypt代码本质上是spring里面的代码。
+bcypt 코드는 본질적으로 봄의 코드입니다.
 
-### 2.3.3 二维码
+### 2.3.3 QR 코드
 
-见QCodeService类。
+QCodeService 클래스를 참조하십시오.
 
-### 2.3.4 对象存储
+### 2.3.4 오브젝트 스토리지
 
-对象存储服务目前的目标是支持图片的上传下载。
+오브젝트 스토리지 서비스의 현재 목표는 사진 업로드 및 다운로드를 지원하는 것입니다.
 
-对象存储服务会自动读取配置配置，然后实例化服务。
+오브젝트 스토리지 서비스는 자동으로 구성 구성을 읽은 다음 서비스를 인스턴스화합니다.
 
-对象存储接口：
+개체 스토리지 인터페이스 :
 ```
 public interface Storage {
     void store(InputStream inputStream, long contentLength, String contentType, String keyName);
@@ -468,67 +468,67 @@ public interface Storage {
 }
 ```
 
-#### 2.3.4.1 本地存储服务
+#### 2.3.4.1 로컬 스토리지 서비스
 
-见LocalStorage类。
+LocalStorage 클래스를 참조하십시오.
 
-#### 2.3.4.2 腾讯云存储服务
+#### 2.3.4.2 Tencent 클라우드 스토리지 서비스
 
-见TencentStorage类。
+TencentStorage 클래스를 참조하십시오.
 
-#### 2.3.4.3 阿里云存储服务
+#### 2.3.4.3 알리바바 클라우드 스토리지 서비스
 
-见AliyunStorage类。
+AliyunStorage 클래스를 참조하십시오.
 
-#### 2.3.4.4 七牛云存储服务
+#### 2.3.4.4 Qiniu 클라우드 스토리지 서비스
 
-见QiniuStorage类。
+QiniuStorage 클래스를 참조하십시오.
 
-### 2.3.5 消息通知
+### 2.3.5 메시지 알림
 
-消息通知用于通知用户或者管理员。
+메시지 알림은 사용자 또는 관리자에게 알리는 데 사용됩니다.
 
-注意：
-> 目前这里实现比较粗糙，以后会完善细节。
+노트:
+> 현재 구현은 상대적으로 거칠며 향후 세부 사항이 개선 될 것입니다.
 
-#### 2.3.5.1 邮件通知
+#### 2.3.5.1 이메일 알림
 
-见NotifyService类的`notifyMail`方法。
+NotifyService 클래스의`notifyMail` 메소드를 참조하십시오.
 
-#### 2.3.5.2 短信通知
+#### 2.3.5.2 SMS 알림
 
-见NotifyService类的`notifySms`和`notifySmsTemplate`方法。
+NotifyService 클래스의`notifySms` 및`notifySmsTemplate` 메소드를 참조하십시오.
 
-而短信通知实现类见`TencentSmsSender`类。
-也就是目前仅支持腾讯云短信服务，其他短信服务不支持。
-此外，开发者必须先在腾讯云短信平台申请模板才能使用。
+SMS 알림 구현 클래스에 대해서는`TencentSmsSender` 클래스를 참조하십시오.
+즉, 현재 Tencent Cloud SMS 만 지원되며 다른 SMS 서비스는 지원되지 않습니다.
+또한 개발자는 먼저 Tencent Cloud SMS 플랫폼에서 템플릿을 신청해야 사용할 수 있습니다.
 
-#### 2.3.5.3 微信通知
+#### 2.3.5.3 WeChat 알림
 
-见NotifyService类的`notifySms`和`notifyWxTemplate`方法。
-而微信通知实现类见`WxTemplateSender`类。
-开发者必须在微信平台申请模板才能使用。
+NotifyService 클래스의`notifySms` 및`notifyWxTemplate` 메소드를 참조하십시오.
+그리고 WeChat 알림 구현 클래스는`WxTemplateSender` 클래스를 참조하십시오.
+개발자는 템플릿을 사용하려면 WeChat 플랫폼에서 템플릿을 신청해야합니다.
 
-### 2.3.6 物流跟踪
+### 2.3.6 물류 추적
 
-物流跟踪是基于第三方服务快鸟物流查询服务。
-开发者需要申请才能使用。
+물류 추적은 타사 서비스 인 Kuaiao 물류 쿼리 서비스를 기반으로합니다.
+개발자는 그것을 사용하기 위해 신청해야합니다.
 
-见`ExpressService`类。
+`ExpressService` 클래스를 참조하십시오.
 
-### 2.3.7 系统设置
+### 2.3.7 시스템 설정
 
-### 2.3.8 校验注解
+### 2.3.8 검증 노트
 
-自定了两个校验注解，帮助开发者校验HTTP参数。
+개발자가 HTTP 매개 변수를 확인할 수 있도록 두 가지 확인 주석이 사용자 정의되었습니다.
 
-#### 2.3.8.1 Order
+#### 2.3.8.1 주문
 
-校验用户请求参数值只能是`desc`或者`asc`。
+사용자 요청 매개 변수 값이 'desc'또는 'asc'만 될 수 있는지 확인합니다.
 
-注意，这里的Order不是订单的意思，而是排序的意思。
+여기서 순서는 순서가 아니라 정렬을 의미합니다.
 
-1. 定义注解Order
+1. 주석 순서 정의
     ```
     @Target({METHOD, FIELD, PARAMETER})
     @Retention(RUNTIME)
@@ -541,7 +541,7 @@ public interface Storage {
         Class<? extends Payload>[] payload() default {};
     }
     ```
-2. 实现OrderValidator
+2. OrderValidator
     ```
     public class OrderValidator implements ConstraintValidator<Order, String> {
         private List<String> valueList;
@@ -561,7 +561,7 @@ public interface Storage {
         }
     }
     ```
-3. 使用注解
+3. 주석 사용
     ```
     @RestController
     @RequestMapping("/wx/topic")
@@ -578,9 +578,9 @@ public interface Storage {
     
 #### 2.3.8.2 Sort
 
-校验用户请求参数值只能是`add_time`或者`id`。
+사용자 요청 매개 변수 값이 'add_time'또는 'id'만 될 수 있는지 확인합니다.
 
-1. 定义注解Sort
+1. 주석 정렬 정의
     ```
     @Target({METHOD, FIELD, PARAMETER})
     @Retention(RUNTIME)
@@ -593,7 +593,7 @@ public interface Storage {
         Class<? extends Payload>[] payload() default {};
     }
     ```
-2. 实现SortValidator
+2. SortValidator구현
     ```
     public class SortValidator implements ConstraintValidator<Sort, String> {
         private List<String> valueList;
@@ -615,7 +615,7 @@ public interface Storage {
         }
     }
     ```
-3. 使用注解
+3. 주석 사용
     ```
     @RestController
     @RequestMapping("/wx/topic")
@@ -632,26 +632,26 @@ public interface Storage {
 
 ## 2.4 litemall-all
 
-在章节1.5中讨论的部署方案中设计了一种单服务器单服务方案，
-也就是说两个后台服务和静态文件都部署在一个Spring Boot可执行jar包中。
+섹션 1.5에서 논의 된 배포 계획에서 단일 서버 단일 서비스 계획이 설계되었습니다.
+즉, 두 개의 백그라운드 서비스와 정적 파일이 Spring Boot 실행 가능 jar 패키지에 배포됩니다.
 
-查看litemall-all模块，代码仅仅只有一个Application类。
+litemall-all 모듈을 살펴보면 코드에는 Application 클래스가 하나만 있습니다.
 
-实际的原理是litemall-all模块内的pom.xml文件：
+실제 원칙은 litemall-all 모듈의 pom.xml 파일입니다.
 
-1. 打包方式是`jar`，因此最后会打包可执行jar格式；
-2. 对litemall-wx-api模块和litemall-admin-api模块依赖，
-   因此打包时会作为依赖库而打包到litemall-all模块的输出中；
-3. 使用copy-resources插件，在打包时把litemall-admin模块的dist
-   文件夹拷贝到litemall-all模块的static文件夹中；而这个文件夹
-   正是Spring Boot应用的默认静态文件路径。
+1. 패키징 방법은`jar`이므로 실행 가능한 jar 형식이 마지막에 패키징됩니다.
+2. litemall-wx-api 모듈 및 litemall-admin-api 모듈에 따라
+   따라서 패키징 중에 종속 라이브러리로서 litemall-all 모듈의 출력에 패키징됩니다.
+3. 복사 리소스 플러그인을 사용하여 litemall-admin 모듈의 dist를 패키징합니다.
+   폴더를 litemall-all 모듈의 정적 폴더에 복사하고이 폴더를
+   Spring Boot 애플리케이션의 기본 정적 파일 경로입니다.
    
-   注意：
-   > 这个插件只是简单的拷贝操作；因此开发者应该在打包litemall-all
-   > 之前确保先编译litemall-admin模块得到最终静态文件。
+   노트:
+   >이 플러그인은 단순한 복사 작업이므로 개발자는 litemall-all
+   > 최종 정적 파일을 얻으려면 먼저 litemall-admin 모듈을 컴파일하십시오.
 
 
 ## 2.5 litemall-all-war
 
-litemall-all-war模块就是对litemall-all模块进行少量调整，
-最后打包时会在target目录下面生成litemall.war，用于tomcat部署。
+litemall-all-war 모듈은 litemall-all-all 모듈에 대한 작은 조정입니다.
+최종 패키지에서 litemall.war는 tomcat 배포를위한 대상 디렉터리 아래에 생성됩니다.
