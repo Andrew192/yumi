@@ -48,7 +48,7 @@ page {
   margin: 0 auto;
   display: block;
   width: 258rpx;
-  height: 59rpx;
+  height: 70rpx;
   line-height: 29rpx;
   text-align: center;
   font-size: 35rpx;
@@ -60,7 +60,7 @@ page {
   margin: 0 auto;
   color: #fff;
   font-size: 30rpx;
-  height: 96rpx;
+  height: 90rpx;
   line-height: 96rpx;
   right: 0;
   display: flex;

@@ -27,7 +27,7 @@ Page({
     //CatalogList
     let that = this;
     wx.showLoading({
-      title: '加载中...',
+      title: '로딩 중...',
     });
     util.request(api.CatalogAll).then(function(res) {
       that.setData({

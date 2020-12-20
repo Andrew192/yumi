@@ -37,7 +37,7 @@
       </view>
       <view class='user_column_item' bindtap='goAfterSale'>
         <image class='user_column_item_image' src='/static/images/aftersale.png'></image>
-        <view class='user_column_item_text'>애프터서비스 중</view>
+        <view class='user_column_item_text'>애프터서비스</view>
       </view>
     </view>
   </view>
@@ -59,11 +59,11 @@
     </view>
     <view class='user_column_item' bindtap='goFootprint'>
       <image class='user_column_item_image' src='/static/images/footprint.png'></image>
-      <view class='user_column_item_text'>기록 찾아보기</view>
+      <view class='user_column_item_text'>기록 조회</view>
     </view>
     <view class='user_column_item' bindtap='goGroupon'>
       <image class='user_column_item_image' src='/static/images/group.png'></image>
-      <view class='user_column_item_text'>내 조인</view>
+      <view class='user_column_item_text'>내 그룹</view>
     </view>
 
     <view class='user_column_item' bindtap='goAddress'>
@@ -80,7 +80,7 @@
 
     <button class="user_column_item_phone" open-type="getPhoneNumber" bindgetphonenumber="bindPhoneNumber">
       <image class='user_column_item_image' src='/static/images/mobile.png'></image>
-      <view class='user_column_item_text'>전화 바인딩</view>
+      <view class='user_column_item_text'>전화 연결</view>
     </button>
     <view class='user_column_item' bindtap='goHelp'>
       <image class='user_column_item_image' src='/static/images/help.png'></image>
@@ -94,11 +94,11 @@
       <contact-button style="opacity:0;position:absolute;" type="default-dark" session-from="weapp" size="27">
       </contact-button>
       <image class='user_column_item_image' src='/static/images/customer.png'></image>
-      <view class='user_column_item_text'>고객 서비스에 문의</view>
+      <view class='user_column_item_text'>고객문의</view>
     </view>
     <view class='user_column_item' bindtap='aboutUs'>
       <image class='user_column_item_image' src='/static/images/about.png'></image>
-      <view class='user_column_item_text'>우리 회사는</view>
+      <view class='user_column_item_text'>회사 정보</view>
     </view>
   </view>
   <view class='separate'></view>

@@ -2,7 +2,7 @@
   <view class="no-login" wx:if="{{!hasLogin}}">
     <view class="c">
       <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
-      <text>아직 로그인하지 않았습니다.</text>
+      <text>로그인이 필요합니다.</text>
       <button plain="true" bindtap="goLogin">로그인으로 이동</button>
     </view>
   </view>

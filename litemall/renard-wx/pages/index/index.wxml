@@ -118,7 +118,7 @@
     <view class="h">
       <view class="title">
         <navigator url="/pages/topic/topic">
-          <text class="txt">专题精选</text>
+          <text class="txt">특집</text>
         </navigator>
       </view>
     </view>

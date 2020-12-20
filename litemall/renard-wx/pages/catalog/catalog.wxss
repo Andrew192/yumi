@@ -1,5 +1,5 @@
 .HotName {
-  font-size: 80rpx;
+  font-size: 50rpx;
   margin-left: 40rpx;
   color: #293539;
   font-weight: 300;

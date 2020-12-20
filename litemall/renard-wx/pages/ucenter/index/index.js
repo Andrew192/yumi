@@ -7,7 +7,7 @@ Page({
   data: {
     aboutShow: true,
     userInfo: {
-      nickName: '点击登录',
+      nickName: '로그인하려면 클릭하세요.',
       avatarUrl: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
     }
   },

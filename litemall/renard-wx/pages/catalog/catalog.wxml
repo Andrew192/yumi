@@ -5,7 +5,7 @@
       <text class="txt">검색</text>
     </navigator>
   </view>
-  <view class="HotName">분류
+  <view class="HotName">Category
     <text></text>
   </view>
   <view class="menu-box">

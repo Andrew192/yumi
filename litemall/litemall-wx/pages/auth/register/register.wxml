@@ -2,28 +2,28 @@
   <view class="form-box">
 
     <view class="form-item">
-      <input class="username" value="{{username}}" bindinput="bindUsernameInput" placeholder="用户名" auto-focus/>
+      <input class="username" value="{{username}}" bindinput="bindUsernameInput" placeholder="NAME" auto-focus/>
       <van-icon  wx:if="{{ username.length > 0 }}" id="clear-username" class="clear" name="close" catchtap="clearInput"/>      
     </view>
 
     <view class="form-item">
-      <input class="password" value="{{password}}" password bindinput="bindPasswordInput" placeholder="密码" />
+      <input class="password" value="{{password}}" password bindinput="bindPasswordInput" placeholder="PASSWORD" />
       <van-icon class="clear" id="clear-password" wx:if="{{ password.length > 0 }}" name="close" catchtap="clearInput"/>      
     </view>
 
     <view class="form-item">
-      <input class="password" value="{{confirmPassword}}" password bindinput="bindConfirmPasswordInput" placeholder="确认密码" />
+      <input class="password" value="{{confirmPassword}}" password bindinput="bindConfirmPasswordInput" placeholder="PASSWORD CHECK" />
       <van-icon class="clear" id="clear-confirm-password" wx:if="{{ confirmPassword.length > 0 }}" name="close" catchtap="clearInput"/>
     </view>
 
     <view class="form-item">
-      <input class="mobile" value="{{mobile}}" bindinput="bindMobileInput" placeholder="手机号" />
+      <input class="mobile" value="{{mobile}}" bindinput="bindMobileInput" placeholder="PHONE NUMBER" />
       <van-icon class="clear" id="clear-mobile" wx:if="{{ mobile.length > 0 }}" name="close" catchtap="clearInput"/>      
     </view>
 
     <view class="form-item-code">
       <view class="form-item code-item">
-        <input class="code" value="{{code}}" bindinput="bindCodeInput" placeholder="验证码" />
+        <input class="code" value="{{code}}" bindinput="bindCodeInput" placeholder="인증 코드" />
         <van-icon class="clear" id="clear-code" wx:if="{{ code.length > 0 }}" name="close" catchtap="clearInput"/>      
       </view>
       <view class="code-btn" bindtap="sendCode">인증 코드 받기</view>
