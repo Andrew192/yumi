@@ -1,104 +1,104 @@
-## deploy
+## 배포
 
-### 项目打包
+### 프로젝트 패키징
 
-1. 在服务器或者开发机打包项目到deploy；
+1. 서버 또는 개발 컴퓨터에 배포 할 프로젝트를 패키지화합니다.
     ```
     cd litemall
-    cat ./litemall-db/sql/litemall_schema.sql > ./deploy/db/litemall.sql
+    cat ./litemall-db/sql/litemall_schema.sql> ./deploy/db/litemall.sql
     cat ./litemall-db/sql/litemall_table.sql >> ./deploy/db/litemall.sql
     cat ./litemall-db/sql/litemall_data.sql >> ./deploy/db/litemall.sql
     
     cd ./litemall-admin
-    cnpm install
-    cnpm run build:dep
+    cnpm 설치
+    cnpm 실행 build : dep
     
     cd ..
-    mvn clean package
+    mvn 클린 패키지
     cp -f ./litemall-all/target/litemall-all-*-exec.jar ./deploy/litemall/litemall.jar
     ```
-    这里的工作是：
-    1. 把数据库文件拷贝到deploy/db文件夹
-    2. 编译litemall-admin项目
-    3. 编译litemall-all模块，同时把litemall-admin编译得到的静态文件拷贝到
-       litemall-all模块的static目录
+    여기서 작업은 다음과 같습니다.
+    1. 데이터베이스 파일을 deploy / db 폴더에 복사합니다.
+    2. litemall-admin 프로젝트 컴파일
+    3. litemall-all 모듈을 컴파일하고 litemall-admin으로 컴파일 한 정적 파일을 다음 위치에 복사합니다.
+       litemall-all 모듈의 정적 디렉토리
        
-2. 修改litemall文件夹下面的*.yml外部配置文件，当litemall-all模块启动时会
-    加载外部配置文件，而覆盖默认jar包内部的配置文件。
-    例如，配置文件中一些地方需要设置成远程服务器的IP地址
+2. litemall 폴더 아래의 * .yml 외부 구성 파일을 수정합니다. litemall-all 모듈이 시작되면
+    외부 구성 파일을로드하고 기본 jar 패키지 내의 구성 파일을 재정의합니다.
+    예를 들어, 구성 파일의 일부 위치는 원격 서버의 IP 주소로 설정해야합니다.
     
-此时deploy部署包结构如下：
+이때 배포 배포 패키지 구조는 다음과 같습니다.
 
-* bin
+* 빈
 
-存放远程服务器运行的脚本，包括deploy.sh脚本和reset.sh脚本
+deploy.sh 스크립트 및 reset.sh 스크립트를 포함하여 원격 서버에서 실행되는 저장소 스크립트
 
 * db
 
-存放litemall数据库文件
+litemall 데이터베이스 파일 저장
 
 * litemall
 
-存放远程服务器运行的代码，包括litemall-all二进制可执行包和litemall外部配置文件
+litemall-all 바이너리 실행 패키지 및 litemall 외부 구성 파일을 포함하여 원격 서버에서 실행중인 코드를 저장합니다.
 
-* util
-存放开发服务器运行的脚本，包括package.sh脚本和lazy.sh脚本。
-由于是本地开发服务器运行，因此开发者可以不用上传到远程服务器。
+* 유틸리티
+package.sh 스크립트 및 lazy.sh 스크립트를 포함하여 개발 서버에서 실행하는 스크립트를 저장합니다.
+로컬 개발 서버에서 실행되기 때문에 개발자는 원격 서버에 업로드 할 필요가 없습니다.
 
-### 项目部署
+### 프로젝트 배포
 
-1. 远程服务器环境（MySQL和JDK1.8）已经安装好，请确保云服务器的安全组已经允许相应的端口。
-2. 导入db/litemall.sql
+1. 원격 서버 환경 (MySQL 및 JDK1.8)이 설치되어 있습니다. 클라우드 서버의 보안 그룹이 해당 포트를 허용하는지 확인하십시오.
+2. db / litemall.sql 가져 오기
     ```bash
-    cd /home/ubuntu/deploy/db
-    mysql -h localhost -u $ROOT -p$PASSWORD < litemall.sql
+    cd / home / ubuntu / deploy / db
+    mysql -h localhost -u $ ROOT -p $ PASSWORD <litemall.sql
     ```
-3. 启动服务
+3. 서비스 시작
     ```bash
-    sudo service litemall stop
+    sudo 서비스 litemall 중지
     sudo ln -f -s /home/ubuntu/deploy/litemall/litemall.jar /etc/init.d/litemall
-    sudo service litemall start
+    sudo 서비스 litemall 시작
     ```
-4. 测试是否部署成功(xxx.xxx.xxx.xxx是云服务器IP）：
+4. 배포가 성공했는지 테스트합니다 (xxx.xxx.xxx.xxx는 클라우드 서버 IP 임).
     ```
     http://xxx.xxx.xxx.xxx:8080/wx/index/index
     http://xxx.xxx.xxx.xxx:8080/admin/index/index
     http://xxx.xxx.xxx.xxx:8080/#/login
     ```
 
-### 项目辅助脚本
+### 프로젝트 보조 스크립트
 
-在前面的项目打包和项目部署中都是采用手动命令来部署。
-这里可以写一些脚本简化：
+이전 프로젝트 패키징 및 프로젝트 배포에서는 배포에 수동 명령이 사용되었습니다.
+여기에 몇 가지 스크립트를 작성하여 단순화 할 수 있습니다.
 
-* util/packet.sh
+* util / packet.sh
 
-在开发服务器运行可以自动项目打包
+개발 서버에서 실행하면 프로젝트를 자동으로 패키징 할 수 있습니다.
 
-* util/lazy.sh
+* util / lazy.sh
 
-在开发服务器运行可以自动项目打包、项目上传远程服务器、自动登录系统执行项目部署脚本。
+개발 서버에서 실행하면 프로젝트를 자동으로 패키징하고, 프로젝트를 원격 서버에 업로드하고, 시스템에 자동으로 로그인하여 프로젝트 배포 스크립트를 실행할 수 있습니다.
     
-注意：
-> 1. 开发者需要在util/lazy.sh中设置相应的远程服务器登录账号和密钥文件路径。
-> 2. 开发者需要在bin/reset.sh设置远程服务器的MySQL的root登录账户。
+노트:
+> 1. 개발자는 util / lazy.sh에서 해당 원격 서버 로그인 계정과 키 파일 경로를 설정해야합니다.
+> 2. 개발자는 bin / reset.sh에서 원격 서버의 MySQL 루트 로그인 계정을 설정해야합니다.
     
-* bin/deploy.sh
+* bin / deploy.sh
 
-在远程服务器运行可以自动部署服务
+원격 서버에서 실행하면 서비스를 자동으로 배포 할 수 있습니다.
 
-* bin/reset.sh
+* bin / reset.sh
 
-在远程服务器运行可以自动项目导入数据、删除本地上传图片、再执行bin/deploy.sh部署服务。
+원격 서버에서 실행하면 자동으로 데이터를 가져오고 로컬에 업로드 된 사진을 삭제 한 다음 bin / deploy.sh 배포 서비스를 실행할 수 있습니다.
 
-注意：
-> 开发者需要在bin/reset.sh设置远程服务器的MySQL的root登录账户。
+노트:
+> 개발자는 bin / reset.sh에서 원격 서버의 MySQL 루트 로그인 계정을 설정해야합니다.
 
-总结，当开发者设置好配置信息以后，可以在本地运行lazy.sh脚本自动一键部署:
+요약하면 개발자가 구성 정보를 설정 한 후 lazy.sh 스크립트를 로컬에서 실행하여 한 번의 클릭으로 자동 배포 할 수 있습니다.
 ```bash
 cd litemall
 ./deploy/util/lazy.sh
 ```
 
-不过由于需要设置的信息会包含敏感安全信息，强烈建议开发者参考这里的deploy文件夹，
-然后实现自己的deploy文件夹，妥善处置外部配置文件和脚本中的敏感安全信息!!!
+그러나 설정해야하는 정보에는 민감한 보안 정보가 포함되어 있으므로 개발자는 여기에서 배포 폴더를 참조하는 것이 좋습니다.
+그런 다음 자체 배포 폴더를 구현하여 외부 구성 파일 및 스크립트에있는 중요한 보안 정보를 적절하게 폐기하십시오
