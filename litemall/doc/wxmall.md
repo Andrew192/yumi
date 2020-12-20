@@ -1,398 +1,394 @@
-# 3 litemall小商城
+#3 litemall 작은 쇼핑몰
 
-技术：
+ 기술:
 
-* 小商城前端，即litemall-wx模块和renard-wx模块
-  * 微信小程序
-* 小商城后端，即litemall-wx-api模块
-  * Spring Boot 2.x
-  * Spring MVC
-  * [weixin-java-tools](https://gitee.com/binary/weixin-java-tools)
+* 작은 쇼핑몰의 프런트 엔드, 즉 litemall-wx 모듈 및 renard-wx 모듈
+  * WeChat Mini 프로그램
+* 소규모 쇼핑몰 백엔드, 즉 litemall-wx-api 모듈
+  * 스프링 부트 2.x
+  * 봄 MVC
+  * [weixin-java-tools] (https://gitee.com/binary/weixin-java-tools)
 
 
-目前发现存在的一些问题：
+현재 발견 된 몇 가지 문제 :
   
-* `缺失`后台服务返回的token存在有效期，小商场应该自动刷新
-* `缺失`账号多次登录失败，应该小商城出现图片验证码限制，或者后台账号锁定
-* `改善`商品搜索中采用更好的搜索机制
-* `改善`商品搜索中，支持热门搜索"换一批"
-* `改善`地址优化，目前每一次点击都会请求后台，应该缓存已有的数据
-* `改善`商品数量和规格中，如果货品数量不足，则显示效果，通常是是两种效果
-  * 某个规格选择以后，另外规格的某些规格是实线，而某些是虚线，
-  * 商品的都规格选择以后，“立即购买”和“加入购物车显示”灰色
-* `改善`商品好评计算与显示，例如90%好评
-* `改善`商品的评论列表中显示评价的评论分数、商品规格
-* `改善`商品的评论列表中的图片点击可放大，同时用户评价的多个图片可以选择左右滑动查看。
-* `改善`商品的订单中支持订单号搜索功能
-* `改善`在一些内容比较多的页面中支持“顶部”功能
+* '누락 된'백그라운드 서비스에서 반환 된 토큰은 유효 기간이 있으며 소규모 쇼핑몰은 자동으로 새로 고침됩니다.
+* "누락 된"계정은 여러 번 로그인에 실패했습니다. 작은 쇼핑몰에서 사진 인증 코드 제한이 있거나 백그라운드 계정이 잠겨 있어야합니다.
+* '개선'제품 검색은 더 나은 검색 메커니즘을 채택합니다.
+*`Improve`의 제품 검색에서 인기 검색어 인“배치 변경”지원
+*`Improve` 주소 최적화, 현재 모든 클릭은 백그라운드를 요청하며 기존 데이터는 캐시되어야합니다.
+* '개량'상품의 수량 및 사양에서 상품 수량이 부족할 경우 효과가 표시되며 보통 두 가지 효과가 나타납니다.
+  * 특정 사양을 선택한 후 다른 사양의 일부 사양은 실선, 일부는 점선,
+  * 제품 사양을 선택한 후 "지금 구매"및 "장바구니에 추가 디스플레이"가 회색으로 표시됩니다.
+* "향상"제품 칭찬 계산 및 표시 등 90 % 칭찬
+* 평가의 댓글 점수 및 제품 사양은 '개선'제품의 댓글 목록에 표시됩니다.
+* '개선'제품의 댓글 목록에서 사진을 클릭하면 확대되며, 동시에 사용자 리뷰의 여러 사진을 보려면 좌우로 슬라이드하도록 선택할 수 있습니다.
+* '개량'상품의 주문 번호 조회 기능 지원
+*`Improve`는 더 많은 콘텐츠가있는 일부 페이지에서 "상단"기능을 지원합니다.
 
-## 3.0 小商场环境
+## 3.0 소규모 쇼핑몰 환경
 
-按照项目README文档中的“快速启动”一节，开发者可以快速启动小商场项目。
-但是小程序端只可以显示数据和图片，而微信登录会失败、微信支付也会失败，
-因为appid不是开发者自己的，
+README 프로젝트의 "빠른 시작"섹션에 따르면 개발자는 소규모 쇼핑몰 프로젝트를 빠르게 시작할 수 있습니다.
+그러나 애플릿은 데이터와 사진 만 표시 할 수 있으며 WeChat 로그인이 실패하고 WeChat 결제도 실패합니다.
+appid는 개발자 소유가 아니기 때문에
 
-这里进一步介绍开发者需要设置的小商场环境。
+개발자가 설정해야하는 소규모 쇼핑몰 환경에 대한 추가 소개입니다.
 
-### 3.0.1 微信登录配置
+### 3.0.1 WeChat 로그인 구성
 
-开发者在微信小程序官网申请以后，可以有app-id和app-secret信息。
+개발자는 WeChat Mini 프로그램의 공식 웹 사이트에서 신청 한 후 앱 ID 및 앱 보안 정보를 가질 수 있습니다.
 
-1. 在litemall-core模块的src/main/resources的application-core.yml资源文件中设置
+1. litemall-core 모듈의 src / main / resources의 application-core.yml 리소스 파일에 설정
     ```
-    litemall
+    리 테몰
         wx
-            app-id: 开发者申请的app-id
-            app-secret: 开发者申请的app-secret
+            app-id : 개발자가 적용한 app-id
+            app-secret : 개발자가 적용한 app-secret
     ```
 
-2. 在litemall-wx模块的project.config.json文件中设置
+2. litemall-wx 모듈의 project.config.json 파일에서 설정합니다.
 
     ```
-    "appid": "开发者申请的app-id",
+    "appid": "개발자가 적용한 app-id",
     ```
 
-3. 启动后台服务
+3. 백그라운드 서비스 시작
 
-4. 建议开发者关闭当前项目或者直接关闭微信开发者工具，重新打开（因为此时litemall-wx模块的appid可能未更新）。
-   编译运行，尝试微信登录
+4. 개발자는 현재 프로젝트를 닫거나 WeChat 개발자 도구를 직접 닫았다가 다시 여는 것이 좋습니다 (현재 litemall-wx 모듈의 appid가 업데이트되지 않을 수 있기 때문).
+   컴파일 및 실행, WeChat 로그인 시도
 
-### 3.0.2 微信支付配置
+### 3.0.2 WeChat 결제 구성
 
-开发者在微信商户平台申请以后，可以有app-id和app-secret信息。
+개발자는 WeChat 판매자 플랫폼에 신청 한 후 앱 ID 및 앱 보안 정보를 가질 수 있습니다.
 
-1. 在litemall-core-api模块的src/main/resources的application-core.yml资源文件中设置
+1. litemall-core-api 모듈의 src / main / resources의 application-core.yml 리소스 파일에 설정
 
     ```
-    litemall
+    리 테몰
         wx
-            mch-id: 开发者申请的mch-id
-            mch-key: 开发者申请的mch-key
-            notify-url: 开发者部署服务的微信支付成功回调地址
+            mch-id : 개발자가 적용한 mch-id
+            mch-key : 개발자가 적용한 mch-key
+            notify-url : 개발자 배포 서비스의 WeChat 결제 성공 콜백 주소
     ```
 
-    注意
-    > * notify-url是微信商户平台向小商场后台服务发送支付结果的地址。
-    >    因此这就要求该地址是可访问的。
-    > * 目前小商场后台服务的默认request mapping是`/wx/order/pay-notify`（见WxOrderController类的payNotify）,
-    >    因此notify-url应该设置的地址类似于`http://www.example.com/wx/order/pay-notify`
-    > * 当开发者真正上线后台服务时，强烈建议默认request mapping要重新命名，不能对外公开。
+    노트
+    > * notify-url은 위챗 가맹점 플랫폼이 결제 결과를 소규모 쇼핑몰 백그라운드 서비스로 전송하는 주소입니다.
+    > 따라서 주소에 액세스 할 수 있어야합니다.
+    > * 현재 소규모 쇼핑몰 백엔드 서비스의 기본 요청 매핑은`/ wx / order / pay-notify`입니다 (WxOrderController 클래스의 payNotify 참조).
+    > 따라서 notify-url의 주소는`http : // www.example.com / wx / order / pay-notify`와 유사해야합니다.
+    > * 개발자가 실제로 백그라운드 서비스를 시작할 때 기본 요청 매핑의 이름을 바꾸고 공개 할 수 없도록하는 것이 좋습니다.
 
-2. 启动后台服务
+2. 백그라운드 서비스 시작
 
-3. 部署后台服务到云服务器
+3. 클라우드 서버에 백그라운드 서비스 배포
 
-4. litemall-wx的api.js设置云服务器的域名。
-   编译运行，尝试微信支付。
+4. litemall-wx의 api.js는 클라우드 서버의 도메인 이름을 설정합니다.
+   컴파일하고 실행하고 WeChat 결제를 시도하십시오.
    
-### 3.0.3 微信退款配置
+### 3.0.3 WeChat 환불 구성
 
-目前管理平台的退款功能需要进行微信商户退款配置
+현재 관리 플랫폼의 환불 기능을 사용하려면 WeChat 판매자 환불 구성이 필요합니다.
 
-1. 从微信商户平台下载商户证书（或者叫做API证书），保存到合适位置，
-   请阅读[文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3)
-2. 在litemall-core-api模块的src/main/resources的application-core.yml资源文件中设置
+1. WeChat 판매자 플랫폼에서 판매자 인증서 (또는 API 인증서)를 다운로드하여 적절한 위치에 저장합니다.
+   [문서] (https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3)를 읽어보세요.
+2. litemall-core-api 모듈의 src / main / resources의 application-core.yml 리소스 파일에서 설정합니다.
 
     ```
-    litemall
+    리 테몰
         wx
-            key-path: 证书文件访问路径
+            key-path : 인증서 파일의 액세스 경로
     ```
-3. 启动小程序前端和后端，进行下单、支付、申请退款操作
+3. 미니 프로그램의 프런트 엔드 및 백 엔드를 시작하여 주문, 결제 및 환불 신청
 
-4. 启动管理后台前端和后端，进行订单退款操作，然后验证手机是否收到退款。
+4. 관리 백엔드의 프런트 엔드 및 백 엔드를 시작하고 주문 환불 작업을 수행 한 다음 전화기가 환불을 받는지 확인합니다.
 
-注意：
-> 虽然这里管理后台退款接入了微信退款API，但是从安全角度考虑，**强烈建议**
-> 开发者删除管理后台微信退款代码，然后分成两个步骤实现管理员退款操作：
-> * 首先，管理员登录微信平台进行退款操作；
-> * 然后，管理员登陆管理后台点击退款按钮，进行订单退款状态变更和商品库存回库。
+노트:
+> 여기서 환불 관리 백엔드는 WeChat 환불 API에 연결되어 있지만 보안 측면에서 ** 적극 권장 **
+> 개발자는 관리 백그라운드에서 WeChat 환불 코드를 삭제 한 다음 두 단계로 나누어 관리자 환불 작업을 구현합니다.
+> * 먼저 관리자는 WeChat 플랫폼에 로그인하여 환불 작업을 수행합니다.
+> * 관리자는 관리 배경에 로그인 한 후 환불 버튼을 클릭하여 주문 환불 상태를 변경하고 제품 재고를 창고로 반환합니다.
 
 ## 3.1 litemall-wx-api
 
-本节介绍小商场的后台服务模块。
+이 섹션에서는 소규모 쇼핑몰의 백그라운드 서비스 모듈을 소개합니다.
 
-### 3.1.1 授权服务
+### 3.1.1 인증 서비스
 
-见WxAuthController类。
+WxAuthController 클래스를 참조하십시오.
 
-### 3.1.2 首页服务
+### 3.1.2 홈 서비스
 
-见WxHomeController类。
+WxHomeController 클래스를 참조하십시오.
 
-### 3.1.3 类目服务
+### 3.1.3 카테고리 서비스
 
-见WxCatelogController类。
+WxCatelogController 클래스를 참조하십시오.
 
-### 3.1.4 商品服务
+### 3.1.4 상품 서비스
 
-见WxGoodsController类。
+WxGoodsController 클래스를 참조하십시오.
 
-### 3.1.5 品牌服务
+### 3.1.5 브랜드 서비스
 
-见WxBrandController类。
+WxBrandController 클래스를 참조하십시오.
 
-### 3.1.6 专题服务
+### 3.1.6 특별 서비스
 
-见WxTopicController类。
+WxTopicController 클래스를 참조하십시오.
 
-### 3.1.7 搜索服务
+### 3.1.7 검색 서비스
 
-见WxSearchController类。
+WxSearchController 클래스를 참조하십시오.
 
-### 3.1.8 购物车服务
+### 3.1.8 장바구니 서비스
 
-见WxCartController类。
+WxCartController 클래스를 참조하십시오.
 
-### 3.1.9 订单服务
+### 3.1.9 주문 서비스
 
-见WxOrderController类。
+WxOrderController 클래스를 참조하십시오.
+### 3.1.10 평가 서비스
 
-### 3.1.10 评价服务
+WxCommentController 클래스를 참조하십시오.
 
-见WxCommentController类。
+노트:
+> 주문 상품 평가 기능은 WxOrderController 클래스의 comment 메서드를 참조하십시오.
 
-注意：
-> 订单商品评价功能见WxOrderController类的comment方法。
+### 3.1.11 단체 구매 서비스
 
-### 3.1.11 团购服务
+WxGrouponController 클래스를 참조하십시오.
 
-见WxGrouponController类。
+### 3.1.12 수집 서비스
 
-### 3.1.12 收藏服务
+WxCollectController 클래스를 참조하십시오.
 
-见WxCollectController类。
+### 3.1.13 풋 프린트 서비스
 
-### 3.1.13 足迹服务
+WxFootprintController 클래스를 참조하십시오.
 
-见WxFootprintController类。
+### 3.1.14 배송지 서비스
 
-### 3.1.14 收货地址服务
+WxAddressController 클래스를 참조하십시오.
 
-见WxAddressController类。
+### 3.1.15 지역 서비스
 
-### 3.1.15 区域服务
+WxRegionController 클래스를 참조하십시오.
 
-见WxRegionController类。
+### 3.1.16 보안
 
-### 3.1.16 安全
+#### 3.1.16.1 토큰
 
-#### 3.1.16.1 Token
+사용자가 성공적으로 로그인하면 백엔드가 '토큰'을 반환하고 후속 사용자 요청에 토큰이 전달됩니다.
 
-用户登录成功以后，后端会返回`token`，之后用户请求都会携带token。
+WxWebMvcConfiguration 클래스, LoginUser 및 LoginUserHandlerMethodArgumentResolver 클래스를 참조하십시오.
 
-见WxWebMvcConfiguration类、LoginUser和LoginUserHandlerMethodArgumentResolver类。
+소규모 쇼핑몰의 백엔드 서비스는 모든 요청에 ​​대해 HTTP 헤더 필드 'X-Litemall-Token'이 있는지 확인합니다.
+존재하는 경우 내부 쿼리는 LoginUser로 변환 된 다음 요청 매개 변수로 사용됩니다.
+존재하지 않는 경우 널 요청 매개 변수로 사용됩니다.
 
-小商城后端服务每一次请求都会检测是否存在HTTP头部域`X-Litemall-Token`。
-如果存在，则内部查询转换成LoginUser，然后作为请求参数。
-如果不存在，则作为null请求参数。
+특정 백엔드 서비스 컨트롤러에서 LoginUser를 사용하여 확인할 수 있습니다.
 
-而具体的后端服务controller中，则可以利用LoginUser来检查。
-
-例如用户地址服务中：
+예를 들어, 사용자 주소 서비스에서 :
 ```
 @RestController
-@RequestMapping("/wx/address")
+@RequestMapping ( "/ wx / address")
 @Validated
-public class WxAddressController {
-    @GetMapping("list")
-    public Object list(@LoginUser Integer userId) {
+공용 클래스 WxAddressController {
+    @GetMapping ( "목록")
+    public Object list (@LoginUser Integer userId) {
         if (userId == null) {
-            return ResponseUtil.unlogin();
+            return ResponseUtil.unlogin ();
         }
         
         ...
     }
 ```
-如果检测`userId`是null，则返回错误信息“用户未登录”。
+'userId'가 null 인 경우 "사용자가 로그인되지 않았습니다"라는 오류 메시지가 반환됩니다.
 
 ## 3.2 litemall-wx
 
-这里的代码基于[nideshop-mini-program](https://gitee.com/tumobi/nideshop-mini-program)，但是做了一定的修改：
+여기에있는 코드는 [nideshop-mini-program] (https://gitee.com/tumobi/nideshop-mini-program)을 기반으로하지만 특정 수정 사항이 있습니다.
 
-* 数据属性名称调整，原项目中数据属性名称是下划线法命名（例如goods_id），而这里采用骆驼式命名法（例如goodsId），因此代码中需要进行相应调整；
-* 代码清理重构，删除了一些目前不必要的文件，梳理一些逻辑功能；
-* BUG修补，修改了一些错误；
-* 功能完善拓展，例如商品立即购买功能、商品评价功能；
+* 데이터 속성 이름 조정 원본 프로젝트의 데이터 속성 이름은 밑줄이 그어져 (예 : goods_id) 여기에 낙타 스타일 이름 지정 (예 : goodsId)이 사용되므로 코드를 적절하게 조정해야합니다.
+* 코드 정리 및 재구성, 불필요한 파일 삭제, 일부 논리 기능 분류;
+* BUG 수리, 일부 오류가 수정되었습니다.
+* 제품 즉시 구매 및 제품 평가와 같은 기능 향상 및 확장
 
-具体变化可以采用工具进行对比。
+도구를 사용하여 특정 변경 사항을 비교할 수 있습니다.
 
-注意
-> litemall-wx模块代码基于nideshop-mini-program的commit版本[acbf6276eb27abc6a48887cddd223d7261f0088e](https://github.com/tumobi/nideshop-mini-program/commit/acbf6276eb27abc6a48887cddd223d7261f0088e)。
-> 由于改动变化较大，因此之后litemall-wx将独立开发，不会合并nideshop-mini-program的更新。
+노트
+> litemall-wx 모듈 코드는 nideshop-mini-program [acbf6276eb27abc6a48887cddd223d7261f0088e] (https://github.com/tumobi/nideshop-mini-program/commit/acbf6276eb27abc6a48887cddd223d7261f0088e)의 커밋 버전을 기반으로합니다.
+> 주요 변경 사항으로 인해 litemall-wx는 향후 독립적으로 개발 될 것이며 nideshop-mini- 프로그램에 대한 업데이트를 통합하지 않을 것입니다.
 
-### 3.2.1 业务API设置
+### 3.2.1 비즈니스 API 설정
 
-业务API存放在`config/api.js`。
+비즈니스 API는`config / api.js`에 저장됩니다.
 
-但是可以发现这样的代码：
+그러나 다음 코드를 찾을 수 있습니다.
 
 ```
-// 本机开发时使用
-var WxApiRoot = 'http://localhost:8082/wx/';
-// 局域网测试使用
-// var WxApiRoot = 'http://192.168.0.101:8082/wx/';
-// 云平台部署时使用
-//  var WxApiRoot = 'http://122.51.199.160:8082/wx/';
+//이 기계를 개발할 때 사용
+var WxApiRoot = 'http : // localhost : 8082 / wx /';
+// LAN 테스트 사용
+// var WxApiRoot = 'http : //192.168.0.101 : 8082 / wx /';
+// 클라우드 플랫폼 배포에 사용
+// var WxApiRoot = 'http : //122.51.199.160 : 8082 / wx /';
 ```
 
-也就是说这里存在三种类型的API服务地址，这里是考虑到开发存在三种情况：
+즉, API 서비스 주소에는 세 가지 유형이 있으며 개발을 고려할 때 세 가지 상황이 있습니다.
 
-1. 本机开发时，localhost是当前开发机的地址；
-2. 手机预览时，192.168.0.101是开发机的IP地址；
-3. 当后台部署在云服务器中时，122.51.199.160是云服务器的IP地址；
-4. 此外，更最重要的是，如果小程序正式部署时，这里的地址必须是域名，
-而不能是IP地址。
+1.이 머신을 개발할 때 localhost는 현재 개발 머신의 주소입니다.
+2. 모바일 미리보기에서 192.168.0.101은 개발 시스템의 IP 주소입니다.
+3. 백그라운드가 클라우드 서버에 배포 된 경우 122.51.199.160은 클라우드 서버의 IP 주소입니다.
+4. 또한 가장 중요한 것은 애플릿이 공식적으로 배포 된 경우 여기에있는 주소는 도메인 이름이어야합니다.
+IP 주소가 될 수 없습니다.
 
-因此，开发阶段开发者可以按照具体情况切换1，2或3的选项。
+따라서 개발 단계에서 개발자는 특정 상황에 따라 1, 2 또는 3 옵션간에 전환 할 수 있습니다.
 
-### 3.2.2 页面
+### 3.2.2 페이지
 
-* 首页
-* 专题页
-* 专题详情页
-* 专题评论页
-* 专题评论添加页
-* 品牌页
-* 品牌详情页
-* 人气推荐页
-* 新品首发页
-* 分类页
-* 分类详情页
-* 查找页
-* 商品详情页
-* 商品评论页
-* 购物车页
-* 下单页
-* 下单地址页
-* 下单地址添加页
-* 支付结果页
-* 个人页
-* 订单列表页
-* 订单详情页
-* 优惠券页
-* 收藏页
-* 足迹页
-* 收货地址页
-* 收货地址添加页
-* 登录页
-* 注册页
-* 找回密码页
+* 집
+* 주제 페이지
+* 주제별 세부 정보 페이지
+* 주제별 댓글 페이지
+* 주제별 댓글 추가 페이지
+* 브랜드 페이지
+* 브랜드 상세 페이지
+* 인기 추천 페이지
+* 신제품 출시 페이지
+* 카테고리 페이지
+* 카테고리 세부 정보 페이지
+* 페이지 찾기
+* 상품 상세 페이지
+* 상품 리뷰 페이지
+* 장바구니 페이지
+* 주문 페이지
+* 주문 주소 페이지
+* 주문 주소 페이지 추가
+* 결제 결과 페이지
+* 개인 페이지
+* 주문 목록 페이지
+* 주문 상세 페이지
+* 쿠폰 페이지
+* 즐겨 찾기
+* 발자국 페이지
+* 수신 주소 페이지
+* 수신 주소 페이지 추가
+* 로그인 페이지
+* 등록 페이지
+* 비밀번호 페이지 검색
 
-### 3.2.3 登录设计
+### 3.2.3 로그인 디자인
 
-按照官方文档，开发者采用`wx.login`方法即可实现登录操作；
-然而，由于`wx.login`只能返回临时登录凭证`code`，从服务器也只能返回对应的sessionId,
-因此虽然已经可以视作登录，但是在小程序中不能显示有意义的登录状态，
-因此实际很多小程序是继续采用`wx.getUserInfo`来进一步请求用户信息。
+공식 문서에 따르면 개발자는`wx.login` 메소드를 사용하여 로그인 작업을 수행 할 수 있습니다.
+그러나`wx.login`은 임시 로그인 자격 증명`code` 만 반환 할 수 있으므로 슬레이브 서버는 해당 sessionId 만 반환 할 수 있습니다.
+따라서 로그인으로 간주 할 수 있지만 의미있는 로그인 상태를 애플릿에 표시 할 수 없습니다.
+따라서 많은 작은 프로그램이 계속해서`wx.getUserInfo`를 사용하여 사용자 정보를 요청합니다.
 
-因此本模块中，用户的登录状态也是由`wx.login`和`wx.getUserInfo`组成。
+따라서이 모듈에서 사용자의 로그인 상태도`wx.login`과`wx.getUserInfo`로 구성됩니다.
 
-#### 3.2.3.1 登录检测
+#### 3.2.3.1 로그인 감지
 
-开发者可以采用`user.checkLogin`来检查是否`已登录`，而其检测逻辑是：
+개발자는 'user.checkLogin'을 사용하여 '로그인'여부를 확인할 수 있으며 감지 로직은 다음과 같습니다.
 
-1. 可以从storage获取`userInfo`和`token`
-2. 同时`wx.checkSession`也成功。
+1. 저장소에서`userInfo`와`token`을 얻을 수 있습니다.
+2. 동시에`wx.checkSession`도 성공합니다.
 
-但是如果每次都使用`checkLogin`可能也不太好，因此目前机制是：
+그러나 매번`checkLogin`을 사용하면 좋지 않을 수 있으므로 현재 메커니즘은 다음과 같습니다.
 
-1. 应用启动时检测一次，如果登录则设置app.globalData.hasLogin为已登录状态;
-之后，其他页面只要查看这个状态即可知道目前是否已登录；
-2. 如果后端token过期返回501错误码时，则前端清理`userInfo`和`token`；
-3. 用户执行退出操作，则清理`userInfo`和`token`，同时设置hasLogin未登录状态。
+1. 앱이 시작될 때 한 번 감지하고 로그인하면 app.globalData.hasLogin을 로그인 상태로 설정합니다.
+그 후에 다른 페이지는 현재 로그인되어 있는지 여부를 알기 위해이 상태 만 확인하면됩니다.
+2. 백엔드 토큰이 만료되고 501 오류 코드를 반환하면 프런트 엔드는`userInfo` 및`token`을 정리합니다.
+3. 사용자가 로그 아웃 작업을 수행하면`userInfo`와`token`이 지워지고 hasLogin은 로그인되지 않은 상태입니다.
 
-注意：
-> 这里的逻辑可能有点乱。。。，但是目前实际效果看没有问题。
+#### 3.2.3.2 로그인시기
 
-#### 3.2.3.2 登录时机
+사용자 정보를 요청하기 위해 로그인 할 때 두 가지 디자인이 있습니다.
 
-登录请求用户信息的时机存在两种设计：
+1. 하나는 애플릿이로드 될 때 사용자 정보를 신청하는 것입니다.이 구현은 비교적 간단하지만 사용자 경험이 좋지 않을 수 있습니다.
+2. 다른 하나는 애플릿을로드 할 필요가 없지만 애플릿 사용자는 실제 사용자 정보가 필요할 때만 사용자에게 로그인하도록 요청한다는 것입니다.
+그리고이 실현은 더 복잡합니다.
 
-1. 一种是小程序加载时，即申请用户信息，这种实现较简单，但是用户体验可能不是很好；
-2. 另外一种是小程序加载时不需要，但是小程序用户需要真正用户信息时才请求用户登录，
-而这种实现较复杂。
+현재 두 번째 방법이 채택되어 두 가지 상황으로 더 나눌 수 있습니다.
 
-目前采用第二种方式实现，这里又可以进一步分成两种情况：
+* 사용자 활성 로그인
 
-* 用户主动登录
+  사용자의 활성 로그인은 사용자가 '개인'페이지에 로그인하지 않은 효과를 의미하며 '로그인하려면 클릭'효과를 표시합니다.
 
-  用户主动登录，指的是`个人`页面中用户没有登录显示`点击登录`的效果。
+* 사용자 수동 로그인
 
-* 用户被动登录
-
-  用户被动登录，指的是用户想购买商品或者需要用户登录才能操作的行为，
-  此时因为向服务器请求时token没有设置，因此服务器拒绝用户的请求，同时返回`501`业务代码。
+  수동 사용자 로그인은 사용자가 상품을 구매하기를 원하거나 사용자가 작동하기 위해 로그인해야하는 행동을 의미합니다.
+  이때 서버 요청시 토큰이 설정되지 않았기 때문에 서버는 사용자의 요청을 거부하고 동시에 서비스 코드 '501'을 반환한다.
  
- 以上无论哪种情况，都会导致用户被重定向到`登录`页面来进行登录操作。
+ 두 경우 모두 사용자는 로그인 할 '로그인'페이지로 리디렉션됩니다.
  
-#### 3.2.3.3 登录操作
+3.2.3.3 로그인 동작
 
-如前面讨论，这里的登录操作实际包含两个操作`wx.login`和`wx.getUserInfo`。
-开发者可以采用`user.loginByWeixin`来进行登录操作。
+앞에서 설명한 것처럼 여기에서 로그인 작업에는 실제로 'wx.login'및 'wx.getUserInfo'작업이 포함됩니다.
+개발자는`user.loginByWeixin`을 사용하여 로그인 할 수 있습니다.
 
-按照小程序官网文档，用户登录前应该检测以下，来避免频繁无意义的登录操作，
-因此较合适的做法如下所示:
+애플릿의 공식 웹 사이트에 따르면, 사용자는 빈번하고 의미없는 로그인 작업을 피하기 위해 로그인하기 전에 다음을 확인해야합니다.
+따라서 더 적절한 접근 방식은 다음과 같습니다.
 
 ```
-    user.checkLogin().catch(() => {
+    user.checkLogin (). catch (() => {
 
-      user.loginByWeixin().then(res => {
-        this.setData({
-          userInfo: res.data.userInfo,
+      user.loginByWeixin (). then (res => {
+        this.setData ({
+          userInfo : res.data.userInfo,
         });
-      }).catch((err) => {
-        util.showErrorToast('登录失败');
+      }). catch ((err) => {
+        util.showErrorToast ( '로그인 실패');
       });
 
     });
 ```
 
-#### 3.2.3.4 登出操作
+3.2.3.4 로그 아웃 작업
 
-在`个人`页面，如果用户已经登录，则会出现`退出登录`按钮，支持用户退出当前登录状态。
+'개인'페이지에서 사용자가 이미 로그인되어있는 경우 현재 로그인 상태에서 로그 아웃 할 수 있도록 지원하는 '로그 아웃'버튼이 나타납니다.
 
-退出逻辑如下所示：
+종료 로직은 다음과 같습니다.
 ```
-        util.request(api.AuthLogout, {}, 'POST');
+        util.request (api.AuthLogout, {}, 'POST');
         app.globalData.hasLogin = false;
-        wx.removeStorageSync('token');
-        wx.removeStorageSync('userInfo');
-        wx.reLaunch({
-          url: '/pages/index/index'
+        wx.removeStorageSync ( 'token');
+        wx.removeStorageSync ( 'userInfo');
+        wx.reLaunch ({
+          URL : '/ pages / index / index'
         });
 ```
 
-### 3.2.4 storage
+### 3.2.4 저장
 
-litemall-wx模块采用storage来存储一些数据，以及支持组件间数据通信。
+litemall-wx 모듈은 스토리지를 사용하여 일부 데이터를 저장하고 구성 요소 간의 데이터 통신을 지원합니다.
 
-#### 3.2.4.1 userInfo和token
+#### 3.2.4.1 userInfo 및 토큰
 
 #### 3.2.4.2 cartId
 
-#### 3.2.4.3 addressId
+#### 3.2.4.3 주소 ID
 
-### 3.2.5 加入购物车和立即购买
+### 3.2.5 장바구니에 담기 및 지금 구매
 
-### 3.2.6 团购
+### 3.2.6 단체 구매
 
 ## 3.3 renard-wx
 
-renard-wx是另外一个小程序前端，其后端API也是litemall-wx-api。
+Renard-wx는 또 다른 작은 프로그램 프론트 엔드이며 백엔드 API도 litemall-wx-api입니다.
 
-和litemall-wx的区别是：
-1. 界面样式有所调整；
-2. 功能进一步简化。
+litemall-wx와의 차이점은 다음과 같습니다.
+1. 인터페이스 스타일이 조정되었습니다.
+2. 기능이 더욱 단순화되었습니다.
 
-## 3.4 开发新组件
+## 3.4 새 구성 요소 개발
 
-本章节介绍如何开发新的微信小程序功能。
+이 장에서는 새로운 WeChat 애플릿 기능을 개발하는 방법을 소개합니다.
 
-### 3.4.1 小商场前端页面
+### 3.4.1 소규모 쇼핑몰 프론트 엔드 페이지
 
-### 3.4.2 前后端交互服务API
+### 3.4.2 프런트 엔드 및 백 엔드 양방향 서비스 API
 
-### 3.4.3 小商场后端服务
+### 3.4.3 소규모 쇼핑몰 백엔드 서비스
 
-### 3.4.4 数据库
+### 3.4.4 데이터베이스
