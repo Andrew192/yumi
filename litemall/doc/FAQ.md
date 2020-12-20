@@ -1,278 +1,275 @@
-# 常见问题
+# 일반적인 문제
 
-## 1 小商城
+## 1 작은 쇼핑몰
 
-这里主要是指litemall-wx-api、litemall-wx和renard-wx三个模块的相关问题。
+이것은 주로 litemall-wx-api, litemall-wx 및 renard-wx의 세 가지 모듈의 관련 문제를 나타냅니다.
 
-### 1.1 小程序微信登录失败
+### 1.1 미니 프로그램 WeChat 로그인 실패
 
-现象：
+현상:
 
-小程序微信登录失败
+미니 프로그램 WeChat 로그인 실패
 
-原因：
+이유:
 
-小程序未上线之前，开发者必须设置自己申请的appid，否则微信登录肯定会失败。
+미니 프로그램이 온라인 상태가되기 전에 개발자는 그가 신청 한 appid를 설정해야합니다. 그렇지 않으면 WeChat 로그인이 확실히 실패합니다.
 
-解决：
+풀다:
 
-1. 如果只是体验商品购买流程，开发者可以采用账号注册登录方式。
-2. 开发者在litemall-wx、renard-wx和litemall-core模块的appid信息设置成自己申请的信息。
+1. 제품 구매 과정 만 경험했다면 개발자는 계정 등록 및 로그인을 사용할 수 있습니다.
+2. 개발자는 litemall-wx, renard-wx 및 litemall-core 모듈의 appid 정보를 신청 한 정보로 설정합니다.
 
-### 1.2 appid已经修改，微信登陆仍然失败
+### 1.2 appid가 수정되었지만 WeChat 로그인이 여전히 실패합니다.
 
-现象：
+현상:
 
-微信开发者工具修改了开发者自己申请的appid，后端也更新了相应信息，但是微信登录仍然报错。
+WeChat 개발자 도구는 개발자가 신청 한 appid를 수정했으며 백엔드도 해당 정보를 업데이트했지만 WeChat 로그인은 여전히 ​​오류를보고했습니다.
 
-原因：
+이유:
 
-这里可能是缓存问题，虽然修改了appid，但是微信开发者工具未及时更新。
+캐싱 문제 일 수 있습니다. appid가 수정되었지만 WeChat 개발자 도구가 제때 업데이트되지 않았습니다.
 
-解决：
+풀다:
 
-微信开发者工具中修改appid以后，请关闭litemall-wx项目或者微信开发者工具，重新启动导入litemall-wx。
+WeChat 개발자 도구에서 appid를 수정 한 후 litemall-wx 프로젝트 또는 WeChat 개발자 도구를 닫고 litemall-wx를 가져 오기 위해 다시 시작하십시오.
 
-### 1.3 手机真机测试不正常
+### 1.3 실제 전화 테스트가 비정상입니다.
 
-现象：
+현상:
 
-微信开发者工具打开正常，但是手机真机扫描加载小商场以后，只有页面结构，没有数据和图片。
+WeChat 개발자 도구는 정상적으로 열리지 만 휴대폰이 작은 쇼핑몰을 스캔하고로드 한 후에는 페이지 구조 만 있고 데이터와 그림은 없습니다.
 
-原因：
+이유:
 
-数据或者图片不可访问。
+데이터 또는 사진에 액세스 할 수 없습니다.
 
-解决：
+풀다:
 
-1. 确保小商场后端服务可以访问，可以通过手机浏览器访问后端服务地址测试
-   * 小商场的后端服务地址是localhost，则手机不可访问；
-   * 小商场的后端服务地址是局域网地址，而手机不在局域网中（例如不是相同wifi，或者手机是移动网络）
-   * 小商场的后端服务未启动
-2. 手机小商场的**调试功能**开启
+1. 소규모 쇼핑몰의 백엔드 서비스에 액세스 할 수 있는지, 모바일 브라우저를 통해 백엔드 서비스 주소 테스트에 액세스 할 수 있는지 확인
+   * 소규모 쇼핑몰의 백엔드 서비스 주소가 localhost 인 경우 휴대폰에 접속할 수 없습니다.
+   * 소규모 쇼핑몰의 백엔드 서비스 주소가 근거리 통신망 주소이고 휴대 전화가 근거리 통신망에 속하지 않습니다 (예 : 동일한 Wi-Fi가 아니거나 휴대 전화가 모바일 네트워크 인 경우).
+   * 소규모 쇼핑몰 백엔드 서비스가 활성화되지 않음
+2. 휴대폰 매장의 ** 디버깅 기능 **이 켜져 있습니다.
 
-### 1.4 第三方手机测试不正常
+### 1.4 타사 휴대폰 테스트가 비정상입니다.
 
-现象：
+현상:
 
-开发者自己手机测试正常，而第三者手机测试不正常。
+개발자 자신의 휴대폰 테스트는 정상이지만 타사 휴대폰 테스트는 비정상입니다.
 
-解决：
+풀다:
 
-1. 确保小商场后端服务可以访问，可以通过第三者手机浏览器访问后端服务地址测试
-2. 第三者手机小商场的**调试功能**开启
-3. 在微信小程序平台设置第三者的微信账号是**体验者**
+1. 소규모 쇼핑몰의 백엔드 서비스에 액세스 할 수 있고, 타사 모바일 브라우저를 통해 백엔드 서비스 주소 테스트에 액세스 할 수 있는지 확인합니다.
+2. 타사 휴대폰 쇼핑몰의 ** 디버깅 기능 **이 켜져 있습니다.
+3. WeChat Mini Program 플랫폼에서 제 3 자의 WeChat 계정을 ** Experiencer **로 설정합니다.
 
-### 1.5 微信支付失败
+### 1.5 WeChat 결제 실패
 
-现象：
+현상:
 
-小商场不能支付，或者点击支付总是报错
+작은 쇼핑몰에서 결제 할 수 없거나 클릭하여 결제시 항상 오류보고
 
-原因：
+이유:
 
-开发者必须拥有商户支付权限，然后设置好以下信息：
+개발자는 판매자 결제 권한이 있어야하며 다음 정보를 설정해야합니다.
 ```
-litemall.wx.app-id=
-litemall.wx.app-secret=
-litemall.wx.mch-id=
-litemall.wx.mch-key=
-litemall.wx.notify-url=
-```
-
-解决：
-
-参考`3.0 小商场环境`，设置相应支付配置信息
-
-### 1.6 支付成功，但商品仍未付款
-
-现象：
-
-在微信开发者工具中已经成功支付，但是返回订单页面时商品订单仍然显示`未付款`状态。
-
-原因是：
-
-微信平台支付成功以后，会把支付结果推送到`wx.notify-url`所指定的地址。
-因此，开发者必须确定`wx.notify-url`所指向的访问链接是可以成功访问，同时
-能够返回正常的响应结果。
-
-解决：
-
-1. 如果开发者是在微信开发者工具中测试支付，那么需要采用一些内网穿透工具，
-把`WxOrderController.payNotify`所代表的本地地址，例如`http://localhots/wx/order/pay-notify`,
-转换成外网可以访问的地址，例如`http://xxx.com/wx/order/pay-notify`，最后
-设置`wx.notify-url`指向该地址。
-
-2. 如果开发者已经上线服务，请确认`wx.notify-url`所指向的访问链接可以正常工作。
-
-## 2. 管理后台
-
-这里主要是指litemall-admin-api和litemall-admin两个模块的相关问题。
-
-### 2.1 登录连接超时，联系管理员
-
-现象：
-
-管理后台登录时，出现报错信息：登录连接超时
-
-原因：
-
-1. 首先，需要明白这是前后端分离项目，前端会向后端发送请求；
-2. 其次，需要明白报错的地方，是litemall-admin/src/utils/request.js文件中;
-3. 最后，连接超时是说发送给后端的请求长时间未反应。这里存在两个可能性：
-    * 真连接超时，目前request.js文件中设置请求超时时间是5s，因此真的可能5s后端
-    未及时返回数据；
-    * 假连接超时，例如向一个不存在的地址请求数据，那自然是返回连接失败。
-
-解决：
-
-通常是开发者设置不正确引起的假连接超时。
-
-1. 首先，用chrome的开发者工具查看登录页面向后端请求的具体地址；
-2. 然后，测试后端的服务是否已启动，请求地址是否可以访问。
-3. 最后，如果设置正确，用chrome的开发者工具查看登录页面向后端请求返回数据信息；
-如果设置不正确，请启动相应的后端服务。
-
-### 2.2 安装失败/启动不成功
-
-现象：
-
-执行`cnpm install`失败
-
-原因：
-
-可能下载依赖失败。
-
-解决：
-
-清空node_modules，重新执行`cnpm install`命令，或者自行百度、Google。
-
-### 2.3 分页数据返回不正常
-
-现象：
-
-如果管理后台点击很大的分页页数（实际已超过当时数据最大页数），后端仍然能够返回数据。
-
-原因：
-
-这个不是BUG，而是开发者对于查询页面超过实际页面后应该产生何种效果的不同理解。
-* 返回最后一页数据可能是合理的；
-* 返回空数据可能也是合理的。
-
-解决：
-
-litemall-db模块的application-db.yaml资源文件中reasonable是true
-
-    pagehelper:
-      helperDialect:  mysql
-      reasonable: true
-      supportMethodsArguments:  true
-      params: count=countSql
-
-开发者可以尝试设置reasonable为false，然后检查是否能够解决问题。
-
-## 3. 基础系统
-
-这里主要是指litemall-db、litemall-core和litemall-all模块三个模块的相关问题。
-
-
-### 3.1 Invalid bound statement
-
-现象：
-
-有时（特别是采用mybatis generator重新生成代码）后端服务报错
-
-```
-org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): org.linlinjava.litemall.db.dao.XXXX
+litemall.wx.app-id =
+litemall.wx.app-secret =
+litemall.wx.mch-id =
+litemall.wx.mch-key =
+litemall.wx.notify-url =
 ```
 
-原因：
+풀다:
 
-应该是自动生成的新的XML文件没有及时更新到编译文件夹target中，造成了target中mybatis的Java代码和XML文件不对应。
+해당 결제 구성 정보를 설정하려면 '3.0 Small Mall 환경'을 참조하십시오.
 
-解决：
+### 1.6 결제는 성공했지만 상품은 아직 미결제 상태입니다
 
-采用maven命令或者插件先清理项目再重新编译打包，例如
+현상:
+
+WeChat 개발자 도구에서 결제가 성공적으로 이루어졌지만 주문 페이지로 돌아갈 때 제품 주문은 여전히 ​​'미결제'상태로 표시됩니다.
+
+그 이유는:
+
+WeChat 플랫폼에서 결제가 완료되면 'wx.notify-url'에 지정된 주소로 결제 결과가 푸시됩니다.
+따라서 개발자는`wx.notify-url`이 가리키는 액세스 링크에 성공적으로 액세스 할 수 있고 동시에 액세스 할 수 있는지 확인해야합니다.
+정상적인 응답 결과를 반환 할 수 있습니다.
+
+풀다:
+
+1. 개발자가 WeChat 개발자 도구에서 결제를 테스트하는 경우 일부 인트라넷 침투 도구를 사용해야합니다.
+'WxOrderController.payNotify'로 표시된 로컬 주소를 입력합니다 (예 : 'http : // localhots / wx / order / pay-notify').
+'http://xxx.com/wx/order/pay-notify'와 같이 인터넷에서 액세스 할 수있는 주소로 변환하고 마지막으로
+이 주소를 가리 키도록`wx.notify-url`을 설정합니다.
+
+2. 개발자가 이미 서비스를 시작한 경우 'wx.notify-url'이 가리키는 액세스 링크가 정상적으로 작동하는지 확인하십시오.
+
+## 2. 경영 배경
+
+이는 주로 litemall-admin-api 및 litemall-admin의 두 모듈의 관련 문제를 나타냅니다.
+
+### 2.1 로그인 및 연결 시간 초과, 관리자에게 문의
+
+현상:
+
+관리 백그라운드에 로그인 할 때 오류 메시지가 나타납니다. 로그인 연결 시간 초과
+
+이유:
+
+1. 첫째, 이것이 프런트 엔드 및 백 엔드 분리 프로젝트이며 프런트 엔드가 백 엔드에 요청을 전송한다는 것을 이해해야합니다.
+2. 둘째, litemall-admin / src / utils / request.js 파일에서 오류가보고 된 위치를 이해해야합니다.
+3. 마지막으로 연결 시간 초과는 백엔드로 보낸 요청이 오랫동안 응답하지 않았 음을 의미합니다. 여기에는 두 가지 가능성이 있습니다.
+    * 실제 연결 시간 제한, 현재 request.js 파일 설정 요청 시간 제한 시간은 5 초이므로 실제로 5 초 백엔드가 가능합니다.
+    제 시간에 데이터를 반환하지 못했습니다.
+    * 존재하지 않는 주소에서 데이터를 요청하는 것과 같은 잘못된 연결 시간 초과는 자연스럽게 연결 실패를 반환합니다.
+
+풀다:
+
+잘못된 연결 시간 제한은 일반적으로 개발자의 잘못된 설정으로 인해 발생합니다.
+
+1. 먼저 Chrome의 개발자 도구를 사용하여 백엔드의 로그인 페이지에서 요청한 특정 주소를 확인합니다.
+2. 그런 다음 백엔드 서비스가 시작되었는지 여부와 요청 된 주소에 액세스 할 수 있는지 테스트합니다.
+3. 마지막으로 설정이 올바른 경우 Chrome의 개발자 도구를 사용하여 로그인 페이지를보고 백엔드에서 데이터 정보를 다시 요청합니다.
+설정이 잘못된 경우 해당 백엔드 서비스를 시작하십시오.
+
+### 2.2 설치 실패 / 실패한 시작
+
+현상:
+
+`cnpm install`을 실행하지 못했습니다.
+
+이유:
+
+종속성을 다운로드하지 못할 수 있습니다.
+
+풀다:
+
+node_modules를 지우거나`cnpm install` 명령을 다시 실행하거나 Baidu 또는 Google을 사용합니다.
+
+### 2.3 페이징 데이터가 비정상적으로 반환 됨
+
+현상:
+
+관리 배경이 많은 수의 페이징 페이지를 클릭하는 경우 (당시 실제 최대 데이터 페이지 수를 초과 함) 백엔드는 여전히 데이터를 반환 할 수 있습니다.
+
+이유:
+
+이것은 버그는 아니지만 쿼리 페이지가 실제 페이지를 초과 할 때 어떤 효과가 생성되어야하는지에 대한 개발자의 다른 이해입니다.
+* 데이터의 마지막 페이지를 반환하는 것이 합리적 일 수 있습니다.
+* 빈 데이터를 반환하는 것이 합리적 일 수 있습니다.
+
+풀다:
+
+litemall-db 모듈의 application-db.yaml 리소스 파일에서 Reasonable이 true입니다.
+
+    pagehelper :
+      helperDialect : mysql
+      합리적 : 참
+      supportMethodsArguments : true
+      매개 변수 : count = countSql
+
+개발자는 타당성을 false로 설정 한 다음 문제가 해결 될 수 있는지 확인할 수 있습니다.
+
+## 3. 기본 시스템
+
+이것은 주로 litemall-db, litemall-core 및 litemall-all의 세 가지 모듈의 관련 문제를 나타냅니다.
+
+
+### 3.1 유효하지 않은 바인딩 문
+
+현상:
+
+때때로 (특히 코드를 재생성하기 위해 mybatis 생성기를 사용) 백엔드 서비스가 오류를보고 함
+
+```
+org.apache.ibatis.binding.BindingException : 유효하지 않은 바운드 문 (찾을 수 없음) : org.linlinjava.litemall.db.dao.XXXX
+```
+
+이유:
+
+자동으로 생성 된 새 XML 파일이 제때 컴파일 폴더 대상으로 업데이트되지 않아 대상에있는 mybatis의 Java 코드가 XML 파일과 일치하지 않게됩니다.
+
+풀다:
+
+Maven 명령 또는 플러그인을 사용하여 프로젝트를 정리 한 다음 다시 컴파일하고 패키징합니다.
 ```bash
 mvn clean
-mvn package
+mvn 패키지
+```
+### 3.2 Unknown column
+
+현상:
+
+```
+데이터베이스를 쿼리하는 중 오류가 발생했습니다. 원인 : com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException : '필드 목록'에서 알 수없는 열 'add_time'
+org / linlinjava / litemall / db / dao / LitemallSystemMapper.xml에 오류가있을 수 있습니다.
+오류에는 org.linlinjava.litemall.db.dao.LitemallSystemMapper.selectByExample-Inline이 포함될 수 있습니다.
+매개 변수를 설정하는 동안 오류가 발생했습니다.
+SQL : select id, key_name, key_value, add_time, update_time, deleted from litemall_system
+원인 : com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException : '필드 목록'에서 알 수없는 열 'add_time'
 ```
 
-### 3.2 Unknown Column
+이유:
 
-现象：
+시스템은 개발 중이므로 업무에 따라 데이터베이스 테이블이 지속적으로 조정되므로 개발자가 코드를 업데이트 한 후 직접 실행하면 현재 코드가 발생할 수 있습니다.
+개발자의 현재 데이터베이스 테이블이 오래되어 데이터베이스 작업이 실패했습니다.
 
+풀다:
+
+데이터베이스에 오류가있는 경우 개발자가 데이터베이스를 다시 가져 오는 것이 좋습니다.
+
+### 3.3 데이터베이스 가져 오기 실패
+
+현상:
+
+개발자가 직접 (또는 Navicat을 사용하여) litemall_schema.sql을 실행하면 작업이 실패합니다.
+
+이유:
+
+하위 MySQL 버전에서는`존재하는 경우 사용자 삭제`가 지원되지 않거나 Navicat에서 지원하지 않을 수 있습니다.
+
+풀다:
+
+먼저 litemall_schema.sql 파일을 직접 열어 보시면
 ```
-Error querying database. Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'add_time' in 'field list'
-The error may exist in org/linlinjava/litemall/db/dao/LitemallSystemMapper.xml
-The error may involve org.linlinjava.litemall.db.dao.LitemallSystemMapper.selectByExample-Inline
-The error occurred while setting parameters
-SQL: select id, key_name, key_value, add_time, update_time, deleted from litemall_system
-Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'add_time' in 'field list'
-```
-
-原因：
-
-系统处在开发中，所以数据库表根据业务会不断调整，因此如果开发者更新代码以后直接运行，有可能导致当前代码
-操作数据库失败，因为开发者当前的数据库表已经过时。
-
-解决：
-
-如果出现数据库方面的报错，建议开发者重新导入数据库。
-
-### 3.3 数据库导入失败
-
-现象：
-
-开发者直接（或使用Navicat）运行litemall_schema.sql时运行失败。
-
-原因：
-
-可能是`drop user if exists`在MySQL低版本不支持，也可能是Navicat不支持。
-
-解决:
-
-首先，请开发者请直接打开litemall_schema.sql文件，可以看到
-```
-drop database if exists litemall;
-drop user if exists 'litemall'@'localhost';
-create database litemall default character set utf8mb4 collate utf8mb4_unicode_ci;
-use litemall;
-create user 'litemall'@'localhost' identified by 'litemall123456';
-grant all privileges on litemall.* to 'litemall'@'localhost';
-flush privileges;
+litemall이 있으면 데이터베이스를 삭제하십시오.
+존재하는 경우 사용자 삭제 'litemall'@ 'localhost';
+데이터베이스 litemall 기본 문자 집합 만들기 utf8mb4 collate utf8mb4_unicode_ci;
+litemall을 사용하십시오.
+'litemall123456'로 식별되는 사용자 'litemall'@ 'localhost'생성;
+litemall. *에 대한 모든 권한을 'litemall'@ 'localhost'에 부여합니다.
+플러시 권한;
 ```
 
-可以看到，这里主要是完成三个工作
-* 创建数据库
-* 创建数据库用户
-* 分配该用户所有操作权限
+보시다시피 여기에는 주로 세 가지 작업이 완료됩니다.
+* 데이터베이스 만들기
+* 데이터베이스 사용자 생성
+*이 사용자에게 모든 작업 권한 할당
 
-因此，如果开发者运行litemall_schema.sql失败，开发者可以自行使用
-相关SQL命令或者使用SQL工具创建数据库、用户和分配权限工作。
+따라서 개발자가 litemall_schema.sql을 실행하지 못한 경우 개발자가 직접 사용할 수 있습니다.
+관련 SQL 명령을 사용하거나 SQL 도구를 사용하여 데이터베이스, 사용자를 만들고 작업 권한을 할당합니다.
 
-此外实际上，**开发者也不应该在部署或者上线阶段运行litemall_schema.sql**
+또한 실제로 ** 개발자는 배포 중 또는 온라인으로 litemall_schema.sql을 실행해서는 안됩니다. **
 
-## 4. 项目
+## 4. 프로젝트
 
-这里主要是指其他项目开发相关问题。
+이것은 주로 다른 프로젝트 개발 관련 문제를 나타냅니다.
 
-### 4.1 项目导入IDEA时卡顿
+### 4.1 프로젝트를 IDEA로 가져올 때 멈춤
 
-现象：
+현상:
 
-IDEA导入项目时，非常耗时间，或者卡断，或者一直疯狂运行。
+IDEA가 프로젝트를 가져올 때 많은 시간이 걸리거나 정지되거나 계속 미친 듯이 실행됩니다.
 
-原因：
+이유:
 
-应该是litemall-admin模块和litemall-vue模块的node_modules文件夹导致的。
-node_modules是litemall-admin和litemall-vue模块所依赖的项目库，可能有近200M的文件。
-而IDEA如果没有设置，则可能尝试对该文件夹进行解析索引，从而导致卡断。
+litemall-admin 모듈 및 litemall-vue 모듈의 node_modules 폴더에 의해 발생해야합니다.
+node_modules는 litemall-admin 및 litemall-vue 모듈이 의존하는 프로젝트 라이브러리이며 거의 2 억 개의 파일이있을 수 있습니다.
+IDEA가 설정되지 않은 경우 폴더를 구문 분석하고 색인을 생성하여 카드가 손상 될 수 있습니다.
 
-解决方案：
+해결책:
 
-1. 先关闭IDEA，然后删除litemall-admin和litemall-vue模块内的node_modules文件夹；
-2. 然后分别创建空的node_modules文件夹；
-3. 重新打开IDEA，分别设置litemall-admin模块和litemall-vue模块的node_modules文件夹Excluded状态。
-
-![](./pics/faq/excluded.png)
+1. 먼저 IDEA를 닫은 다음 litemall-admin 및 litemall-vue 모듈에서 node_modules 폴더를 삭제합니다.
+2. 그런 다음 각각 빈 node_modules 폴더를 만듭니다.
+3. IDEA를 다시 열고 litemall-admin 모듈과 litemall-vue 모듈의 node_modules 폴더에 대한 Excluded 상태를 각각 설정합니다.
