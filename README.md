@@ -5,7 +5,7 @@
 #### 미니프로그램 Litemall 오픈소스 사용 
 #### [저작자 및 다운로드주소 : https://github.com/linlinjava/litemall](https://github.com/linlinjava/litemall)
 
-#### Project
+### Project
 유학생을 위한 필요 물품 추천 코너 및 결제 연동 시스템 개발 목적
 
 litemall 오픈소스를 활용한 미니프로그램입니다.
