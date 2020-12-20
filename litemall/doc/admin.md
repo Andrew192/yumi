@@ -1,185 +1,184 @@
 # 4 litemall管理后台
 
-项目技术架构：
+프로젝트 기술 구조 :
 
-* 管理后台前端，即litemall-admin模块
+* 관리 백엔드 프런트 엔드, 즉 litemall-admin 모듈
   * vue
   * vuex
   * vue-router
   * axios
-  * element
+  * 요소
   * vue-element-admin 4.2.1
-  * 其他，见package.json
-* 管理后台后端, 即litemall-admin-api模块
-  * Spring Boot 2.x
-  * Spring MVC
+  * 기타, package.json 참조
+* 관리 백엔드, 즉 litemall-admin-api 모듈
+  * 스프링 부트 2.x
+  * 봄 MVC
 
-目前存在的问题：
+현재 존재하는 문제 :
 
-* `缺失`首页中实现一些小组件，同时点击能够跳转相应页面
-* `缺失`支持导出表所有数据
-* `改善`管理员登录页面打开慢，优化速度
-* `改善`地址优化，目前每一次点击都会请求后台，应该缓存已有的数据
-* `改善`vue和vue-element-admin等及时更新
+* '누락'홈페이지에 작은 구성 요소를 구현하고 클릭하면 해당 페이지로 이동합니다.
+*`Missing`은 테이블의 모든 데이터 내보내기를 지원합니다.
+* '개선'관리자 로그인 페이지가 느리게 열리고 속도 최적화
+*`Improve` 주소 최적화, 현재 모든 클릭은 백그라운드를 요청하며 기존 데이터는 캐시되어야합니다.
+*`Improve` vue 및 vue-element-admin은 제때 업데이트됩니다.
 
 ## 4.1 litemall-admin-api
 
-本节介绍管理后台的后台服务模块。
+이 섹션에서는 관리 배경의 백그라운드 서비스 모듈을 소개합니다.
 
-### 4.1.1 授权服务
+### 4.1.1 인증 서비스
 
-见AdminAuthController类
+AdminAuthController 클래스 참조
 
-### 4.1.2 用户管理服务
+### 4.1.2 사용자 관리 서비스
 
-用户管理服务进一步分成：
-* 会员管理服务，见AdminUserController类
-* 收货地址服务，见AdminAddressController类
-* 会员收藏服务，见AdminCollectController类
-* 会员足迹服务，见AdminFootprintController类
-* 搜索历史服务，见AdminHistoryController类
-* 意见反馈服务，见AdminFeedbackController类
+사용자 관리 서비스는 다음과 같이 세분화됩니다.
+* 회원 관리 서비스, AdminUserController 클래스 참조
+* 수신 주소 서비스, AdminAddressController 클래스 참조
+* 회원 수집 서비스, AdminCollectController 클래스 참조
+* 멤버 풋 프린트 서비스, AdminFootprintController 클래스 참조
+* 검색 기록 서비스, AdminHistoryController 클래스 참조
+* 의견 피드백 서비스, AdminFeedbackController 클래스 참조
 
-### 4.1.3 商场管理服务
+### 4.1.3 쇼핑몰 관리 서비스
 
-商城管理服务进一步分成：
-* 行政区域服务，见AdminRegionController类
-* 品牌制造商服务，见AdminBrandController类
-* 商品类目服务，见AdminCategoryController类
-* 订单管理服务，见AdminOrderController类
-* 通用问题服务，见AdminIssueController类
-* 关键词服务，见AdminKeywordController类
+쇼핑몰 관리 서비스는 다음과 같이 세분화됩니다.
+* 관리 영역 서비스, AdminRegionController 클래스 참조
+* 브랜드 제조업체 서비스, AdminBrandController 카테고리 참조
+* 상품 카테고리 서비스, AdminCategoryController 카테고리 참조
+* 주문 관리 서비스, AdminOrderController 클래스 참조
+* 일반 질문 서비스, AdminIssueController 클래스 참조
+* 키워드 서비스, AdminKeywordController 클래스 참조
 
-### 4.1.4 商品管理服务
+### 4.1.4 상품 관리 서비스
 
-商品服务，见AdminAdminController类
+상품 서비스, AdminAdminController 클래스 참조
 
-### 4.1.5 推广管理服务
+### 4.1.5 프로모션 관리 서비스
 
-推广管理服务进一步分成：
+프로모션 관리 서비스는 다음과 같이 세분화됩니다.
 
-* 广告服务，见AdminAdController类
-* 专题服务，见AdminTopicController类
-* 团购服务，见AdminGrouponController类
+* 광고 서비스, AdminAdController 클래스 참조
+* 특별 서비스, AdminTopicController 클래스 참조
+* 그룹 구매 서비스, AdminGrouponController 클래스 참조
 
-### 4.1.6 系统管理服务
+### 4.1.6 시스템 관리 서비스
 
-系统管理服务进一步分成：
-* 管理员服务，见AdminAdminController类
-* 对象存储服务，见见AdminStorageController类
+시스템 관리 서비스는 다음과 같이 세분화됩니다.
+* 관리자 서비스, AdminAdminController 클래스 참조
+* 오브젝트 스토리지 서비스, AdminStorageController 클래스 참조
 
-### 4.1.7 其他服务
+### 4.1.7 기타 서비스
 
-* 统计服务，见AdminStatController类
-* 个人服务，见AdminProfileController类
+* 통계 서비스, AdminStatController 클래스 참조
+* 개인 서비스, AdminProfileController 클래스 참조
 
-### 4.1.8 安全
+### 4.1.8 보안
 
-这里的安全基于Shiro。
+여기 보안은 Shiro를 기반으로합니다.
 
-#### 4.1.8.1 认证
+#### 4.1.8.1 인증
 
-#### 4.1.8.2 账号密码加盐
+#### 4.1.8.2 계정 비밀번호 추가 솔트
 
-如果是微信登录，那么无需账号和密码。
+WeChat 로그인 인 경우 계정과 비밀번호가 필요하지 않습니다.
 
-而如果用户采用了账号和密码的形式登录，那么后端需要把用户密码加盐。
+사용자가 계정 및 비밀번호 형식으로 로그인하는 경우 백엔드는 사용자 비밀번호에 솔트를 추가해야합니다.
 
-#### 4.1.8.3 权限控制
+#### 4.1.8.3 액세스 제어
 
-后端实现权限管理功能来支持一定的安全控制。
-具体细节见4.1.9。
+백엔드는 특정 보안 제어를 지원하기 위해 권한 관리 기능을 구현합니다.
+자세한 내용은 4.1.9를 참조하십시오.
 
-### 4.1.9 权限管理
+### 4.1.9 권한 관리
 
-权限管理只完成了操作权限的功能，而数据权限的功能未完成。
+권한 관리는 권한 운영 기능 만 완료하고 데이터 권한 기능은 완전하지 않습니다.
 
-#### 4.1.9.1 权限设计
+#### 4.1.9.1 권한 디자인
 
-权限控制在数据库层面涉及到三个表`litemall_admin`, `litemall_role`和`litemall_permission`：
-* litemall_admin表中存在roleId字段，保存角色ID数组；
-* litemall_role表记录角色名称和角色介绍；
-* litemall_permission表记录角色所用于的权限值。
+데이터베이스 수준에서 권한 제어에는 세 개의 테이블`litemall_admin`,`litemall_role` 및`litemall_permission`이 포함됩니다.
+* litemall_admin 테이블에는 역할 ID 배열을 저장하는 roleId 필드가 있습니다.
+* litemall_role 테이블은 역할 이름과 역할 소개를 기록합니다.
+* litemall_permission 테이블은 역할에서 사용하는 권한 값을 기록합니다.
 
-权限控制在后端层面通过这三个表可以构建出管理员所属的角色以及所拥有的操作权限。
-当管理员登录以后，访问一些受权限保护的后端地址时，后端会验证当前管理员的操作权限和后端地址需要的操作权限；
-如果不匹配则会抛出异常，然后前端就会收到无操作权限的提示信息。
+이 세 가지 테이블을 통해 백엔드 수준의 권한 제어는 관리자의 역할과 소유 한 작업 권한을 구성 할 수 있습니다.
+관리자가 로그인하여 권한으로 보호되는 일부 백엔드 주소에 액세스하면 백엔드는 현재 관리자의 작업 권한과 백엔드 주소에 필요한 작업 권한을 확인합니다.
+일치하지 않으면 예외가 발생하고 프런트 엔드에 작업 권한이 없다는 메시지가 표시됩니다.
 
-权限控制在前端层面可以简单地把无操作权限显示给用户即可。
-但是前端可以进一步优化完成菜单权限特性和按钮权限特性：
-* 菜单权限，即管理员登录以后，前端的菜单是自动生成的；
-* 按钮权限，即管理员点击菜单跳转到页面，而页面中只出现当前管理员可操作的按钮。
+프런트 엔드 수준에서 권한 제어는 사용자에게 작업 권한을 표시하지 않을 수 있습니다.
+그러나 프런트 엔드는 메뉴 권한 기능 및 버튼 권한 기능을 추가로 최적화 할 수 있습니다.
+* 메뉴 권한, 즉 관리자가 로그인하면 프런트 엔드 메뉴가 자동으로 생성됩니다.
+* 버튼 권한, 즉 관리자가 메뉴를 클릭하면 페이지로 이동하며 현재 관리자가 조작 할 수있는 버튼 만 페이지에 나타납니다.
 
-以上内容参考了网上资料和开源项目，但是实现细节方面会存在一些出入。
+위의 내용은 온라인 자료 및 오픈 소스 프로젝트에 대한 내용이지만 구현 세부 사항에 약간의 차이가있을 수 있습니다.
 
-##### 4.1.9.1.1 三个表，而不是五个表
+##### 4.1.9.1.1 5 개의 테이블 대신 3 개의 테이블
 
-通常是五个表，user, role, user_role, permission, role_permission。
+일반적으로 user, role, user_role, permission, role_permission의 5 개의 테이블이 있습니다.
 
-但是本项目只需要三个表：
-* user_role表的关联关系，可以通过user表的roles字段完成，因此可以省略；
-* permission表省略，这里可能是非常奇怪的做法，但是实际上是可行的。
+그러나이 프로젝트에는 세 개의 테이블 만 필요합니다.
+* user_role 테이블의 연관 관계는 user 테이블의 roles 필드를 통해 완료 할 수 있으므로 생략 할 수 있습니다.
+* 권한 테이블이 생략되어있어 매우 이상 할 수 있지만 실제로는 가능합니다.
 
-很多开源项目的permission表是记录当前系统的所有权限，最终呈现给管理后台的使用者；
-但是数据来源则是开发者或者系统用户来进行数据输入的，但是这样真的合理吗？
-* 开发者开发完系统以后，需要额外在数据库中写入权限相关内容，这样存在独立两个步骤
-  可能不是很好；此外，如果系统升级，完成新的权限，那么如何添加这些权限到数据库也
-  不是很好。
-* 如果开发者设计权限页面，支持系统管理员手动添加新的权限，那样其实也不合适，
-  因为系统管理员可能对系统的权限并不了解，例如url地址所需要的权限。
-  这里很多开源项目都是采取这种方法，但是实际上管理员可能根本不会理解或者使用。
+많은 오픈 소스 프로젝트의 권한 테이블은 현재 시스템의 모든 권한을 기록하고 마지막으로 관리 백엔드 사용자에게 제공합니다.
+그러나 데이터 소스는 데이터 입력을위한 개발자 또는 시스템 사용자이지만 이것이 정말 합리적입니까?
+* 개발자가 시스템을 개발 한 후 데이터베이스에 추가 권한 관련 콘텐츠를 작성해야하므로 두 단계의 독립적 인 단계가 있습니다.
+  그다지 좋지 않을 수 있습니다. 또한 시스템이 업그레이드되고 새 권한이 완료되면 이러한 권한을 데이터베이스에 추가하는 방법도 있습니다.
+  아주 좋은하지.
+* 개발자가 권한 페이지를 디자인하고 시스템 관리자가 수동으로 새 권한을 추가하도록 지원하는 경우 실제로는 적절하지 않습니다.
+  시스템 관리자가 URL 주소에 필요한 권한과 같은 시스템 권한을 이해하지 못할 수 있기 때문입니다.
+  여기에있는 많은 오픈 소스 프로젝트에서이 접근 방식을 사용하지만 실제로 관리자는이를 전혀 이해하거나 사용하지 못할 수 있습니다.
 
-这里本项目参考了[biu](https://github.com/CaiBaoHong/biu)项目中注解的方式，
-系统的所有的权限不是通过数据库中权限表数据获取，而是通过注解自动解析生产当前系统
-所有的权限。而且因为是注解，所以开发者在开发新的权限时，只需要在代码内直接书写，
-不需要再次在数据库中写入。
+여기서이 프로젝트는 [biu] (https://github.com/CaiBaoHong/biu) 프로젝트의 주석 방식을 나타냅니다.
+시스템의 모든 권한은 데이터베이스의 권한 테이블 데이터를 통해 획득되지 않지만 현재 시스템은 주석을 통해 자동 분석됩니다.
+모든 권한. 주석이기 때문에 개발자는 새로운 권한을 개발할 때 코드에 직접 작성하기 만하면됩니다.
+데이터베이스에 다시 쓸 필요가 없습니다.
 
-当然，这里并意味说三个表就好或者五个表就不好，开发者可以按照自己的理解来做。
+물론 이것은 3 개의 테이블이 좋다거나 5 개의 테이블이 좋지 않다는 것을 의미하지는 않으며, 개발자는 자신의 이해에 따라 그것을 할 수 있습니다.
 
-本项目具体如何实现见下文细节。
+이 프로젝트의 특정 구현에 대해서는 아래 세부 정보를 참조하십시오.
 
-##### 4.1.9.1.2 权限只有一种类型，而不是三种类型
+##### 4.1.9.1.2 세 가지 유형이 아닌 한 가지 유형의 권한 만 있습니다.
 
-在[biu](https://github.com/CaiBaoHong/biu)项目中明确了存在三种权限类型，分别是
-菜单权限元数据、按钮权限元数据、接口权限元数据。
-很明显地，前两种权限对应了前端权限，而接口权限元数据就是后端权限。
+[biu] (https://github.com/CaiBaoHong/biu) 프로젝트에는 세 가지 유형의 권한이 있음이 분명합니다.
+메뉴 권한 메타 데이터, 버튼 권한 메타 데이터, 인터페이스 권한 메타 데이터.
+분명히 처음 두 권한은 프런트 엔드 권한에 해당하고 인터페이스 권한 메타 데이터는 백 엔드 권한입니다.
 
-本项目没有采用这种理念，其原因是因为对于最终管理员而言，或者说有可能是不懂IT的
-普通管理员，前端权限页面存在三个权限给用户勾选，可能反而会造成困惑。实际上，
-前端页面建议还是应该出现一种权限效果。
+이 프로젝트는이 개념을 채택하지 않았습니다. 그 이유는 최종 관리자를위한 것이거나 IT를 이해하지 못할 수 있기 때문입니다.
+일반 관리자의 경우 프런트 엔드 권한 페이지에 사용자가 확인할 수있는 세 가지 권한이있어 혼동을 일으킬 수 있습니다. 사실은,
+프런트 엔드 페이지는 여전히 권한 효과가 있어야한다고 제안합니다.
 
-本项目对管理员而言只有一种权限，但是这个权限本身对应了菜单权限元数据、按钮权限元数据、接口权限元数据。
-因此，管理员勾选一个权限以后，后台权限即授权成功，同时前端的菜单权限和按钮权限也自动调整。
-具体实现细节见下文。
+이 프로젝트는 관리자 권한이 하나 뿐이지 만이 권한 자체는 메뉴 권한 메타 데이터, 버튼 권한 메타 데이터, 인터페이스 권한 메타 데이터에 해당합니다.
+따라서 관리자가 권한을 선택하면 백그라운드 권한이 성공적으로 승인되고 프런트 엔드 메뉴 권한과 버튼 권한이 자동으로 조정됩니다.
+구체적인 구현 세부 정보는 아래를 참조하세요.
 
-后端权限基于shiro来实现，相关代码见litemall-admin-api模块。
+백엔드 권한은 shiro를 기반으로 구현되며 관련 코드는 litemall-admin-api 모듈에 있습니다.
 
-##### 4.1.9.2 基本配置
+##### 4.1.9.2 기본 구성
 
-1. config子包的`ShiroConfig`引入了Shiro并配置了shirFilter、realm和sessionManager；
-2. shiroFilter配置只允许少量url可以匿名访问，其他url都需要登录才能访问；
-3. realm设置的是shiro子包的`AdminAuthorizingRealm`类，该类作用是认证和授权的功能；
-4. sessionManager设置的是shiro子包的`AdminWebSessionManager`类，该类作用是重置会话管理器。
-   默认会话管理器是基于cookie实现会话保持，而这里是基于自定义头部实现会话保持。
+1. config 하위 패키지의`ShiroConfig`는 Shiro를 소개하고 shirFilter, realm 및 sessionManager를 구성합니다.
+2. shiroFilter 구성에서는 소수의 URL 만 익명으로 액세스 할 수 있으며 다른 URL은 로그인해야 액세스 할 수 있습니다.
+3. Realm은 인증 및 권한 부여 기능에 사용되는 shiro 하위 패키지의`AdminAuthorizingRealm` 클래스를 설정합니다.
+4. SessionManager는 세션 관리자를 재설정하는 데 사용되는 shiro 하위 패키지의`AdminWebSessionManager` 클래스를 설정합니다.
+   기본 세션 관리자는 세션 보존을 위해 쿠키를 기반으로하며 여기에서는 세션 보존을 위해 사용자 지정 헤더를 기반으로합니다.
 
-经过以上步骤，shiro就配置正常。
-* 当管理员登录时，先认证；
-* 认证成功，则授权，在后端内保存roles和permissions；同时，在响应头部写入自定义头部和sessionId；
-* 认证失败，则抛出认证异常；
-* 管理员再次访问页面时，shiro通过自定义头自动认证成功。
+위의 단계를 마치면 shiro가 정상적으로 구성됩니다.
+* 관리자가 로그인하면 먼저 인증합니다.
+* 인증에 성공하면 권한을 부여하고 백엔드에서 역할과 권한을 저장하고 동시에 응답 헤더에 사용자 지정 헤더와 sessionId를 작성합니다.
+* 인증에 실패하면 인증 예외가 발생합니다.
+* 관리자가 페이지를 다시 방문하면 shiro는 사용자 정의 헤더를 통해 자동으로 인증합니다.
 
-##### 4.1.9.3 权限校验
+##### 4.1.9.3 권한 확인
 
-但是以上只完成授权功能，而没有完成权限校验功能。
-这里开发者应该在Controller类的方法中使用`RequiresPermissions`注解。
-例如:
+그러나 위의 내용은 인증 기능 만 완료하고 권한 확인 기능은 완료하지 않습니다.
+여기서 개발자는 Controller 클래스 메서드에서`RequiresPermissions` 주석을 사용해야합니다.
 ```
 @RestController
 @RequestMapping("/admin/ad")
 public class AdminAdController {
 
     @RequiresPermissions("admin:ad:list")
-    @RequiresPermissionsDesc(menu={"推广管理" , "广告管理"}, button="查询")
+    @RequiresPermissionsDesc(menu={"프로모션 관리", "광고 관리"}, button = "쿼리")
     @GetMapping("/list")
     public Object list(String name, String content,
                        @RequestParam(defaultValue = "1") Integer page,
@@ -196,15 +195,14 @@ public class AdminAdController {
     }
 }
 ```
+특정 권한 확인 논리는 shiro에 의해 자동으로 완료됩니다.
+1. 성공적인 로그인 또는 세션 로그인, shiro는 이미 현재 사용자의 권한 목록을 가지고 있습니다.
+2. 접근 보호 방법에서 shiro는`RequiresPermissions` 주석을 통해 필요한 작업 권한 목록을 가져옵니다.
+3. 할당 된 권한이 작업에 필요한 권한과 일치하는지 테스트하고 일치하면 메서드를 호출 할 수 있으며 그렇지 않으면 권한없는 예외가 발생합니다.
 
-而具体的权限校验逻辑则由shiro自动完成：
-1. 登录成功或者会话登录，shiro已经有当前用户的权限列表；
-2. 访问权限保护的方法时，shiro通过`RequiresPermissions`注解得到所需操作权限列表；
-3. 测试已分配的权限和操作所需权限是否一致，如果一致则可以调用方法，否则抛出无权限的异常。
+##### 4.1.9.4 권한 설명
 
-##### 4.1.9.4 权限描述
-
-在annotation子包中存在一个自定义的`RequiresPermissionsDesc`注解
+주석 서브 패키지에 사용자 정의`RequiresPermissionsDesc` 주석이 있습니다.
 ```
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -214,21 +212,21 @@ public @interface RequiresPermissionsDesc {
 }
 ```
 
-这里讨论一下为什么要自定义权限描述注解？
-> 当后端设计好权限以后，需要向前端发送系统的权限情况，管理员可以查看系统当前所有权限以及允许为一个角色配置权限。
-> 这里就带来了实现方面的问题:
-> 一些开源项目在数据库设计一个permission表，记录系统所有权限，但是4.1.9.1.1节讨论了这种方式的局限性。
-> 因此本项目采用权限注解方式，要求开发者在使用权限注解（RequiresPermissions）的地方应该同时使用权限文档注解（RequiresPermissionsDesc），
-> 这样系统能够通过权限注解自动生成权限列表，向前端返回可读的信息。
+여기에서 권한 설명 주석을 사용자 정의해야하는 이유를 논의하십시오.
+> 백엔드에 대한 권한을 디자인 한 후 시스템 권한을 프런트 엔드로 보내야합니다. 관리자는 시스템의 모든 현재 권한을보고 역할에 대한 권한 구성을 허용 할 수 있습니다.
+> 다음은 구현 문제입니다.
+> 일부 오픈 소스 프로젝트는 시스템의 모든 권한을 기록하기 위해 데이터베이스에 권한 테이블을 디자인하지만 섹션 4.1.9.1.1에서는이 접근 방식의 제한 사항에 대해 설명합니다.
+> 따라서 본 프로젝트는 권한 주석 (RequiresPermissions)을 사용할 때 개발자가 권한 문서 주석 (RequiresPermissionsDesc)을 사용해야하는 권한 주석 방식을 채택하고 있습니다.
+> 이러한 방식으로 시스템은 권한 주석을 통해 권한 목록을 자동으로 생성하고 읽을 수있는 정보를 프런트 엔드에 반환 할 수 있습니다.
 
-例如:
+예 :
 ```
 @RestController
 @RequestMapping("/admin/ad")
 public class AdminAdController {
 
     @RequiresPermissions("admin:ad:list")
-    @RequiresPermissionsDesc(menu={"推广管理" , "广告管理"}, button="查询")
+    @RequiresPermissionsDesc(menu={"프로모션 관리", "광고 관리"}, button = "쿼리")
     @GetMapping("/list")
     public Object list(String name, String content,
                        @RequestParam(defaultValue = "1") Integer page,
@@ -247,8 +245,8 @@ public class AdminAdController {
 ```
 
 
-本项目通过搜索`RequiresPermissions`注解和`RequiresPermissionsDesc`注解（见util子包的PermissionUtil类），
-在内部生产了`Permission`类的集合:
+이 프로젝트는`RequiresPermissions` 주석과`RequiresPermissionsDesc` 주석을 검색합니다 (util 하위 패키지의 PermissionUtil 클래스 참조).
+`Permission` 클래스 모음은 내부적으로 생성됩니다.
 ```
 public class Permission {
     private RequiresPermissions requiresPermissions;
@@ -257,88 +255,88 @@ public class Permission {
 }
 ```
 
-也就是说，对于一个权限，既有权限值（requiresPermissions的value），也有权限对应的操作API，
-也有权限的描述内容（requiresPermissionsDesc的menu和button）。
+즉, 권한에는 제한 (RequirementsPermissions 값)뿐만 아니라 권한에 해당하는 오퍼레이션 API도 있습니다.
+권한에 대한 설명도 있습니다 (requiresPermissionsDesc의 메뉴 및 버튼).
 
-前端权限所需要的一些权限内容可以从这里来间接产生，具体方式见4.2.1节。
+프런트 엔드 권한에 필요한 일부 권한 콘텐츠는 여기에서 간접적으로 생성 할 수 있습니다. 자세한 내용은 섹션 4.2.1을 참조하세요.
 
-当然，需要指出的是，这里利用注解方式可以不需要在数据库中保存权限信息，
-但是在灵活性方面可能也会有问题。
+물론 여기서 주석을 사용하는 경우 데이터베이스에 권한 정보를 저장할 필요가 없다는 점을 지적해야합니다.
+그러나 유연성 측면에서도 문제가있을 수 있습니다.
 
-### 4.1.10 定时任务
+### 4.1.10 시간 지정 작업
 
-job子包存在以下定时任务：
-* OrderJob类
+작업 하위 패키지에는 다음과 같은 타이밍 작업이 있습니다.
+* OrderJob 클래스
   * checkOrderUnpaid
   * checkOrderUnconfirm
   * checkOrderComment
-* CouponJob类
+* CouponJob 클래스
   * checkCouponExpired
 
-注意：
-> 虽然定时任务放在AdminOrderController类中，但是可能这里不是很合适，
-> 以后需要调整或者完善。
+노트:
+> 시간이 지정된 작업이 AdminOrderController 클래스에 배치되어 있지만 여기에는 적합하지 않을 수 있습니다.
+> 향후 조정 또는 개선이 필요합니다.
 
 ## 4.2 litemall-admin
 
-本章介绍管理后台的前端模块。
+이 장에서는 관리 백엔드의 프런트 엔드 모듈을 소개합니다.
 
-litemall-admin模块的代码基于[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
+litemall-admin 모듈의 코드는 [vue-element-admin] (https://github.com/PanJiaChen/vue-element-admin)을 기반으로합니다.
 
 
-#### 4.2.1 前端权限
+#### 4.2.1 프런트 엔드 권한
 
-需要再次明确的是，前端权限的作用仅仅是隐藏菜单或者页面按钮，优化用户使用体验，
-而实际上没有真正的权限保护功能。
+프런트 엔드 권한의 기능은 메뉴 또는 페이지 버튼을 숨기고 사용자 경험을 최적화하는 것임을 다시 한 번 분명히해야합니다.
+실제로 실제 권한 보호 기능은 없습니다.
 
-这里前端校验的思路可以参考vue-element-admin的文档:
-* [路由和侧边栏](https://panjiachen.github.io/vue-element-admin-site/zh/guide/essentials/router-and-nav.html)
-* [权限验证](https://panjiachen.github.io/vue-element-admin-site/zh/guide/essentials/permission.html)
+여기에서 프런트 엔드 확인에 대한 아이디어는 vue-element-admin 문서를 참조 할 수 있습니다.
+* [라우팅 및 사이드 바] (https://panjiachen.github.io/vue-element-admin-site/zh/guide/essentials/router-and-nav.html)
+* [인증 확인] (https://panjiachen.github.io/vue-element-admin-site/zh/guide/essentials/permission.html)
 
-##### 4.2.1.2 角色页面
+##### 4.2.1.2 역할 페이지
 
-管理员的角色页面用于创建角色和分配权限。
+관리자의 역할 페이지는 역할을 만들고 권한을 할당하는 데 사용됩니다.
 
-其中点击授权按钮，则会出现系统所有的权限和当前已经分配的权限,具体代码可以见AdminRoleController的getPermissions。
-* 系统所有的权限，可以通过后端自动解析权限描述注解来获取；
-* 当前已分配权限，可以通过数据库访问来获取。
+인증 버튼을 클릭하면 시스템의 모든 권한과 현재 할당 된 권한이 표시되며, 특정 코드는 AdminRoleController의 getPermissions에서 확인할 수 있습니다.
+* 시스템의 모든 권한은 권한 설명 주석의 백엔드 자동 구문 분석을 통해 얻을 수 있습니다.
+* 현재 할당 된 권한은 데이터베이스 액세스를 통해 얻을 수 있습니다.
 
-#### 4.2.1.3  权限API
+#### 4.2.1.3 권한 API
 
-vue-element-admin中权限校验是基于role完成的权限校验；
-而其他一些开源项目中权限校验是基于permission权限值完成的权限校验；
-而本项目进行了调整，基于permission URL完成权限校验。
+vue-element-admin의 권한 검사는 역할별로 수행 된 권한 검사를 기반으로합니다.
+일부 다른 오픈 소스 프로젝트에서는 권한 값을 기반으로 권한 확인이 수행됩니다.
+이 프로젝트는 권한 URL을 기반으로 권한 확인을 완료하도록 조정되었습니다.
 
-首先讨论为什么基于role的权限校验不是很好：
+먼저 역할 기반 권한 확인이 그다지 좋지 않은 이유를 논의하십시오.
 
-vue-element-admin的权限校验要求在菜单或者页面按钮中写上role信息，
-这里原理是可以的。但是存在一个问题，就是角色是管理员动态创建的，
-因此菜单或者页面按钮直接写死访问所需要的role，不利于后期维护升级。
+vue-element-admin의 권한 확인을 위해서는 메뉴 또는 페이지 버튼에 역할 정보를 작성해야합니다.
+여기에서 원칙이 가능합니다. 그러나 문제가 있습니다. 즉, 관리자가 역할을 동적으로 생성한다는 것입니다.
+따라서 메뉴 또는 페이지 버튼은 액세스에 필요한 역할을 직접 기록하므로 이후 유지 관리 및 업그레이드에 도움이되지 않습니다.
 
-接着讨论为什么基于permission权限值的权限校验不是很好：
+그런 다음 권한 값을 기반으로 한 권한 검사가 그다지 좋지 않은 이유를 논의하십시오.
 
-在前后端分离项目中，前端和后端应该是不同的开发者开发。如果采用权限值的方式，
-可能导致前后端耦合紧密的问题。
-例如，后端开发者开发了一个API是`/admin/ad/list`，后端访问所需的权限值是`admin:ad:list`，
-此时前端也需要写菜单或者页面按钮的地方写上`admin:ad:list"`。
-当然，这里原理上和操作上都是可行的。但是，这里要求前端开发者必须知道自己访问后端
-API所对应的操作权限值。因此如何以一种好的前后端分离的方式来做可能是一个问题。
+프런트 엔드 분리 프로젝트에서 프런트 엔드와 백 엔드는 서로 다른 개발자가 개발해야합니다. 권한 값이 채택되면
+이로 인해 앞뒤 끝이 단단히 결합 될 수 있습니다.
+예를 들어 백엔드 개발자가 개발 한 API는`/ admin / ad / list`이고 백엔드 액세스에 필요한 권한 값은`admin : ad : list`입니다.
+이때 프런트 엔드는 메뉴 나 페이지 버튼이 쓰여진 곳에`admin : ad : list'`를 써야합니다.
+물론 이것은 원칙적으로나 작동 중에도 가능합니다. 그러나 프론트 엔드 개발자는 백엔드에 액세스하고 있음을 알아야합니다.
+API에 해당하는 작업 권한 값입니다. 따라서 전면과 후면을 분리하는 좋은 방법이 문제가 될 수 있습니다.
 
-本项目则基于permission URL的权限校验方式：
+이 프로젝트는 권한 URL 확인 방법을 기반으로합니다.
 
-后端权限校验逻辑仍然是权限值，而前端权限校验逻辑则是URL。
-例如，后端开发者开发了一个API是`/admin/ad/list`，后端访问所需的权限值是`admin:ad:list`，
-此时前端则不需要考虑权限值，而是仅仅需要知道自己访问API的方式，也就是在
-菜单或者页面按钮的地方写上`GET /admin/ad/list`，而不是`admin:ad:list"`。
-之所以是可行的，是因为后端权限是一个（权限值，权限描述，权限访问API）构成的Permission类。
+백엔드 권한 확인 로직은 여전히 ​​권한 값이고 프런트 엔드 권한 확인 로직은 URL입니다.
+예를 들어 백엔드 개발자가 개발 한 API는`/ admin / ad / list`이고 백엔드 액세스에 필요한 권한 값은`admin : ad : list`입니다.
+이때 프런트 엔드는 권한 값을 고려할 필요가 없으며 API에 액세스하는 방법 만 알면됩니다.
+메뉴 또는 페이지 버튼 대신 'admin : ad : list'대신 'GET / admin / ad / list'를 작성합니다.
+백엔드 권한은 (권한 값, 권한 설명, 권한 액세스 API)로 구성된 Permission 클래스이기 때문에 가능합니다.
 
-当然，这里也存在一定的局限性。
+물론 여기에는 특정 제한이 있습니다.
 
-#### 4.2.1.4 菜单权限
+#### 4.2.1.4 메뉴 권한
 
-见`src/route/index.js`代码
+`src / route / index.js`의 코드를 참조하세요.
 
-例如
+예 :
 ```
   {
     path: '/promotion',
@@ -347,7 +345,7 @@ API所对应的操作权限值。因此如何以一种好的前后端分离的�
     alwaysShow: true,
     name: 'promotionManage',
     meta: {
-      title: '推广管理',
+      title: '프로모션 관리',
       icon: 'chart'
     },
     children: [
@@ -357,7 +355,7 @@ API所对应的操作权限值。因此如何以一种好的前后端分离的�
         name: 'ad',
         meta: {
           perms: ['GET /admin/ad/list', 'POST /admin/ad/create', 'GET /admin/ad/read', 'POST /admin/ad/update', 'POST /admin/ad/delete'],
-          title: '广告管理',
+          title: '광고 관리',
           noCache: true
         }
       }
@@ -366,45 +364,45 @@ API所对应的操作权限值。因此如何以一种好的前后端分离的�
   },
 ```
 
-在菜单的meta中的perms属性声明了当前菜单所需要的操作权限。
-如果管理员登录以后，所分配的操作权限存在至少一个，那么该菜单就会显示；
-否则该菜单就会隐藏。
+메뉴 메타의 perms 속성은 현재 메뉴에 필요한 작업 권한을 선언합니다.
+관리자가 로그인 한 후 할당 된 작업 권한이 하나 이상있는 경우이 메뉴가 표시됩니다.
+그렇지 않으면 메뉴가 숨겨집니다.
 
 
-##### 4.2.1.4 按钮权限
+##### 4.2.1.4 버튼 권한
 
-在每个页面中一些组件可以采用指令`v-permission`或者函数`checkPermission`来实现按钮权限。
+각 페이지에서 일부 구성 요소는 'v-permission'명령 또는 'checkPermission'함수를 사용하여 버튼 권한을 구현할 수 있습니다.
 
-例如，`src/views/promation/ad`页面中
+예 :`src / views / promation / ad` 페이지
 ```
-    <div class="filter-container">
-      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入广告标题"/>
-      <el-input v-model="listQuery.content" clearable class="filter-item" style="width: 200px;" placeholder="请输入广告内容"/>
-      <el-button v-permission="['GET /admin/ad/list']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <el-button v-permission="['POST /admin/ad/create']" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-      <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
-    </div>
+    <div class = "filter-container">
+      <el-input v-model = "listQuery.name"clearable class = "filter-item"style = "width : 200px;"placeholder = "광고 제목을 입력하세요"/>
+      <el-input v-model = "listQuery.content"clearable class = "filter-item"style = "width : 200px;"placeholder = "광고 내용을 입력하세요."/>
+      <el-button v-permission = "[ 'GET / admin / ad / list']"class = "filter-item"type = "primary"icon = "el-icon-search"@ click = "handleFilter"> 찾기 </ el-button>
+      <el-button v-permission = "[ 'POST / admin / ad / create']"class = "filter-item"type = "primary"icon = "el-icon-edit"@ click = "handleCreate"> 추가 </ el-button>
+      <el-button : loading = "downloadLoading"class = "filter-item"type = "primary"icon = "el-icon-download"@ click = "handleDownload"> 내보내기 </ el-button>
+    </ div>
 ```
 
-element的`el-button`组件声明了操作权限是`GET /admin/ad/list'`。
-如果管理员登录以后，所分配的操作权限匹配，那么该按钮就会显示；
-否则该按钮就会隐藏。
+요소의`el-button` 구성 요소는 작업 권한이`GET / admin / ad / list'`임을 선언합니다.
+관리자가 로그인 한 후 할당 된 작업 권한이 일치하면이 버튼이 표시됩니다.
+그렇지 않으면 버튼이 숨겨집니다.
 
-##### 4.1.1.5 权限局限性
+##### 4.1.1.5 권한 제한
 
-前端权限这里的代码调整旨在解决一些认为不合理的地方，但是实际上也同时带来了
-一定的局限性或者限制。
+프런트 엔드 권한 여기에서 코드 조정은 비합리적인 부분을 해결하기 위해 설계되었지만 실제로는
+특정 제한 또는 제한.
 
-这里列出一些可能的问题，开发者可以自己审阅或者重新设计代码。
+다음은 개발자가 코드를 검토하거나 재 설계 할 수있는 몇 가지 가능한 문제입니다.
 
-## 4.3 开发新组件
+## 4.3 새로운 구성 요소 개발
 
-本章节介绍如何开发新的管理后台功能。
+이 장에서는 새로운 관리 배경 기능을 개발하는 방법을 소개합니다.
 
-### 4.3.1 管理后台前端页面
+### 4.3.1 백엔드 프런트 엔드 페이지 관리
 
-### 4.3.2 前后端交互服务API
+### 4.3.2 프런트 엔드 및 백엔드 양방향 서비스 API
 
-### 4.3.3 管理后台后端服务
+### 4.3.3 백엔드 서비스 관리
 
-### 4.3.4 数据库
+### 4.3.4 데이터베이스
